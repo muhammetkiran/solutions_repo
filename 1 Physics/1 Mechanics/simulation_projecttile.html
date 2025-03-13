@@ -1,0 +1,130 @@
+#Problem1
+
+[simulation](docs/1 Physics/1 Mechanics/simulation_projecttile.html)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projectile Motion Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+        .controls {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Projectile Motion Simulator</h1>
+    <div class="controls">
+        <label for="velocity">Initial Velocity (m/s): </label>
+        <input type="number" id="velocity" value="20" min="1" step="1">
+        <br><br>
+        <label for="angle">Angle (degrees): </label>
+        <input type="number" id="angle" value="45" min="0" max="90" step="1">
+        <br><br>
+        <button onclick="startSimulation()">Launch</button>
+        <button onclick="resetSimulation()">Reset</button>
+    </div>
+    <canvas id="canvas" width="800" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const g = 9.8; // gravitational acceleration (m/s^2)
+        let animationFrameId;
+
+        // Convert degrees to radians
+        function toRadians(deg) {
+            return deg * Math.PI / 180;
+        }
+
+        // Clear canvas and stop animation
+        function resetSimulation() {
+            cancelAnimationFrame(animationFrameId);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGround();
+        }
+
+        // Draw the ground line
+        function drawGround() {
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height - 50);
+            ctx.lineTo(canvas.width, canvas.height - 50);
+            ctx.strokeStyle = 'green';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        // Start the simulation
+        function startSimulation() {
+            resetSimulation(); // Clear previous animation
+
+            // Get user inputs
+            const v0 = parseFloat(document.getElementById('velocity').value);
+            const theta = toRadians(parseFloat(document.getElementById('angle').value));
+
+            // Initial velocity components
+            const v0x = v0 * Math.cos(theta);
+            const v0y = v0 * Math.sin(theta);
+
+            // Time of flight
+            const timeOfFlight = (2 * v0y) / g;
+
+            // Range
+            const range = (v0 * v0 * Math.sin(2 * theta)) / g;
+
+            // Scaling factors (pixels per meter)
+            const scaleX = canvas.width / (range * 1.1); // Fit range with margin
+            const scaleY = (canvas.height - 50) / ((v0y * v0y) / (2 * g) * 1.5); // Fit max height
+
+            let t = 0;
+            const dt = 0.02; // Time step for animation
+
+            function animate() {
+                // Calculate position
+                const x = v0x * t;
+                const y = v0y * t - 0.5 * g * t * t;
+
+                // Convert to canvas coordinates (y is inverted)
+                const canvasX = x * scaleX;
+                const canvasY = canvas.height - 50 - y * scaleY;
+
+                // Draw projectile
+                ctx.beginPath();
+                ctx.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = 'red';
+                ctx.fill();
+
+                // Update time
+                t += dt;
+
+                // Continue animation until projectile hits ground
+                if (y >= 0 && t <= timeOfFlight + dt) {
+                    animationFrameId = requestAnimationFrame(animate);
+                } else {
+                    // Draw final position
+                    ctx.beginPath();
+                    ctx.arc(canvasX, canvas.height - 50, 5, 0, 2 * Math.PI);
+                    ctx.fillStyle = 'red';
+                    ctx.fill();
+                }
+            }
+
+            // Start animation
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        // Initialize canvas with ground
+        drawGround();
+    </script>
+</body>
+</html>
