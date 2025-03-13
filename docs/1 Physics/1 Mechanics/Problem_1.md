@@ -7,6 +7,8 @@ Let’s dive into this problem step by step, exploring the mechanics of projecti
 
 ---
 
+Example [here](projectile_with_embedded_video.html)
+
 ### 1. Theoretical Foundation
 
 Projectile motion is a classic example of motion under constant acceleration, where the only force acting is gravity (assuming no air resistance for now). Let’s derive the governing equations from first principles.
