@@ -1,13 +1,20 @@
 # Problem 1
 
+<h1>Projectile Motion Simulator</h1>
+<p>Projectile motion is a fundamental concept in physics that describes the motion of an object launched into the air, subject only to the force of gravity. From a kicked soccer ball to a launched rocket, this type of motion follows a parabolic trajectory, governed by simple yet elegant equations. Understanding how initial velocity and launch angle affect the range, height, and flight time of a projectile provides valuable insights into real-world phenomena.</p>
+<p>In this simulation, inspired by the "Projectile Motion Simulation Using JavaScript" tutorial, we explore these principles interactively. By leveraging JavaScript and HTML5 Canvas, this project visualizes the path of a projectile, allowing users to adjust parameters like initial velocity and angle to observe their effects in real time. The accompanying video tutorial demonstrates how to build such a simulation step-by-step, making it an excellent resource for students, educators, and coding enthusiasts eager to blend physics with programming. This introduction sets the stage for an engaging exploration of motion, computation, and visualization—bridging theory with hands-on application.</p>
+
+
 [simulation](simulation_projecttile.html)
+
+[example vıdeo](projectile_with_embedded_video.html)
 
 
 Let’s dive into this problem step by step, exploring the mechanics of projectile motion with enthusiasm and clarity. We’ll derive the equations, analyze the range, discuss practical applications, and outline a computational approach—all while keeping the physics intuitive and engaging.
 
 ---
 
-Example [here](projectile_with_embedded_video.html)
+
 
 ### 1. Theoretical Foundation
 
