@@ -1,4 +1,6 @@
-# Investigating the Dynamics of a Forced Damped Pendulum
+# Problem 2
+
+ <h1>Investigating the Dynamics of a Forced Damped Pendulum<h1>
 
 ## Introduction
 The forced damped pendulum is a remarkable system that bridges the gap between predictable periodic motion and the seemingly erratic world of chaos. Despite its simple structure a pendulum experiencing damping and an external driving force its behavior can become astonishingly complex. This system serves as a key model in nonlinear dynamics, shedding light on concepts like resonance, bifurcations, and chaotic motion, which appear in physics, engineering, and even biological systems.
@@ -30,7 +32,7 @@ Given the inherent nonlinearity of the system, direct analytical solutions are o
 Solving the equation using methods like the Runge-Kutta algorithm to track the evolution of $\theta(t) $.
 - **Phase Space Analysis**:
 
- Examining plots of $(\theta, \dot{\theta}) $ to distinguish between periodic, quasi-periodic, and chaotic motion.
+ Examining plots of (\theta, \dot{\theta})  to distinguish between periodic, quasi-periodic, and chaotic motion.
 - **Poincaré Sections**:
 
  Recording the system’s state at discrete time intervals to reveal underlying patterns and transitions to chaos.
