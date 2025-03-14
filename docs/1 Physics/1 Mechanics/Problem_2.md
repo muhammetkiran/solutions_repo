@@ -1,12 +1,14 @@
 # Problem 2
 
- <h1>Investigating the Dynamics of a Forced Damped Pendulum<h1>
+# Investigating the Dynamics of a Forced Damped Pendulum 
+
 
 ## Introduction
+ 
+
 The forced damped pendulum is a remarkable system that bridges the gap between predictable periodic motion and the seemingly erratic world of chaos. Despite its simple structure a pendulum experiencing damping and an external driving force its behavior can become astonishingly complex. This system serves as a key model in nonlinear dynamics, shedding light on concepts like resonance, bifurcations, and chaotic motion, which appear in physics, engineering, and even biological systems.
 
-                                                                
-
+                                                           
 ![alt text](image-2.png)
 
 [simulation](pendulum_projectile.html)
@@ -40,6 +42,7 @@ Solving the equation using methods like the Runge-Kutta algorithm to track the e
 
  Measuring sensitivity to initial condition a key indicator of chaotic dynamics.
 
+
 ## Emergence of Chaos
 One of the most striking aspects of the forced damped pendulum is its ability to exhibit chaos under certain parameter settings. Hallmarks of chaotic motion include:
 
@@ -58,7 +61,8 @@ One of the most striking aspects of the forced damped pendulum is its ability to
 
 These features have profound implications, extending beyond mechanics to climate science, electrical circuits, and even neuroscience.
 
+![alt text](image-3.png)
+
 ## Conclusion
 
 The forced damped pendulum is more than just an abstract mathematical construct it is a gateway to understanding the unpredictability inherent in many real-world systems. By tweaking parameters such as damping strength and driving frequency, researchers can explore the delicate balance between order and chaos, revealing the intricate nature of nonlinear dynamics.
-
