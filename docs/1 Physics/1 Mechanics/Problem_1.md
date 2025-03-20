@@ -1,8 +1,150 @@
 # Problem 1
 
-<h1>Projectile Motion Simulator</h1>
-<p>Projectile motion is a fundamental concept in physics that describes the motion of an object launched into the air, subject only to the force of gravity. From a kicked soccer ball to a launched rocket, this type of motion follows a parabolic trajectory, governed by simple yet elegant equations. Understanding how initial velocity and launch angle affect the range, height, and flight time of a projectile provides valuable insights into real-world phenomena.</p>
+### **Theoretical Foundations of Projectile Motion**  
 
+Projectile motion describes the motion of an object launched into the air under the influence of gravity, assuming no air resistance. It follows a curved trajectory known as a **parabola** and is governed by Newton’s laws of motion. The motion is analyzed by breaking it into two perpendicular components:  
+
+1. **Horizontal Motion** – Constant velocity (no acceleration).  
+2. **Vertical Motion** – Accelerated motion due to gravity$g = 9.81 
+ 
+
+Let’s define key parameters:  
+-$v_0$: Initial velocity (m/s).  
+-$\theta$: Launch angle (degrees).  
+-$g$: Acceleration due to gravity (m/s²).  
+-$t$: Time (s).  
+-$x, y$: Horizontal and vertical position (m).  
+
+---
+
+### **Equations of Motion**  
+
+#### **Horizontal Motion (Constant Velocity)**  
+Since no external force acts horizontally, the acceleration is zero:  
+
+$$
+a_x = 0, \quad v_x = v_0 \cos\theta
+$$
+
+The horizontal displacement over time is:
+
+$$
+x(t) = v_0 \cos\theta \cdot t
+$$
+
+#### **Vertical Motion (Accelerated Motion)**  
+The object experiences acceleration due to gravity:  
+
+$$
+a_y = -g, \quad v_y = v_0 \sin\theta - g t
+$$
+
+The vertical displacement is given by the kinematic equation:
+
+$$
+y(t) = v_0 \sin\theta \cdot t - \frac{1}{2} g t^2
+$$
+
+---
+
+### **Key Calculations**  
+
+#### **Time of Flight**  
+The total time the projectile stays in the air can be found by setting$y(T) = 0$(assuming it lands at the same height):  
+
+$$
+0 = v_0 \sin\theta \cdot T - \frac{1}{2} g T^2
+$$
+
+Solving for$T$:  
+
+$$
+T = \frac{2 v_0 \sin\theta}{g}
+$$
+
+For example, if$v_0 = 20$m/s and$\theta = 45^\circ$:  
+
+$$
+T = \frac{2 (20) \sin 45^\circ}{9.81} = \frac{40 \times 0.707}{9.81} \approx 2.88 \text{ s}
+$$
+
+---
+
+#### **Maximum Height**  
+The highest point occurs when vertical velocity is zero$(v_y = 0)$:
+
+$$
+0 = v_0 \sin\theta - g t
+$$
+
+Solving for$t$(time to reach max height):
+
+$$
+t_{\text{max}} = \frac{v_0 \sin\theta}{g}
+$$
+
+The maximum height is:
+
+$$
+H = v_0 \sin\theta \cdot t_{\text{max}} - \frac{1}{2} g t_{\text{max}}^2
+$$
+
+$$
+H = \frac{(v_0 \sin\theta)^2}{2g}
+$$
+
+Using$v_0 = 20$m/s and$\theta = 45^\circ$:
+
+$$
+H = \frac{(20 \times 0.707)^2}{2 \times 9.81} = \frac{200}{19.62} \approx 10.19 \text{ m}
+$$
+
+---
+
+#### **Range of the Projectile**  
+The horizontal distance traveled before hitting the ground is:
+
+$$
+R = v_0 \cos\theta \cdot T
+$$
+
+Using the flight time equation:
+
+$$
+R = \frac{v_0^2 \sin 2\theta}{g}
+$$
+
+For$v_0 = 20$m/s and$\theta = 45^\circ$:
+
+$$
+R = \frac{(20)^2 \sin 90^\circ}{9.81} = \frac{400}{9.81} \approx 40.8 \text{ m}
+$$
+
+---
+
+### **Effect of Initial Conditions**  
+
+- **Launch Angle ($$\theta$$)**:  
+  - The maximum range is achieved at$\theta = 45^\circ$.  
+  - Angles$\theta$and$90^\circ - \theta$result in the same range.  
+
+- **Initial Speed ($$v_0$)**:  
+  - Higher$v_0$increases time in the air and range.  
+  - If$v_0$is doubled, the range increases four times.  
+
+- **Gravity ($$g$)**:  
+  - Lower gravity increases both flight time and range.  
+  - On the Moon ($$g \approx 1.62$m/s²), projectiles travel **six times farther** than on Earth.  
+
+---
+
+### **Real-World Applications**  
+
+- **Sports**: Understanding projectile motion helps in basketball, soccer, and golf.  
+- **Engineering**: Missile and artillery targeting systems rely on these principles.  
+- **Space Exploration**: Landing spacecraft on planets with different gravity requires trajectory calculations.  
+
+This theoretical model provides a foundation for studying real-world projectile motion, though factors like air resistance and wind can further complicate trajectories. 🚀
 
 
 [simulation](simulation_projecttile.html)
@@ -10,76 +152,5 @@
 [example vıdeo](projectile_with_embedded_video.html)
 
 
-# Investigating the Impact of Launch Angle on the Range
-
-## Motivation
-While projectile motion may seem simple at first glance, it provides a rich framework for exploring fundamental physics principles. The task is straightforward: analyze how the range of a projectile is affected by its launch angle. However, beneath this simplicity lies a complex system governed by both linear and quadratic relationships, making it both accessible and deeply insightful.
-
-What makes this topic especially compelling is the array of free parameters involved in these equations, such as initial velocity, gravitational acceleration, and launch height. These parameters give rise to a wide range of solutions that can describe everything from the flight of a soccer ball to the trajectory of a rocket.
 
 
-![alt text](image.png)
-
-## Task
-
-
-### 1. Theoretical Foundation
-
-Start by deriving the governing equations of motion from basic principles. This involves solving a fundamental differential equation to establish the general form of the motion.  
-Highlight how changes in initial conditions give rise to a family of solutions.
-
-![alt text](image-1.png)
-
-#### Derivation of Governing Equations
-
-Projectile motion can be broken down into horizontal and vertical components, described by the following kinematic equations:
-
-- Horizontal motion: 
-  $$
-  x(t) = v_0 \cos(\theta) t
-  $$
-- Vertical motion: 
-  $$
-  y(t) = v_0 \sin(\theta) t - \frac{1}{2} g t^2
-  $$
-
-Where:
-- \( v_0 \) is the initial velocity.
-- \( \theta \) is the launch angle.
-- \( g \) is the acceleration due to gravity.
-- \( t \) is the time of flight.
-
-#### Initial Conditions and General Solution
-
-The initial conditions for projectile motion are:
-- \( x(0) = 0 \) (starting from the origin in the horizontal direction),
-- \( y(0) = 0 \) (starting from the origin in the vertical direction).
-
-The time \( t \) when the projectile hits the ground (i.e., when \( y(t) = 0 \)) is the key to finding the range \( R \).
-
-From the vertical motion equation:
-$$
-y(t) = v_0 \sin(\theta) t - \frac{1}{2} g t^2
-$$
-
-Setting \( y(t) = 0 \) (when the projectile lands), we get:
-$$
-v_0 \sin(\theta) t - \frac{1}{2} g t^2 = 0
-$$
-
-This simplifies to:
-$$
-t(v_0 \sin(\theta) - \frac{1}{2} g t) = 0
-$$
-
-Solving for \( t \), we discard \( t = 0 \) (the initial time) and solve for the time of flight \( t_f \):
-$$
-t_f = \frac{2 v_0 \sin(\theta)}{g}
-$$
-
-This is the time it takes for the projectile to reach the ground. Now, we can use this to find the horizontal range.
-
-#### Horizontal Range
-
-The horizontal range \( R \) is the distance the projectile travels horizontally before hitting the ground. Since there is no horizontal acceleration (constant horizontal velocity), the range is given by:
-$$
