@@ -93,7 +93,7 @@ $$
 H = \frac{(v_0 \sin\theta)^2}{2g}
 $$
 
-Using $v_0 = 20 $ m/s and $\theta = 45^\circ$:
+Using $v_0 = 20$ m/s and $\theta = 45^\circ$:
 
 $$
 H = \frac{(20 \times 0.707)^2}{2 \times 9.81} = \frac{200}{19.62} \approx 10.19 \text{ m}
@@ -114,7 +114,7 @@ $$
 R = \frac{v_0^2 \sin 2\theta}{g}
 $$
 
-For $ v_0 = 20 $ m/s and $\theta = 45^\circ$:
+For $v_0 = 20$ m/s and $\theta = 45^\circ$:
 
 $$
 R = \frac{(20)^2 \sin 90^\circ}{9.81} = \frac{400}{9.81} \approx 40.8 \text{ m}
