@@ -1,12 +1,12 @@
 # Problem 1
 
-### **Theoretical Foundations of Projectile Motion**  
+### **Investigating the Range as a Function of the Angle of Projection**  
 
 Projectile motion describes the motion of an object launched into the air under the influence of gravity, assuming no air resistance. It follows a curved trajectory known as a **parabola** and is governed by Newton’s laws of motion. The motion is analyzed by breaking it into two perpendicular components:  
 
 1. **Horizontal Motion** – Constant velocity (no acceleration).  
-2. **Vertical Motion** – Accelerated motion due to gravity$g = 9.81 
- 
+2. **Vertical Motion** – Accelerated motion due to gravity 
+
 
 Let’s define key parameters:  
 -$v_0$: Initial velocity (m/s).  
@@ -50,19 +50,19 @@ $$
 ### **Key Calculations**  
 
 #### **Time of Flight**  
-The total time the projectile stays in the air can be found by setting$y(T) = 0$(assuming it lands at the same height):  
+The total time the projectile stays in the air can be found by setting $y(T) = 0$(assuming it lands at the same height):  
 
 $$
 0 = v_0 \sin\theta \cdot T - \frac{1}{2} g T^2
 $$
 
-Solving for$T$:  
+Solving for $T$:  
 
 $$
 T = \frac{2 v_0 \sin\theta}{g}
 $$
 
-For example, if$v_0 = 20$m/s and$\theta = 45^\circ$:  
+For example, if $v_0 = 20$ m/s and $\theta = 45^\circ$:  
 
 $$
 T = \frac{2 (20) \sin 45^\circ}{9.81} = \frac{40 \times 0.707}{9.81} \approx 2.88 \text{ s}
@@ -71,13 +71,13 @@ $$
 ---
 
 #### **Maximum Height**  
-The highest point occurs when vertical velocity is zero$(v_y = 0)$:
+The highest point occurs when vertical velocity is zero $(v_y = 0)$:
 
 $$
 0 = v_0 \sin\theta - g t
 $$
 
-Solving for$t$(time to reach max height):
+Solving for $t$(time to reach max height):
 
 $$
 t_{\text{max}} = \frac{v_0 \sin\theta}{g}
@@ -85,15 +85,15 @@ $$
 
 The maximum height is:
 
-$$
-H = v_0 \sin\theta \cdot t_{\text{max}} - \frac{1}{2} g t_{\text{max}}^2
+$$ 
+H = v_0  \sin\theta \cdot t_{\text{max}} - \frac{1}{2} g t_{\text{max}}^2
 $$
 
 $$
 H = \frac{(v_0 \sin\theta)^2}{2g}
 $$
 
-Using$v_0 = 20$m/s and$\theta = 45^\circ$:
+Using $v_0 = 20 $ m/s and $\theta = 45^\circ$:
 
 $$
 H = \frac{(20 \times 0.707)^2}{2 \times 9.81} = \frac{200}{19.62} \approx 10.19 \text{ m}
@@ -114,37 +114,31 @@ $$
 R = \frac{v_0^2 \sin 2\theta}{g}
 $$
 
-For$v_0 = 20$m/s and$\theta = 45^\circ$:
+For $v_0 = 20 $ m/s and $\theta = 45^\circ$:
 
 $$
 R = \frac{(20)^2 \sin 90^\circ}{9.81} = \frac{400}{9.81} \approx 40.8 \text{ m}
 $$
 
----
+![alt text](image-4.png) 
 
 ### **Effect of Initial Conditions**  
 
-- **Launch Angle ($$\theta$$)**:  
-  - The maximum range is achieved at$\theta = 45^\circ$.  
-  - Angles$\theta$and$90^\circ - \theta$result in the same range.  
+- **Launch Angle ($\theta$)**:  
+  - The maximum range is achieved at  $\theta = 45^\circ$.  
+  - Angles $\theta$ and $ 90^\circ - \theta$ result in the same range.  
 
-- **Initial Speed ($$v_0$)**:  
-  - Higher$v_0$increases time in the air and range.  
-  - If$v_0$is doubled, the range increases four times.  
+- **Initial Speed ($v_0$)**:  
+  - Higher $v_0$ increases time in the air and range.  
+  - If $v_0$ is doubled, the range increases four times.  
 
-- **Gravity ($$g$)**:  
+- **Gravity ($g$)**:  
   - Lower gravity increases both flight time and range.  
-  - On the Moon ($$g \approx 1.62$m/s²), projectiles travel **six times farther** than on Earth.  
+  - On the Moon ( $g$ \approx 1.62 m/s²), projectiles travel **six times farther** than on Earth.  
 
 ---
+ 
 
-### **Real-World Applications**  
-
-- **Sports**: Understanding projectile motion helps in basketball, soccer, and golf.  
-- **Engineering**: Missile and artillery targeting systems rely on these principles.  
-- **Space Exploration**: Landing spacecraft on planets with different gravity requires trajectory calculations.  
-
-This theoretical model provides a foundation for studying real-world projectile motion, though factors like air resistance and wind can further complicate trajectories. 🚀
 
 
 [simulation](simulation_projecttile.html)
