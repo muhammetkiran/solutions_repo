@@ -114,7 +114,7 @@ $$
 R = \frac{v_0^2 \sin 2\theta}{g}
 $$
 
-For $v_0 = 20 $ m/s and $\theta = 45^\circ$:
+For $ v_0 = 20 $ m/s and $\theta = 45^\circ$:
 
 $$
 R = \frac{(20)^2 \sin 90^\circ}{9.81} = \frac{400}{9.81} \approx 40.8 \text{ m}
