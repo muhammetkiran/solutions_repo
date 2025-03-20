@@ -48,6 +48,30 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#theoretical-foundations-of-projectile-motion">Theoretical Foundations of Projectile Motion</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#equations-of-motion">Equations of Motion</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#horizontal-motion-constant-velocity">Horizontal Motion (Constant Velocity)</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#vertical-motion-accelerated-motion">Vertical Motion (Accelerated Motion)</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#key-calculations">Key Calculations</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#time-of-flight">Time of Flight</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#maximum-height">Maximum Height</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#range-of-the-projectile">Range of the Projectile</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#effect-of-initial-conditions">Effect of Initial Conditions</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#real-world-applications">Real-World Applications</a>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_2/">Problem 2</a>
@@ -172,62 +196,119 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
-<h1>Projectile Motion Simulator</h1>
-<p>Projectile motion is a fundamental concept in physics that describes the motion of an object launched into the air, subject only to the force of gravity. From a kicked soccer ball to a launched rocket, this type of motion follows a parabolic trajectory, governed by simple yet elegant equations. Understanding how initial velocity and launch angle affect the range, height, and flight time of a projectile provides valuable insights into real-world phenomena.</p>
+<h3 id="theoretical-foundations-of-projectile-motion"><strong>Theoretical Foundations of Projectile Motion</strong></h3>
+<p>Projectile motion describes the motion of an object launched into the air under the influence of gravity, assuming no air resistance. It follows a curved trajectory known as a <strong>parabola</strong> and is governed by Newton’s laws of motion. The motion is analyzed by breaking it into two perpendicular components:  </p>
+<ol>
+<li><strong>Horizontal Motion</strong> – Constant velocity (no acceleration).  </li>
+<li><strong>Vertical Motion</strong> – Accelerated motion due to gravity$g = 9.81 </li>
+</ol>
+<p>Let’s define key parameters:<br/>
+-<span class="arithmatex">\(v_0\)</span>: Initial velocity (m/s).<br/>
+-<span class="arithmatex">\(\theta\)</span>: Launch angle (degrees).<br/>
+-<span class="arithmatex">\(g\)</span>: Acceleration due to gravity (m/s²).<br/>
+-<span class="arithmatex">\(t\)</span>: Time (s).<br/>
+-<span class="arithmatex">\(x, y\)</span>: Horizontal and vertical position (m).  </p>
+<hr/>
+<h3 id="equations-of-motion"><strong>Equations of Motion</strong></h3>
+<h4 id="horizontal-motion-constant-velocity"><strong>Horizontal Motion (Constant Velocity)</strong></h4>
+<p>Since no external force acts horizontally, the acceleration is zero:  </p>
+<div class="arithmatex">\[
+a_x = 0, \quad v_x = v_0 \cos\theta
+\]</div>
+<p>The horizontal displacement over time is:</p>
+<div class="arithmatex">\[
+x(t) = v_0 \cos\theta \cdot t
+\]</div>
+<h4 id="vertical-motion-accelerated-motion"><strong>Vertical Motion (Accelerated Motion)</strong></h4>
+<p>The object experiences acceleration due to gravity:  </p>
+<div class="arithmatex">\[
+a_y = -g, \quad v_y = v_0 \sin\theta - g t
+\]</div>
+<p>The vertical displacement is given by the kinematic equation:</p>
+<div class="arithmatex">\[
+y(t) = v_0 \sin\theta \cdot t - \frac{1}{2} g t^2
+\]</div>
+<hr/>
+<h3 id="key-calculations"><strong>Key Calculations</strong></h3>
+<h4 id="time-of-flight"><strong>Time of Flight</strong></h4>
+<p>The total time the projectile stays in the air can be found by setting<span class="arithmatex">\(y(T) = 0\)</span>(assuming it lands at the same height):  </p>
+<div class="arithmatex">\[
+0 = v_0 \sin\theta \cdot T - \frac{1}{2} g T^2
+\]</div>
+<p>Solving for<span class="arithmatex">\(T\)</span>:  </p>
+<div class="arithmatex">\[
+T = \frac{2 v_0 \sin\theta}{g}
+\]</div>
+<p>For example, if<span class="arithmatex">\(v_0 = 20\)</span>m/s and<span class="arithmatex">\(\theta = 45^\circ\)</span>:  </p>
+<div class="arithmatex">\[
+T = \frac{2 (20) \sin 45^\circ}{9.81} = \frac{40 \times 0.707}{9.81} \approx 2.88 \text{ s}
+\]</div>
+<hr/>
+<h4 id="maximum-height"><strong>Maximum Height</strong></h4>
+<p>The highest point occurs when vertical velocity is zero<span class="arithmatex">\((v_y = 0)\)</span>:</p>
+<div class="arithmatex">\[
+0 = v_0 \sin\theta - g t
+\]</div>
+<p>Solving for<span class="arithmatex">\(t\)</span>(time to reach max height):</p>
+<div class="arithmatex">\[
+t_{\text{max}} = \frac{v_0 \sin\theta}{g}
+\]</div>
+<p>The maximum height is:</p>
+<div class="arithmatex">\[
+H = v_0 \sin\theta \cdot t_{\text{max}} - \frac{1}{2} g t_{\text{max}}^2
+\]</div>
+<div class="arithmatex">\[
+H = \frac{(v_0 \sin\theta)^2}{2g}
+\]</div>
+<p>Using<span class="arithmatex">\(v_0 = 20\)</span>m/s and<span class="arithmatex">\(\theta = 45^\circ\)</span>:</p>
+<div class="arithmatex">\[
+H = \frac{(20 \times 0.707)^2}{2 \times 9.81} = \frac{200}{19.62} \approx 10.19 \text{ m}
+\]</div>
+<hr/>
+<h4 id="range-of-the-projectile"><strong>Range of the Projectile</strong></h4>
+<p>The horizontal distance traveled before hitting the ground is:</p>
+<div class="arithmatex">\[
+R = v_0 \cos\theta \cdot T
+\]</div>
+<p>Using the flight time equation:</p>
+<div class="arithmatex">\[
+R = \frac{v_0^2 \sin 2\theta}{g}
+\]</div>
+<p>For<span class="arithmatex">\(v_0 = 20\)</span>m/s and<span class="arithmatex">\(\theta = 45^\circ\)</span>:</p>
+<div class="arithmatex">\[
+R = \frac{(20)^2 \sin 90^\circ}{9.81} = \frac{400}{9.81} \approx 40.8 \text{ m}
+\]</div>
+<hr/>
+<h3 id="effect-of-initial-conditions"><strong>Effect of Initial Conditions</strong></h3>
+<ul>
+<li><strong>Launch Angle (<span class="arithmatex">(<span class="arithmatex">\(\theta\)</span>\)</span>)</strong>:  </li>
+<li>The maximum range is achieved at<span class="arithmatex">\(\theta = 45^\circ\)</span>.  </li>
+<li>
+<p>Angles<span class="arithmatex">\(\theta\)</span>and<span class="arithmatex">\(90^\circ - \theta\)</span>result in the same range.  </p>
+</li>
+<li>
+<p><strong>Initial Speed ($<span class="arithmatex">\(v_0\)</span>)</strong>:  </p>
+</li>
+<li>Higher<span class="arithmatex">\(v_0\)</span>increases time in the air and range.  </li>
+<li>
+<p>If<span class="arithmatex">\(v_0\)</span>is doubled, the range increases four times.  </p>
+</li>
+<li>
+<p><strong>Gravity ($<span class="arithmatex">\(g\)</span>)</strong>:  </p>
+</li>
+<li>Lower gravity increases both flight time and range.  </li>
+<li>On the Moon ($<span class="arithmatex">\(g \approx 1.62\)</span>m/s²), projectiles travel <strong>six times farther</strong> than on Earth.  </li>
+</ul>
+<hr/>
+<h3 id="real-world-applications"><strong>Real-World Applications</strong></h3>
+<ul>
+<li><strong>Sports</strong>: Understanding projectile motion helps in basketball, soccer, and golf.  </li>
+<li><strong>Engineering</strong>: Missile and artillery targeting systems rely on these principles.  </li>
+<li><strong>Space Exploration</strong>: Landing spacecraft on planets with different gravity requires trajectory calculations.  </li>
+</ul>
+<p>This theoretical model provides a foundation for studying real-world projectile motion, though factors like air resistance and wind can further complicate trajectories. 🚀</p>
 <p><a href="../simulation_projecttile.html">simulation</a></p>
 <p><a href="../projectile_with_embedded_video.html">example vıdeo</a></p>
-<h1 id="investigating-the-impact-of-launch-angle-on-the-range">Investigating the Impact of Launch Angle on the Range</h1>
-<h2 id="motivation">Motivation</h2>
-<p>While projectile motion may seem simple at first glance, it provides a rich framework for exploring fundamental physics principles. The task is straightforward: analyze how the range of a projectile is affected by its launch angle. However, beneath this simplicity lies a complex system governed by both linear and quadratic relationships, making it both accessible and deeply insightful.</p>
-<p>What makes this topic especially compelling is the array of free parameters involved in these equations, such as initial velocity, gravitational acceleration, and launch height. These parameters give rise to a wide range of solutions that can describe everything from the flight of a soccer ball to the trajectory of a rocket.</p>
-<p><img alt="alt text" src="../image.png"/></p>
-<h2 id="task">Task</h2>
-<h3 id="1-theoretical-foundation">1. Theoretical Foundation</h3>
-<p>Start by deriving the governing equations of motion from basic principles. This involves solving a fundamental differential equation to establish the general form of the motion.<br/>
-Highlight how changes in initial conditions give rise to a family of solutions.</p>
-<p><img alt="alt text" src="../image-1.png"/></p>
-<h4 id="derivation-of-governing-equations">Derivation of Governing Equations</h4>
-<p>Projectile motion can be broken down into horizontal and vertical components, described by the following kinematic equations:</p>
-<ul>
-<li>Horizontal motion: 
-  $$
-  x(t) = v_0 \cos(\theta) t
-  $$</li>
-<li>Vertical motion: 
-  $$
-  y(t) = v_0 \sin(\theta) t - \frac{1}{2} g t^2
-  $$</li>
-</ul>
-<p>Where:
-- <span class="arithmatex">\( v_0 \)</span> is the initial velocity.
-- <span class="arithmatex">\( \theta \)</span> is the launch angle.
-- <span class="arithmatex">\( g \)</span> is the acceleration due to gravity.
-- <span class="arithmatex">\( t \)</span> is the time of flight.</p>
-<h4 id="initial-conditions-and-general-solution">Initial Conditions and General Solution</h4>
-<p>The initial conditions for projectile motion are:
-- <span class="arithmatex">\( x(0) = 0 \)</span> (starting from the origin in the horizontal direction),
-- <span class="arithmatex">\( y(0) = 0 \)</span> (starting from the origin in the vertical direction).</p>
-<p>The time <span class="arithmatex">\( t \)</span> when the projectile hits the ground (i.e., when <span class="arithmatex">\( y(t) = 0 \)</span>) is the key to finding the range <span class="arithmatex">\( R \)</span>.</p>
-<p>From the vertical motion equation:
-$$
-y(t) = v_0 \sin(\theta) t - \frac{1}{2} g t^2
-$$</p>
-<p>Setting <span class="arithmatex">\( y(t) = 0 \)</span> (when the projectile lands), we get:
-$$
-v_0 \sin(\theta) t - \frac{1}{2} g t^2 = 0
-$$</p>
-<p>This simplifies to:
-$$
-t(v_0 \sin(\theta) - \frac{1}{2} g t) = 0
-$$</p>
-<p>Solving for <span class="arithmatex">\( t \)</span>, we discard <span class="arithmatex">\( t = 0 \)</span> (the initial time) and solve for the time of flight <span class="arithmatex">\( t_f \)</span>:
-$$
-t_f = \frac{2 v_0 \sin(\theta)}{g}
-$$</p>
-<p>This is the time it takes for the projectile to reach the ground. Now, we can use this to find the horizontal range.</p>
-<h4 id="horizontal-range">Horizontal Range</h4>
-<p>The horizontal range <span class="arithmatex">\( R \)</span> is the distance the projectile travels horizontally before hitting the ground. Since there is no horizontal acceleration (constant horizontal velocity), the range is given by:
-$$</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
