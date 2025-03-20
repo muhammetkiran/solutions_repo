@@ -48,7 +48,7 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="#theoretical-foundations-of-projectile-motion">Theoretical Foundations of Projectile Motion</a>
+<li class="toctree-l3"><a class="reference internal" href="#investigating-the-range-as-a-function-of-the-angle-of-projection">Investigating the Range as a Function of the Angle of Projection</a>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#equations-of-motion">Equations of Motion</a>
 <ul>
@@ -69,8 +69,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#effect-of-initial-conditions">Effect of Initial Conditions</a>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#real-world-applications">Real-World Applications</a>
 </li>
 </ul>
 </li>
@@ -196,11 +194,11 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
-<h3 id="theoretical-foundations-of-projectile-motion"><strong>Theoretical Foundations of Projectile Motion</strong></h3>
+<h3 id="investigating-the-range-as-a-function-of-the-angle-of-projection"><strong>Investigating the Range as a Function of the Angle of Projection</strong></h3>
 <p>Projectile motion describes the motion of an object launched into the air under the influence of gravity, assuming no air resistance. It follows a curved trajectory known as a <strong>parabola</strong> and is governed by Newton’s laws of motion. The motion is analyzed by breaking it into two perpendicular components:  </p>
 <ol>
 <li><strong>Horizontal Motion</strong> – Constant velocity (no acceleration).  </li>
-<li><strong>Vertical Motion</strong> – Accelerated motion due to gravity$g = 9.81 </li>
+<li><strong>Vertical Motion</strong> – Accelerated motion due to gravity </li>
 </ol>
 <p>Let’s define key parameters:<br/>
 -<span class="arithmatex">\(v_0\)</span>: Initial velocity (m/s).<br/>
@@ -231,36 +229,36 @@ y(t) = v_0 \sin\theta \cdot t - \frac{1}{2} g t^2
 <hr/>
 <h3 id="key-calculations"><strong>Key Calculations</strong></h3>
 <h4 id="time-of-flight"><strong>Time of Flight</strong></h4>
-<p>The total time the projectile stays in the air can be found by setting<span class="arithmatex">\(y(T) = 0\)</span>(assuming it lands at the same height):  </p>
+<p>The total time the projectile stays in the air can be found by setting <span class="arithmatex">\(y(T) = 0\)</span>(assuming it lands at the same height):  </p>
 <div class="arithmatex">\[
 0 = v_0 \sin\theta \cdot T - \frac{1}{2} g T^2
 \]</div>
-<p>Solving for<span class="arithmatex">\(T\)</span>:  </p>
+<p>Solving for <span class="arithmatex">\(T\)</span>:  </p>
 <div class="arithmatex">\[
 T = \frac{2 v_0 \sin\theta}{g}
 \]</div>
-<p>For example, if<span class="arithmatex">\(v_0 = 20\)</span>m/s and<span class="arithmatex">\(\theta = 45^\circ\)</span>:  </p>
+<p>For example, if <span class="arithmatex">\(v_0 = 20\)</span> m/s and <span class="arithmatex">\(\theta = 45^\circ\)</span>:  </p>
 <div class="arithmatex">\[
 T = \frac{2 (20) \sin 45^\circ}{9.81} = \frac{40 \times 0.707}{9.81} \approx 2.88 \text{ s}
 \]</div>
 <hr/>
 <h4 id="maximum-height"><strong>Maximum Height</strong></h4>
-<p>The highest point occurs when vertical velocity is zero<span class="arithmatex">\((v_y = 0)\)</span>:</p>
+<p>The highest point occurs when vertical velocity is zero <span class="arithmatex">\((v_y = 0)\)</span>:</p>
 <div class="arithmatex">\[
 0 = v_0 \sin\theta - g t
 \]</div>
-<p>Solving for<span class="arithmatex">\(t\)</span>(time to reach max height):</p>
+<p>Solving for <span class="arithmatex">\(t\)</span>(time to reach max height):</p>
 <div class="arithmatex">\[
 t_{\text{max}} = \frac{v_0 \sin\theta}{g}
 \]</div>
 <p>The maximum height is:</p>
-<div class="arithmatex">\[
-H = v_0 \sin\theta \cdot t_{\text{max}} - \frac{1}{2} g t_{\text{max}}^2
+<div class="arithmatex">\[ 
+H = v_0  \sin\theta \cdot t_{\text{max}} - \frac{1}{2} g t_{\text{max}}^2
 \]</div>
 <div class="arithmatex">\[
 H = \frac{(v_0 \sin\theta)^2}{2g}
 \]</div>
-<p>Using<span class="arithmatex">\(v_0 = 20\)</span>m/s and<span class="arithmatex">\(\theta = 45^\circ\)</span>:</p>
+<p>Using $v_0 = 20 $ m/s and <span class="arithmatex">\(\theta = 45^\circ\)</span>:</p>
 <div class="arithmatex">\[
 H = \frac{(20 \times 0.707)^2}{2 \times 9.81} = \frac{200}{19.62} \approx 10.19 \text{ m}
 \]</div>
@@ -274,39 +272,32 @@ R = v_0 \cos\theta \cdot T
 <div class="arithmatex">\[
 R = \frac{v_0^2 \sin 2\theta}{g}
 \]</div>
-<p>For<span class="arithmatex">\(v_0 = 20\)</span>m/s and<span class="arithmatex">\(\theta = 45^\circ\)</span>:</p>
+<p>For $v_0 = 20 $ m/s and <span class="arithmatex">\(\theta = 45^\circ\)</span>:</p>
 <div class="arithmatex">\[
 R = \frac{(20)^2 \sin 90^\circ}{9.81} = \frac{400}{9.81} \approx 40.8 \text{ m}
 \]</div>
-<hr/>
+<p><img alt="alt text" src="../image-4.png"/> </p>
 <h3 id="effect-of-initial-conditions"><strong>Effect of Initial Conditions</strong></h3>
 <ul>
-<li><strong>Launch Angle (<span class="arithmatex">(<span class="arithmatex">\(\theta\)</span>\)</span>)</strong>:  </li>
-<li>The maximum range is achieved at<span class="arithmatex">\(\theta = 45^\circ\)</span>.  </li>
+<li><strong>Launch Angle (<span class="arithmatex">\(\theta\)</span>)</strong>:  </li>
+<li>The maximum range is achieved at  <span class="arithmatex">\(\theta = 45^\circ\)</span>.  </li>
 <li>
-<p>Angles<span class="arithmatex">\(\theta\)</span>and<span class="arithmatex">\(90^\circ - \theta\)</span>result in the same range.  </p>
+<p>Angles <span class="arithmatex">\(\theta\)</span> and $ 90^\circ - \theta$ result in the same range.  </p>
 </li>
 <li>
-<p><strong>Initial Speed ($<span class="arithmatex">\(v_0\)</span>)</strong>:  </p>
+<p><strong>Initial Speed (<span class="arithmatex">\(v_0\)</span>)</strong>:  </p>
 </li>
-<li>Higher<span class="arithmatex">\(v_0\)</span>increases time in the air and range.  </li>
+<li>Higher <span class="arithmatex">\(v_0\)</span> increases time in the air and range.  </li>
 <li>
-<p>If<span class="arithmatex">\(v_0\)</span>is doubled, the range increases four times.  </p>
+<p>If <span class="arithmatex">\(v_0\)</span> is doubled, the range increases four times.  </p>
 </li>
 <li>
-<p><strong>Gravity ($<span class="arithmatex">\(g\)</span>)</strong>:  </p>
+<p><strong>Gravity (<span class="arithmatex">\(g\)</span>)</strong>:  </p>
 </li>
 <li>Lower gravity increases both flight time and range.  </li>
-<li>On the Moon ($<span class="arithmatex">\(g \approx 1.62\)</span>m/s²), projectiles travel <strong>six times farther</strong> than on Earth.  </li>
+<li>On the Moon ( <span class="arithmatex">\(g\)</span> \approx 1.62 m/s²), projectiles travel <strong>six times farther</strong> than on Earth.  </li>
 </ul>
 <hr/>
-<h3 id="real-world-applications"><strong>Real-World Applications</strong></h3>
-<ul>
-<li><strong>Sports</strong>: Understanding projectile motion helps in basketball, soccer, and golf.  </li>
-<li><strong>Engineering</strong>: Missile and artillery targeting systems rely on these principles.  </li>
-<li><strong>Space Exploration</strong>: Landing spacecraft on planets with different gravity requires trajectory calculations.  </li>
-</ul>
-<p>This theoretical model provides a foundation for studying real-world projectile motion, though factors like air resistance and wind can further complicate trajectories. 🚀</p>
 <p><a href="../simulation_projecttile.html">simulation</a></p>
 <p><a href="../projectile_with_embedded_video.html">example vıdeo</a></p>
 </div>
