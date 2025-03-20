@@ -126,7 +126,7 @@ $$
 
 - **Launch Angle ($\theta$)**:  
   - The maximum range is achieved at  $\theta = 45^\circ$.  
-  - Angles $\theta$ and $ 90^\circ - \theta$ result in the same range.  
+  - Angles $\theta$ and $90^\circ - \theta$ result in the same range.  
 
 - **Initial Speed ($v_0$)**:  
   - Higher $v_0$ increases time in the air and range.  
