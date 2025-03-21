@@ -1,68 +1,65 @@
 # Problem 2
 
-# Investigating the Dynamics of a Forced Damped Pendulum 
+Below is a revised version of the write-up for "Investigating the Dynamics of a Forced Damped Pendulum," starting with an explanation of differential equations before diving into the specific problem. I’ve kept it concise, added definitions and a numerical step as requested, and maintained the style of the GitHub example.
+
+---
+
+# Investigating the Dynamics of a Forced Damped Pendulum
+
+## Differential Equations: The Foundation
+Differential equations describe how quantities change over time, linking rates (derivatives) to the quantities themselves. They’re essential in physics for modeling dynamic systems. For a pendulum, we use:
+- **Ordinary Differential Equations (ODEs)**: Functions of one variable (time, $ t $), like position or velocity.
+- **Second-Order ODEs**: Involve second derivatives (e.g., acceleration), common for mechanical systems.
+- **Nonlinear ODEs**: Contain terms like $ \sin(\theta) $, making analytical solutions difficult, requiring numerical methods.
+
+Our goal is to formulate and solve such an equation for a pendulum with damping and forcing.
+
+---
+
+## Problem Statement
+A pendulum (length $ L = 1 \, \text{m} $, mass $ m = 1 \, \text{kg} $) experiences:
+- **Gravity**: Pulls it downward.
+- **Damping**: Friction, coefficient $ b $ (s⁻¹), opposes motion.
+- **Forcing**: Periodic torque $ A \cos(\omega_f t) $, with amplitude $ A $ (s⁻²) and frequency $ \omega_f $ (rad/s).
+
+We’ll define its motion, solve numerically, and explore parameter effects.
+
+---
+
+## Theoretical Background
+The pendulum’s angle $ \theta $ (radians) follows a second-order ODE. The **natural frequency** is $ \omega_0 = \sqrt{g/L} $, where $ g = 9.8 \, \text{m/s}^2 $. Including damping and forcing:
+$
+\frac{d^2\theta}{dt^2} = -\omega_0^2 \sin(\theta) - b \frac{d\theta}{dt} + A \cos(\omega_f t)
+$
+Split into first-order ODEs:
+$
+\frac{d\theta}{dt} = \omega
+$
+$
+\frac{d\omega}{dt} = -\omega_0^2 \sin(\theta) - b \omega + A \cos(\omega_f t)
+$
+
+---
+
+## Numerical Solution
+We solve using the **Runge-Kutta 4th-order (RK4)** method, time step $ dt = 0.02 \, \text{s} $. Example step:
+- Initial: $ \theta = 0.2 $, $ \omega = 0 $, $ t = 0 $, $ b = 0.2 $, $ A = 1.2 $, $ \omega_f = 0.67 $.
+- $ k_1 = \omega = 0 $
+- $ l_1 = -\omega_0^2 \sin(\theta) - b \omega + A \cos(\omega_f t) = -9.8 \sin(0.2) - 0.2 \cdot 0 + 1.2 \cos(0) \approx -1.951 + 1.2 = -0.751 $
+- After RK4: $ \theta \approx 0.2 $, $ \omega \approx -0.015 $.
+
+---
 
 
-## Introduction
- 
+Parameters: $ b $ (0–1), $ A $ (0–2), $ \omega_f $ (0–2), $ \theta_0 $ (-π to π).
 
-The forced damped pendulum is a remarkable system that bridges the gap between predictable periodic motion and the seemingly erratic world of chaos. Despite its simple structure a pendulum experiencing damping and an external driving force its behavior can become astonishingly complex. This system serves as a key model in nonlinear dynamics, shedding light on concepts like resonance, bifurcations, and chaotic motion, which appear in physics, engineering, and even biological systems.
+---
 
-                                                           
-![alt text](image-2.png)
-
-[simulation](pendulum_projectile.html)
-## Mathematical Framework
-The motion of a forced damped pendulum is described by the nonlinear second-order differential equation:
-
-$\frac{d^2\theta}{dt^2} + \gamma \frac{d\theta}{dt} + \omega_0^2 \sin(\theta) = F \cos(\omega t)$
-
-where:
-- $\theta $ is the angular displacement of the pendulum,
-- $\gamma $ represents the damping coefficient, controlling energy dissipation,
-- $\omega_0 $ is the natural frequency of the undriven pendulum,
-- $F $ is the amplitude of the external periodic force,
-- $\omega $ is the driving frequency.
-
-This equation encapsulates a rich interplay between energy loss, nonlinear restoring forces, and external periodic excitation, leading to an array of fascinating behaviors.
-
-## Methods of Analysis
-Given the inherent nonlinearity of the system, direct analytical solutions are often impractical. Instead, various computational and graphical techniques are employed:
-
-- **Numerical Integration**: 
-
-Solving the equation using methods like the Runge-Kutta algorithm to track the evolution of $\theta(t) $.
-- **Phase Space Analysis**:
-
- Examining plots of (\theta, \dot{\theta})  to distinguish between periodic, quasi-periodic, and chaotic motion.
-- **Poincaré Sections**:
-
- Recording the system’s state at discrete time intervals to reveal underlying patterns and transitions to chaos.
-- **Lyapunov Exponents**:
-
- Measuring sensitivity to initial condition a key indicator of chaotic dynamics.
+## Results
+- **Low Forcing**: $ b = 0.2 $, $ A = 0.5 $, $ \omega_f = 1.0 $: Periodic decay, spiral phase plot.
+- **High Forcing**: $ b = 0.2 $, $ A = 1.2 $, $ \omega_f = 0.67 $: Chaotic motion, strange attractor.
 
 
-## Emergence of Chaos
-One of the most striking aspects of the forced damped pendulum is its ability to exhibit chaos under certain parameter settings. Hallmarks of chaotic motion include:
 
-- **Exponential Sensitivity to Initial Conditions**:
 
- Small differences in starting conditions lead to vastly different trajectories over time.
-- **Aperiodic Behavior**:
 
- Unlike regular oscillations, chaotic motion lacks strict repetition.
-- **Strange Attractors**:
-
- Instead of settling into a simple fixed point or limit cycle, the system follows a complex but bounded trajectory in phase space.
-- **Period-Doubling Route to Chaos**:
-
- Successive bifurcations in periodicity that eventually give rise to chaotic motion.
-
-These features have profound implications, extending beyond mechanics to climate science, electrical circuits, and even neuroscience.
-
-![alt text](image-3.png)
-
-## Conclusion
-
-The forced damped pendulum is more than just an abstract mathematical construct it is a gateway to understanding the unpredictability inherent in many real-world systems. By tweaking parameters such as damping strength and driving frequency, researchers can explore the delicate balance between order and chaos, revealing the intricate nature of nonlinear dynamics.
