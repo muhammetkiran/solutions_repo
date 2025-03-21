@@ -1,7 +1,7 @@
 # Problem 2
 
  # Investigating the Dynamics of a Forced Damped Pendulum
- 
+
 ### **Theoretical Foundations of the Forced Damped Pendulum**
   
 
@@ -128,3 +128,5 @@ Understanding the dynamics of forced damped pendulums is crucial in various fiel
 **Seismology:** Modeling the Earth's response to periodic forces, such as tidal effects, benefits from insights into forced oscillatory systems.
 
 ### Implementation
+
+ [Simulation model motion of pendulum](pendulum_projectile.html)
