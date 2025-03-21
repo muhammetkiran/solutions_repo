@@ -1,8 +1,9 @@
 # Problem 2
 
+ # Investigating the Dynamics of a Forced Damped Pendulum
+ 
 ### **Theoretical Foundations of the Forced Damped Pendulum**
-
-### **Differential Equations Governing the Forced Damped Pendulum**  
+  
 
 The motion of a **forced damped pendulum** is governed by a second-order nonlinear differential equation that incorporates **inertia**, **damping**, **restoring force**, and **external driving force**:  
 
@@ -117,6 +118,13 @@ Thus, the steady-state response is:
 
 $\theta_{\text{steady}}(t) = 0.14 \cos(2.5t - 35.3^\circ)$
 
----
+### Practical Applications
+Understanding the dynamics of forced damped pendulums is crucial in various fields:
 
+**Engineering:**  Mechanical systems with oscillatory components, such as suspension bridges or clock mechanisms, can experience resonant vibrations leading to structural failures if not properly damped.
 
+**Robotics:** The principles governing pendulum dynamics assist in designing stable walking robots and understanding bipedal locomotion.
+
+**Seismology:** Modeling the Earth's response to periodic forces, such as tidal effects, benefits from insights into forced oscillatory systems.
+
+### Implementation
