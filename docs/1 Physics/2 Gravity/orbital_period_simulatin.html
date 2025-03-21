@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbital Period and Radius Simulation</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        #canvas { border: 1px solid black; }
+        #controls { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Orbital Period and Orbital Radius Simulation</h1>
+    <canvas id="canvas" width="600" height="600"></canvas>
+    <div id="controls">
+        <label for="radius">Orbital Radius (m): </label>
+        <input type="number" id="radius" value="10000000" step="1000000">
+        <button id="start">Start Simulation</button>
+        <h3 id="period"></h3>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let radiusInput = document.getElementById('radius');
+        let periodDisplay = document.getElementById('period');
+        let animationId;
+        
+        function updatePeriod() {
+            const radius = parseFloat(radiusInput.value);
+            // Calculate orbital period T using Kepler's third law
+            const G = 6.67430e-11; // gravitational constant
+            const M = 5.972e24; // mass of Earth
+            const T = 2 * Math.PI * Math.sqrt(Math.pow(radius, 3) / (G * M)); // period in seconds
+            const T_minutes = T / 60; // convert to minutes
+            periodDisplay.innerText = `Orbital Period: ${T_minutes.toFixed(2)} minutes`;
+        }
+
+        function drawOrbit() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const radius = parseFloat(radiusInput.value);
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Draw the orbit (circle)
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius / 100000, 0, Math.PI * 2);
+            ctx.strokeStyle = 'blue';
+            ctx.stroke();
+
+            // Draw the orbiting body
+            const angle = (Date.now() / 1000) % (2 * Math.PI); // Calculate angle based on time
+            const x = centerX + radius / 100000 * Math.cos(angle);
+            const y = centerY + radius / 100000 * Math.sin(angle);
+
+            // Draw the planet
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, Math.PI * 2);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+        }
+
+        function startSimulation() {
+            updatePeriod();
+            drawOrbit();
+            animationId = requestAnimationFrame(startSimulation);
+        }
+
+        document.getElementById('start').onclick = function() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            startSimulation();
+        };
+    </script>
+</body>
+</html>
