@@ -2,77 +2,122 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orbital Period and Radius Simulation</title>
+    <title>Orbit Simulation</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
-        #canvas { border: 1px solid black; }
-        #controls { margin-top: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black; /* Uzay arka plan rengi */
+            color: white; /* Yazı rengi beyaz */
+        }
+        #canvas {
+            border: 1px solid white; /* Kenar rengi beyaz */
+            background-color: black;  /* Kanvas arka plan rengi */
+        }
+        #controls {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>Orbital Period and Orbital Radius Simulation</h1>
-    <canvas id="canvas" width="600" height="600"></canvas>
+    <h1>Orbit Simulation</h1>
+    <canvas id="canvas" width="800" height="800"></canvas>
     <div id="controls">
-        <label for="radius">Orbital Radius (m): </label>
-        <input type="number" id="radius" value="10000000" step="1000000">
+        <h3>Adjust Planet Speeds and Sizes:</h3>
+        <div id="planet-controls"></div>
         <button id="start">Start Simulation</button>
-        <h3 id="period"></h3>
     </div>
 
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        let radiusInput = document.getElementById('radius');
-        let periodDisplay = document.getElementById('period');
+        let angle = 0;
         let animationId;
-        
-        function updatePeriod() {
-            const radius = parseFloat(radiusInput.value);
-            // Calculate orbital period T using Kepler's third law
-            const G = 6.67430e-11; // gravitational constant
-            const M = 5.972e24; // mass of Earth
-            const T = 2 * Math.PI * Math.sqrt(Math.pow(radius, 3) / (G * M)); // period in seconds
-            const T_minutes = T / 60; // convert to minutes
-            periodDisplay.innerText = `Orbital Period: ${T_minutes.toFixed(2)} minutes`;
+
+        // Gezegen ayarları
+        const planets = [
+            { name: 'Mercury', color: 'gray', radius: 70, speed: 0.1, size: 5 },
+            { name: 'Venus', color: 'yellow', radius: 100, speed: 0.07, size: 8 },
+            { name: 'Earth', color: 'blue', radius: 150, speed: 0.04, size: 8 },
+            { name: 'Mars', color: 'red', radius: 200, speed: 0.02, size: 7 }
+        ];
+
+        function drawOrbit(radius) {
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
+            ctx.strokeStyle = 'lightblue';
+            ctx.stroke();
         }
 
-        function drawOrbit() {
+        function drawPlanets() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const radius = parseFloat(radiusInput.value);
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
+            drawOrbit(0); // Güneşin yörüngesi
 
-            // Draw the orbit (circle)
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, radius / 100000, 0, Math.PI * 2);
-            ctx.strokeStyle = 'blue';
-            ctx.stroke();
+            planets.forEach((planet) => {
+                drawOrbit(planet.radius);
+                const x = canvas.width / 2 + planet.radius * Math.cos(angle * planet.speed);
+                const y = canvas.height / 2 + planet.radius * Math.sin(angle * planet.speed);
+                
+                // Gezegenleri çiz
+                ctx.beginPath();
+                ctx.arc(x, y, planet.size, 0, Math.PI * 2);
+                ctx.fillStyle = planet.color;
+                ctx.fill();
+            });
 
-            // Draw the orbiting body
-            const angle = (Date.now() / 1000) % (2 * Math.PI); // Calculate angle based on time
-            const x = centerX + radius / 100000 * Math.cos(angle);
-            const y = centerY + radius / 100000 * Math.sin(angle);
-
-            // Draw the planet
-            ctx.beginPath();
-            ctx.arc(x, y, 5, 0, Math.PI * 2);
-            ctx.fillStyle = 'red';
-            ctx.fill();
+            angle += 0.1; // Simülasyon hızını artır
         }
 
         function startSimulation() {
-            updatePeriod();
-            drawOrbit();
-            animationId = requestAnimationFrame(startSimulation);
+            angle = 0; // Açı sıfırla
+            drawPlanets();
+            animationId = requestAnimationFrame(simulate);
+        }
+
+        function simulate() {
+            drawPlanets();
+            animationId = requestAnimationFrame(simulate);
+        }
+
+        function createPlanetControls() {
+            const planetControlsDiv = document.getElementById('planet-controls');
+
+            planets.forEach((planet) => {
+                const planetDiv = document.createElement('div');
+                planetDiv.innerHTML = `
+                    <h4>${planet.name}</h4>
+                    Speed: <input type="range" min="0" max="0.2" step="0.01" value="${planet.speed}" 
+                         onchange="updateSpeed('${planet.name}', this.value)">
+                    <br>
+                    Size: <input type="range" min="1" max="20" step="1" value="${planet.size}" 
+                         onchange="updateSize('${planet.name}', this.value)">
+                `;
+                planetControlsDiv.appendChild(planetDiv);
+            });
+        }
+
+        function updateSpeed(name, value) {
+            const planet = planets.find(p => p.name === name);
+            if (planet) {
+                planet.speed = parseFloat(value);
+            }
+        }
+
+        function updateSize(name, value) {
+            const planet = planets.find(p => p.name === name);
+            if (planet) {
+                planet.size = parseFloat(value);
+            }
         }
 
         document.getElementById('start').onclick = function() {
             if (animationId) {
                 cancelAnimationFrame(animationId);
             }
-            startSimulation();
+            startSimulation(); // Simülasyonu başlat
         };
+
+        createPlanetControls(); // Gezegenler için kontroller oluştur
     </script>
 </body>
 </html>
