@@ -23,47 +23,33 @@ For a stable orbit, the gravitational force must act as the centripetal force th
 
 The gravitational force between two masses $M$ (central body) and $m$ (orbiting body) is given by Newton’s Law of Universal Gravitation:  
 
-$
-F_g = \frac{GMm}{r^2}
-$
+$F_g = \frac{GMm}{r^2}$
 
 For an object in a circular orbit, the required centripetal force is:  
 
-$
-F_c = \frac{m v^2}{r}
-$
+$F_c = \frac{m v^2}{r}$
 
 Since gravity provides the necessary centripetal force, we set these two forces equal to each other:  
 
-$
-\frac{GMm}{r^2} = \frac{m v^2}{r}
-$
+$\frac{GMm}{r^2} = \frac{m v^2}{r}$
 
 Canceling $m$ and solving for orbital velocity $v$:  
 
-$
-v = \sqrt{\frac{GM}{r}}
-$
+$v = \sqrt{\frac{GM}{r}}$
 
 Since orbital period $T$ is the time taken to complete one full orbit, we use the relationship between velocity, circumference, and time:  
 
-$
-T = \frac{2\pi r}{v}
-$
+$T = \frac{2\pi r}{v}$
 
 Substituting $v$:  
 
-$
-T = 2\pi \sqrt{\frac{r^3}{GM}}
-$
+$T = 2\pi \sqrt{\frac{r^3}{GM}}$
 
 ### **Key Observations:**  
 
 1. The orbital period increases with the cube root of the orbital radius. This is a direct consequence of **Kepler’s Third Law**, which states:  
 
-   $
-   T^2 \propto r^3
-   $
+   $T^2 \propto r^3$
 
 2. The larger the central mass $M$, the stronger the gravitational pull, leading to shorter orbital periods for a given radius.  
 
@@ -87,29 +73,19 @@ A satellite is launched into a circular orbit **500 km above Earth's surface**. 
 
 The orbital radius is the sum of Earth’s radius and the satellite’s altitude:  
 
-$
-r = R_E + h = (6.371 \times 10^6) + (500 \times 10^3)
-$
+$r = R_E + h = (6.371 \times 10^6) + (500 \times 10^3)$
 
-$
-r = 6.871 \times 10^6 \text{ m}
-$
+$r = 6.871 \times 10^6 \text{ m}$
 
 ### **Step 2: Apply the Orbital Period Formula**  
 
-$
-T = 2\pi \sqrt{\frac{r^3}{GM}}
-$
+$T = 2\pi \sqrt{\frac{r^3}{GM}}$
 
 Substituting values:  
 
-$
-T = 2\pi \sqrt{\frac{(6.871 \times 10^6)^3}{(6.674 \times 10^{-11}) (5.972 \times 10^{24})}}
-$
+$T = 2\pi \sqrt{\frac{(6.871 \times 10^6)^3}{(6.674 \times 10^{-11}) (5.972 \times 10^{24})}}$
 
-$
-T \approx 5674 \text{ s} \approx 94.6 \text{ min}
-$
+$T \approx 5674 \text{ s} \approx 94.6 \text{ min}$
 
 ### **Step 3: Interpretation**  
 
@@ -127,7 +103,7 @@ $
 
 ### **2. Planetary Orbits**  
 - Kepler’s Laws allow astronomers to determine the distances and periods of planets in our Solar System.  
-- For example, Earth’s orbital radius around the Sun is **1 AU** ($1.496 \times 10^{11}$ m), giving it a **365.25-day period**.  
+- For example, Earth’s orbital radius around the Sun is **1 AU** $(1.496 \times 10^{11}$ m), giving it a **365.25-day period**.  
 
 ### **3. Space Travel and Orbital Transfers**  
 - Understanding orbital mechanics is crucial for launching satellites, planning space missions, and docking with the ISS.  
@@ -138,3 +114,5 @@ $
 ## **Conclusion**  
 
 The relationship between **orbital period and radius** is fundamental in astrophysics and engineering. The **$T = 2\pi \sqrt{r^3/GM}$** equation helps predict how celestial bodies and artificial satellites move in space.  
+
+Would you like a different example, such as a **planetary orbit** calculation or a **two-body problem**? 🚀
