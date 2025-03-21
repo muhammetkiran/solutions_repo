@@ -197,16 +197,16 @@
 $</p>
 <p>Where:</p>
 <ul>
-<li>$ \theta $: Angular displacement (radians)</li>
-<li>$ \beta <span class="arithmatex">\(: Damping coefficient (s\)</span>^{-1}$)</li>
-<li>$ g <span class="arithmatex">\(: Acceleration due to gravity (9.81 m/s\)</span>^2$)</li>
-<li>$ L $: Length of the pendulum (meters)</li>
-<li>$ A $: Amplitude of the external driving torque (N·m)</li>
-<li>$ m $: Mass of the pendulum bob (kg)</li>
-<li>$ \omega $: Angular frequency of the driving force (rad/s)</li>
-<li>$ t $: Time (seconds)</li>
+<li><span class="arithmatex">\(\theta\)</span>: Angular displacement (radians)</li>
+<li><span class="arithmatex">\(\beta\)</span>: Damping coefficient (s<span class="arithmatex">\(^{-1}\)</span>)</li>
+<li><span class="arithmatex">\(g\)</span>: Acceleration due to gravity (9.81 m/s<span class="arithmatex">\(^2\)</span>)</li>
+<li><span class="arithmatex">\(L\)</span>: Length of the pendulum (meters)</li>
+<li><span class="arithmatex">\(A\)</span>: Amplitude of the external driving torque (N·m)</li>
+<li><span class="arithmatex">\(m\)</span>: Mass of the pendulum bob (kg)</li>
+<li><span class="arithmatex">\(\omega\)</span>: Angular frequency of the driving force (rad/s)</li>
+<li><span class="arithmatex">\(t\)</span>: Time (seconds)</li>
 </ul>
-<p>This equation balances the inertial term ($ \frac{d^2\theta}{dt^2} <span class="arithmatex">\(), damping term (\)</span> \beta \frac{d\theta}{dt} <span class="arithmatex">\(), restoring force (\)</span> \frac{g}{L} \sin\theta <span class="arithmatex">\(), and the external driving force (\)</span> \frac{A}{mL^2} \cos(\omega t) $).</p>
+<p>This equation balances the inertial term (<span class="arithmatex">\(\frac{d^2\theta}{dt^2}\)</span>), damping term (<span class="arithmatex">\(\beta \frac{d\theta}{dt}\)</span>), restoring force (<span class="arithmatex">\(\frac{g}{L} \sin\theta\)</span>), and the external driving force (<span class="arithmatex">\(\frac{A}{mL^2} \cos(\omega t)\)</span>).</p>
 <h4 id="dimensionless-form"><strong>Dimensionless Form</strong></h4>
 <p>To simplify analysis, we often convert the equation into a dimensionless form by introducing scaled variables:</p>
 <p>$
@@ -214,12 +214,12 @@ $</p>
 $</p>
 <p>Where:</p>
 <ul>
-<li>$ \tau = \sqrt{\frac{g}{L}} t $: Dimensionless time</li>
-<li>$ Q = \frac{\beta}{\sqrt{\frac{g}{L}}} $: Dimensionless damping coefficient</li>
-<li>$ F = \frac{A}{mL^2 \sqrt{\frac{g}{L}}} $: Dimensionless driving amplitude</li>
-<li>$ \Omega = \frac{\omega}{\sqrt{\frac{g}{L}}} $: Dimensionless driving frequency</li>
+<li><span class="arithmatex">\(\tau = \sqrt{\frac{g}{L}} t\)</span>: Dimensionless time</li>
+<li><span class="arithmatex">\(Q = \frac{\beta}{\sqrt{\frac{g}{L}}}\)</span>: Dimensionless damping coefficient</li>
+<li><span class="arithmatex">\(F = \frac{A}{mL^2 \sqrt{\frac{g}{L}}}\)</span>: Dimensionless driving amplitude</li>
+<li><span class="arithmatex">\(\Omega = \frac{\omega}{\sqrt{\frac{g}{L}}}\)</span>: Dimensionless driving frequency</li>
 </ul>
-<p>This form highlights the key parameters influencing the system's behavior: damping ($ Q <span class="arithmatex">\(), driving amplitude (\)</span> F <span class="arithmatex">\(), and driving frequency (\)</span> \Omega $).</p>
+<p>This form highlights the key parameters influencing the system's behavior: damping (<span class="arithmatex">\(Q\)</span>), driving amplitude (<span class="arithmatex">\(F\)</span>), and driving frequency (<span class="arithmatex">\(\Omega\)</span>).</p>
 <h3 id="behavioral-dynamics"><strong>Behavioral Dynamics</strong></h3>
 <p>The forced damped pendulum exhibits a rich tapestry of dynamical behaviors depending on the system parameters:</p>
 <ul>
@@ -234,7 +234,7 @@ $</p>
 </li>
 </ul>
 <h3 id="phase-space-and-poincare-sections"><strong>Phase Space and Poincaré Sections</strong></h3>
-<p>Analyzing the system's behavior often involves examining its phase space—a plot of angular velocity ($ \frac{d\theta}{dt} <span class="arithmatex">\() versus angular displacement (\)</span> \theta $). In chaotic regimes, the phase space reveals strange attractors, indicating complex, non-repeating trajectories.</p>
+<p>Analyzing the system's behavior often involves examining its phase space—a plot of angular velocity (<span class="arithmatex">\(\frac{d\theta}{dt}\)</span>) versus angular displacement (<span class="arithmatex">\(\theta\)</span>). In chaotic regimes, the phase space reveals strange attractors, indicating complex, non-repeating trajectories.</p>
 <p><strong>Poincaré sections</strong> are a valuable tool for visualizing the system's dynamics. By plotting the pendulum's state at regular intervals synchronized with the driving period, we obtain a discrete map that can reveal fixed points, periodic orbits, and chaotic scatterings, providing insight into the underlying structure of the motion.</p>
 <h3 id="practical-implications"><strong>Practical Implications</strong></h3>
 <p>Understanding the dynamics of forced damped pendulums is crucial in various fields:</p>
