@@ -14,16 +14,16 @@ $
 
 Where:
 
-- $ \theta $: Angular displacement (radians)
-- $ \beta $: Damping coefficient (s$^{-1}$)
-- $ g $: Acceleration due to gravity (9.81 m/s$^2$)
-- $ L $: Length of the pendulum (meters)
-- $ A $: Amplitude of the external driving torque (N·m)
-- $ m $: Mass of the pendulum bob (kg)
-- $ \omega $: Angular frequency of the driving force (rad/s)
-- $ t $: Time (seconds)
+- $\theta$: Angular displacement (radians)
+- $\beta$: Damping coefficient (s\(^{-1}\))
+- $g$: Acceleration due to gravity (9.81 m/s\(^2\))
+- $L$: Length of the pendulum (meters)
+- $A$: Amplitude of the external driving torque (N·m)
+- $m$: Mass of the pendulum bob (kg)
+- $\omega$: Angular frequency of the driving force (rad/s)
+- $t$: Time (seconds)
 
-This equation balances the inertial term ($ \frac{d^2\theta}{dt^2} $), damping term ($ \beta \frac{d\theta}{dt} $), restoring force ($ \frac{g}{L} \sin\theta $), and the external driving force ($ \frac{A}{mL^2} \cos(\omega t) $).
+This equation balances the inertial term ($\frac{d^2\theta}{dt^2}$), damping term ($\beta \frac{d\theta}{dt}$), restoring force ($\frac{g}{L} \sin\theta$), and the external driving force ($\frac{A}{mL^2} \cos(\omega t)$).
 
 #### **Dimensionless Form**
 
@@ -35,12 +35,12 @@ $
 
 Where:
 
-- $ \tau = \sqrt{\frac{g}{L}} t $: Dimensionless time
-- $ Q = \frac{\beta}{\sqrt{\frac{g}{L}}} $: Dimensionless damping coefficient
-- $ F = \frac{A}{mL^2 \sqrt{\frac{g}{L}}} $: Dimensionless driving amplitude
-- $ \Omega = \frac{\omega}{\sqrt{\frac{g}{L}}} $: Dimensionless driving frequency
+- $\tau = \sqrt{\frac{g}{L}} t$: Dimensionless time
+- $Q = \frac{\beta}{\sqrt{\frac{g}{L}}}$: Dimensionless damping coefficient
+- $F = \frac{A}{mL^2 \sqrt{\frac{g}{L}}}$: Dimensionless driving amplitude
+- $\Omega = \frac{\omega}{\sqrt{\frac{g}{L}}}$: Dimensionless driving frequency
 
-This form highlights the key parameters influencing the system's behavior: damping ($ Q $), driving amplitude ($ F $), and driving frequency ($ \Omega $).
+This form highlights the key parameters influencing the system's behavior: damping ($Q$), driving amplitude ($F$), and driving frequency ($\Omega$).
 
 ### **Behavioral Dynamics**
 
@@ -54,7 +54,7 @@ The forced damped pendulum exhibits a rich tapestry of dynamical behaviors depen
 
 ### **Phase Space and Poincaré Sections**
 
-Analyzing the system's behavior often involves examining its phase space—a plot of angular velocity ($ \frac{d\theta}{dt} $) versus angular displacement ($ \theta $). In chaotic regimes, the phase space reveals strange attractors, indicating complex, non-repeating trajectories.
+Analyzing the system's behavior often involves examining its phase space—a plot of angular velocity ($\frac{d\theta}{dt}$) versus angular displacement ($\theta$). In chaotic regimes, the phase space reveals strange attractors, indicating complex, non-repeating trajectories.
 
 **Poincaré sections** are a valuable tool for visualizing the system's dynamics. By plotting the pendulum's state at regular intervals synchronized with the driving period, we obtain a discrete map that can reveal fixed points, periodic orbits, and chaotic scatterings, providing insight into the underlying structure of the motion.
 
