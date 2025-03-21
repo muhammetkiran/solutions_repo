@@ -50,6 +50,22 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#theoretical-foundations-of-the-forced-damped-pendulum">Theoretical Foundations of the Forced Damped Pendulum</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#equations-of-motion">Equations of Motion</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#dimensionless-form">Dimensionless Form</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#behavioral-dynamics">Behavioral Dynamics</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#phase-space-and-poincare-sections">Phase Space and Poincaré Sections</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#practical-implications">Practical Implications</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#conclusion">Conclusion</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,48 +188,69 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
-<h1 id="investigating-the-dynamics-of-a-forced-damped-pendulum">Investigating the Dynamics of a Forced Damped Pendulum</h1>
-<h2 id="differential-equations-the-foundation">Differential Equations: The Foundation</h2>
-<p>Differential equations describe how quantities change over time, linking rates (derivatives) to the quantities themselves. They’re essential in physics for modeling dynamic systems. For a pendulum, we use:
-- <strong>Ordinary Differential Equations (ODEs)</strong>: Functions of one variable (time, $ t $), like position or velocity.
-- <strong>Second-Order ODEs</strong>: Involve second derivatives (e.g., acceleration), common for mechanical systems.
-- <strong>Nonlinear ODEs</strong>: Contain terms like $ \sin(\theta) $, making analytical solutions difficult, requiring numerical methods.</p>
-<p>Our goal is to formulate and solve such an equation for a pendulum with damping and forcing.</p>
-<hr/>
-<h2 id="problem-statement">Problem Statement</h2>
-<p>A pendulum (length $ L = 1 \, \text{m} $, mass $ m = 1 \, \text{kg} $) experiences:
-- <strong>Gravity</strong>: Pulls it downward.
-- <strong>Damping</strong>: Friction, coefficient $ b $ (s⁻¹), opposes motion.
-- <strong>Forcing</strong>: Periodic torque $ A \cos(\omega_f t) $, with amplitude $ A $ (s⁻²) and frequency $ \omega_f $ (rad/s).</p>
-<p>We’ll define its motion, solve numerically, and explore parameter effects.</p>
-<hr/>
-<h2 id="theoretical-background">Theoretical Background</h2>
-<p>The pendulum’s angle $ \theta $ (radians) follows a second-order ODE. The <strong>natural frequency</strong> is $ \omega_0 = \sqrt{g/L} $, where $ g = 9.8 \, \text{m/s}^2 $. Including damping and forcing:
-$
-\frac{d^2\theta}{dt^2} = -\omega_0^2 \sin(\theta) - b \frac{d\theta}{dt} + A \cos(\omega_f t)
-$
-Split into first-order ODEs:
-$
-\frac{d\theta}{dt} = \omega
-$
-$
-\frac{d\omega}{dt} = -\omega_0^2 \sin(\theta) - b \omega + A \cos(\omega_f t)
+<h3 id="theoretical-foundations-of-the-forced-damped-pendulum"><strong>Theoretical Foundations of the Forced Damped Pendulum</strong></h3>
+<p>A <strong>forced damped pendulum</strong> is a classic example of a nonlinear dynamical system exhibiting complex behaviors, including periodic oscillations and chaos. This system consists of a pendulum subject to both damping forces (e.g., friction or air resistance) and external periodic driving forces.</p>
+<h4 id="equations-of-motion"><strong>Equations of Motion</strong></h4>
+<p>The dynamics of a forced damped pendulum are governed by the following second-order nonlinear differential equation:</p>
+<p>$
+\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \frac{g}{L} \sin\theta = \frac{A}{mL^2} \cos(\omega t)
 $</p>
-<hr/>
-<h2 id="numerical-solution">Numerical Solution</h2>
-<p>We solve using the <strong>Runge-Kutta 4th-order (RK4)</strong> method, time step $ dt = 0.02 \, \text{s} $. Example step:
-- Initial: $ \theta = 0.2 $, $ \omega = 0 $, $ t = 0 $, $ b = 0.2 $, $ A = 1.2 $, $ \omega_f = 0.67 $.
-- $ k_1 = \omega = 0 $
-- $ l_1 = -\omega_0^2 \sin(\theta) - b \omega + A \cos(\omega_f t) = -9.8 \sin(0.2) - 0.2 \cdot 0 + 1.2 \cos(0) \approx -1.951 + 1.2 = -0.751 $
-- After RK4: $ \theta \approx 0.2 $, $ \omega \approx -0.015 $.</p>
-<hr/>
-<p>Parameters: $ b $ (0–1), $ A $ (0–2), $ \omega_f $ (0–2), $ \theta_0 $ (-π to π).</p>
-<hr/>
-<h2 id="results">Results</h2>
+<p>Where:</p>
 <ul>
-<li><strong>Low Forcing</strong>: $ b = 0.2 $, $ A = 0.5 $, $ \omega_f = 1.0 $: Periodic decay, spiral phase plot.</li>
-<li><strong>High Forcing</strong>: $ b = 0.2 $, $ A = 1.2 $, $ \omega_f = 0.67 $: Chaotic motion, strange attractor.</li>
+<li>$ \theta $: Angular displacement (radians)</li>
+<li>$ \beta <span class="arithmatex">\(: Damping coefficient (s\)</span>^{-1}$)</li>
+<li>$ g <span class="arithmatex">\(: Acceleration due to gravity (9.81 m/s\)</span>^2$)</li>
+<li>$ L $: Length of the pendulum (meters)</li>
+<li>$ A $: Amplitude of the external driving torque (N·m)</li>
+<li>$ m $: Mass of the pendulum bob (kg)</li>
+<li>$ \omega $: Angular frequency of the driving force (rad/s)</li>
+<li>$ t $: Time (seconds)</li>
 </ul>
+<p>This equation balances the inertial term ($ \frac{d^2\theta}{dt^2} <span class="arithmatex">\(), damping term (\)</span> \beta \frac{d\theta}{dt} <span class="arithmatex">\(), restoring force (\)</span> \frac{g}{L} \sin\theta <span class="arithmatex">\(), and the external driving force (\)</span> \frac{A}{mL^2} \cos(\omega t) $).</p>
+<h4 id="dimensionless-form"><strong>Dimensionless Form</strong></h4>
+<p>To simplify analysis, we often convert the equation into a dimensionless form by introducing scaled variables:</p>
+<p>$
+\frac{d^2\theta}{d\tau^2} + Q \frac{d\theta}{d\tau} + \sin\theta = F \cos(\Omega \tau)
+$</p>
+<p>Where:</p>
+<ul>
+<li>$ \tau = \sqrt{\frac{g}{L}} t $: Dimensionless time</li>
+<li>$ Q = \frac{\beta}{\sqrt{\frac{g}{L}}} $: Dimensionless damping coefficient</li>
+<li>$ F = \frac{A}{mL^2 \sqrt{\frac{g}{L}}} $: Dimensionless driving amplitude</li>
+<li>$ \Omega = \frac{\omega}{\sqrt{\frac{g}{L}}} $: Dimensionless driving frequency</li>
+</ul>
+<p>This form highlights the key parameters influencing the system's behavior: damping ($ Q <span class="arithmatex">\(), driving amplitude (\)</span> F <span class="arithmatex">\(), and driving frequency (\)</span> \Omega $).</p>
+<h3 id="behavioral-dynamics"><strong>Behavioral Dynamics</strong></h3>
+<p>The forced damped pendulum exhibits a rich tapestry of dynamical behaviors depending on the system parameters:</p>
+<ul>
+<li>
+<p><strong>Periodic Motion</strong>: For small driving amplitudes and specific frequencies, the pendulum oscillates periodically, often synchronizing with the driving force.</p>
+</li>
+<li>
+<p><strong>Period Doubling</strong>: As the driving amplitude increases, the system may undergo bifurcations where the period of oscillation doubles, leading to motions with periods that are integer multiples of the driving period. This phenomenon is a precursor to chaos. citeturn0search3</p>
+</li>
+<li>
+<p><strong>Chaotic Motion</strong>: At certain parameter thresholds, the pendulum exhibits chaotic behavior, characterized by sensitive dependence on initial conditions and aperiodic trajectories. This means that tiny differences in starting conditions can lead to vastly different outcomes, making long-term prediction impossible. citeturn0search0</p>
+</li>
+</ul>
+<h3 id="phase-space-and-poincare-sections"><strong>Phase Space and Poincaré Sections</strong></h3>
+<p>Analyzing the system's behavior often involves examining its phase space—a plot of angular velocity ($ \frac{d\theta}{dt} <span class="arithmatex">\() versus angular displacement (\)</span> \theta $). In chaotic regimes, the phase space reveals strange attractors, indicating complex, non-repeating trajectories.</p>
+<p><strong>Poincaré sections</strong> are a valuable tool for visualizing the system's dynamics. By plotting the pendulum's state at regular intervals synchronized with the driving period, we obtain a discrete map that can reveal fixed points, periodic orbits, and chaotic scatterings, providing insight into the underlying structure of the motion.</p>
+<h3 id="practical-implications"><strong>Practical Implications</strong></h3>
+<p>Understanding the dynamics of forced damped pendulums is crucial in various fields:</p>
+<ul>
+<li>
+<p><strong>Engineering</strong>: Mechanical systems with oscillatory components, such as suspension bridges or clock mechanisms, can experience resonant vibrations leading to structural failures if not properly damped.</p>
+</li>
+<li>
+<p><strong>Robotics</strong>: The principles governing pendulum dynamics assist in designing stable walking robots and understanding bipedal locomotion.</p>
+</li>
+<li>
+<p><strong>Seismology</strong>: Modeling the Earth's response to periodic forces, such as tidal effects, benefits from insights into forced oscillatory systems.</p>
+</li>
+</ul>
+<h3 id="conclusion"><strong>Conclusion</strong></h3>
+<p>The forced damped pendulum serves as a fundamental model for exploring nonlinear dynamics, chaos theory, and complex oscillatory behavior. Its study not only deepens our understanding of mathematical physics but also informs practical applications across engineering, robotics, and natural sciences. </p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
