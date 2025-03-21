@@ -52,8 +52,6 @@
 <ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="#theoretical-foundations-of-the-forced-damped-pendulum">Theoretical Foundations of the Forced Damped Pendulum</a>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#differential-equations-governing-the-forced-damped-pendulum">Differential Equations Governing the Forced Damped Pendulum</a>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#dimensionless-form-of-the-equation">Dimensionless Form of the Equation</a>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#key-calculations-and-numerical-examples">Key Calculations and Numerical Examples</a>
@@ -65,6 +63,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#3-steady-state-solution-with-external-forcing">3. Steady-State Solution with External Forcing</a>
 </li>
 </ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#practical-applications">Practical Applications</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation">Implementation</a>
 </li>
 </ul>
 </li>
@@ -188,8 +190,8 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<p># Investigating the Dynamics of a Forced Damped Pendulum</p>
 <h3 id="theoretical-foundations-of-the-forced-damped-pendulum"><strong>Theoretical Foundations of the Forced Damped Pendulum</strong></h3>
-<h3 id="differential-equations-governing-the-forced-damped-pendulum"><strong>Differential Equations Governing the Forced Damped Pendulum</strong></h3>
 <p>The motion of a <strong>forced damped pendulum</strong> is governed by a second-order nonlinear differential equation that incorporates <strong>inertia</strong>, <strong>damping</strong>, <strong>restoring force</strong>, and <strong>external driving force</strong>:  </p>
 <p><span class="arithmatex">\(\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \frac{g}{L} \sin\theta = \frac{A}{mL^2} \cos(\omega t)\)</span></p>
 <p>where:<br/>
@@ -266,7 +268,12 @@ For <span class="arithmatex">\(\omega_0 = 3.13\)</span> rad/s, <span class="arit
 <p><span class="arithmatex">\(\tan\delta = \frac{1 \times 2.5}{9.80 - 6.25} = \frac{2.5}{3.55} \approx 0.704 \quad \Rightarrow \quad \delta \approx 35.3^\circ\)</span></p>
 <p>Thus, the steady-state response is:</p>
 <p><span class="arithmatex">\(\theta_{\text{steady}}(t) = 0.14 \cos(2.5t - 35.3^\circ)\)</span></p>
-<hr/>
+<h3 id="practical-applications">Practical Applications</h3>
+<p>Understanding the dynamics of forced damped pendulums is crucial in various fields:</p>
+<p><strong>Engineering:</strong>  Mechanical systems with oscillatory components, such as suspension bridges or clock mechanisms, can experience resonant vibrations leading to structural failures if not properly damped.</p>
+<p><strong>Robotics:</strong> The principles governing pendulum dynamics assist in designing stable walking robots and understanding bipedal locomotion.</p>
+<p><strong>Seismology:</strong> Modeling the Earth's response to periodic forces, such as tidal effects, benefits from insights into forced oscillatory systems.</p>
+<h3 id="implementation">Implementation</h3>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
