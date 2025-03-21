@@ -113,4 +113,6 @@ $T \approx 5674 \text{ s} \approx 94.6 \text{ min}$
 
 The relationship between **orbital period and radius** is fundamental in astrophysics and engineering. The **$T = 2\pi \sqrt{r^3/GM}$** equation helps predict how celestial bodies and artificial satellites move in space. 
 
-[simulation](orbital_period_simulatin.html)
+## **Implementation**
+
+[Simulation model motion of orbital period](orbital_period_simulatin.html)
