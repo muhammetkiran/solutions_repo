@@ -8,9 +8,7 @@ A **forced damped pendulum** is a classic example of a nonlinear dynamical syste
 
 The dynamics of a forced damped pendulum are governed by the following second-order nonlinear differential equation:
 
-$
-\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \frac{g}{L} \sin\theta = \frac{A}{mL^2} \cos(\omega t)
-$
+$\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \frac{g}{L} \sin\theta = \frac{A}{mL^2} \cos(\omega t)$
 
 Where:
 
