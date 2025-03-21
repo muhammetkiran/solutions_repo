@@ -1,8 +1,6 @@
 # Problem 1
 
-Here’s an extended and more detailed version with additional definitions and explanations:  
 
----
 
 # **Orbital Period and Orbital Radius**  
 
@@ -31,7 +29,7 @@ $F_c = \frac{m v^2}{r}$
 
 Since gravity provides the necessary centripetal force, we set these two forces equal to each other:  
 
-$\frac{GMm}{r^2} = \frac{m v^2}{r}$
+ $\frac{GMm}{r^2} = \frac{m v^2}{r}$
 
 Canceling $m$ and solving for orbital velocity $v$:  
 
@@ -114,5 +112,3 @@ $T \approx 5674 \text{ s} \approx 94.6 \text{ min}$
 ## **Conclusion**  
 
 The relationship between **orbital period and radius** is fundamental in astrophysics and engineering. The **$T = 2\pi \sqrt{r^3/GM}$** equation helps predict how celestial bodies and artificial satellites move in space.  
-
-Would you like a different example, such as a **planetary orbit** calculation or a **two-body problem**? 🚀
