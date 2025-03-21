@@ -1,8 +1,5 @@
 # Problem 2
 
-Below is a revised version of the write-up for "Investigating the Dynamics of a Forced Damped Pendulum," starting with an explanation of differential equations before diving into the specific problem. I’ve kept it concise, added definitions and a numerical step as requested, and maintained the style of the GitHub example.
-
----
 
 # Investigating the Dynamics of a Forced Damped Pendulum
 
