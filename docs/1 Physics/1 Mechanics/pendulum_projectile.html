@@ -3,74 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forced Damped Pendulum Simulation</title>
+    <title>Forced Damped Pendulum Simulation with Sliders</title>
     <style>
-        canvas {
-            background: #f0f0f0;
-            display: block;
-            margin: auto;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0e0e0;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        #mainCanvas, #phaseCanvas {
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+        }
+        .controls {
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        .slider-container {
+            margin: 10px;
+            text-align: left;
+            width: 300px;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+        }
+        input[type="range"] {
+            width: 100px;
+            vertical-align: middle;
+        }
+        .value {
+            display: inline-block;
+            width: 50px;
+            text-align: right;
+        }
+        button {
+            padding: 5px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #pauseButton {
+            background-color: #ff9800;
+        }
+        #pauseButton:hover {
+            background-color: #e68900;
+        }
+        #metrics, #energy {
+            margin: 10px;
+            font-size: 14px;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <canvas id="pendulumCanvas"></canvas>
+    <h2>Forced Damped Pendulum Simulation</h2>
+    <div class="controls">
+        <div class="slider-container">
+            <label>Damping (b):</label>
+            <input type="range" id="damping" min="0" max="1" step="0.1" value="0.2" oninput="updateValue('damping')">
+            <span class="value" id="dampingValue">0.2</span>
+        </div>
+        <div class="slider-container">
+            <label>Forcing Amplitude (A):</label>
+            <input type="range" id="forceAmp" min="0" max="2" step="0.1" value="1.2" oninput="updateValue('forceAmp')">
+            <span class="value" id="forceAmpValue">1.2</span>
+        </div>
+        <div class="slider-container">
+            <label>Forcing Frequency (ω):</label>
+            <input type="range" id="forceFreq" min="0" max="2" step="0.01" value="0.67" oninput="updateValue('forceFreq')">
+            <span class="value" id="forceFreqValue">0.67</span>
+        </div>
+        <div class="slider-container">
+            <label>Initial Angle (θ₀, rad):</label>
+            <input type="range" id="theta0" min="-3.14" max="3.14" step="0.1" value="0.2" oninput="updateValue('theta0')">
+            <span class="value" id="theta0Value">0.2</span>
+        </div>
+        <button onclick="startSimulation()">Start</button>
+        <button id="pauseButton" onclick="togglePause()">Pause</button>
+        <button onclick="resetSimulation()">Reset</button>
+    </div>
+    <canvas id="mainCanvas" width="600" height="400"></canvas>
+    <canvas id="phaseCanvas" width="400" height="400"></canvas>
+    <div id="metrics">Angle: 0 rad | Angular Velocity: 0 rad/s | Time: 0 s</div>
+    <div id="energy">Kinetic: 0 J | Potential: 0 J | Total: 0 J</div>
+
     <script>
-        const canvas = document.getElementById("pendulumCanvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = 500;
-        canvas.height = 500;
+        const mainCanvas = document.getElementById('mainCanvas');
+        const mainCtx = mainCanvas.getContext('2d');
+        const phaseCanvas = document.getElementById('phaseCanvas');
+        const phaseCtx = phaseCanvas.getContext('2d');
+        const metrics = document.getElementById('metrics');
+        const energyDiv = document.getElementById('energy');
+        const g = 9.8; // Gravity (m/s²)
+        const L = 1.0; // Length (m)
+        const m = 1.0; // Mass (kg)
+        let animationId = null;
+        let trail = [];
+        let phaseTrail = [];
+        let isPaused = false;
 
-        let theta = Math.PI / 4;
+        // Pendulum state
+        let theta = 0;
         let omega = 0;
-        let alpha = 0;
-        const length = 200;
-        const pivotX = canvas.width / 2;
-        const pivotY = 100;
-        const g = 9.81;
-        const damping = 0.05;
-        const F = 1.2;
-        const omegaF = 2.0;
-        let time = 0;
-        const dt = 0.02;
+        let t = 0;
 
-        function update() {
-            alpha = -g / length * Math.sin(theta) - damping * omega + F * Math.cos(omegaF * time);
-            omega += alpha * dt;
-            theta += omega * dt;
-            time += dt;
+        // Update slider values display and preview angle
+        function updateValue(id) {
+            const value = document.getElementById(id).value;
+            document.getElementById(id + 'Value').textContent = parseFloat(value).toFixed(2);
+            if (!animationId && !isPaused) {
+                theta = parseFloat(document.getElementById('theta0').value);
+                drawMainScene();
+                drawPhasePlot();
+            }
         }
 
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const x = pivotX + length * Math.sin(theta);
-            const y = pivotY + length * Math.cos(theta);
-
-            ctx.beginPath();
-            ctx.arc(pivotX, pivotY, 10, 0, Math.PI * 2);
-            ctx.fillStyle = "black";
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.moveTo(pivotX, pivotY);
-            ctx.lineTo(x, y);
-            ctx.strokeStyle = "black";
-            ctx.lineWidth = 3;
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(x, y, 15, 0, Math.PI * 2);
-            ctx.fillStyle = "red";
-            ctx.fill();
+        // ODE system
+        function pendulumODE(theta, omega, t, b, A, omega_f) {
+            const dtheta_dt = omega;
+            const domega_dt = -(g / L) * Math.sin(theta) - b * omega + A * Math.cos(omega_f * t);
+            return [dtheta_dt, domega_dt];
         }
 
+        // RK4 step
+        function rk4Step(theta, omega, t, dt, b, A, omega_f) {
+            const [k1_theta, k1_omega] = pendulumODE(theta, omega, t, b, A, omega_f);
+            const [k2_theta, k2_omega] = pendulumODE(theta + 0.5 * dt * k1_theta, omega + 0.5 * dt * k1_omega, t + 0.5 * dt, b, A, omega_f);
+            const [k3_theta, k3_omega] = pendulumODE(theta + 0.5 * dt * k2_theta, omega + 0.5 * dt * k2_omega, t + 0.5 * dt, b, A, omega_f);
+            const [k4_theta, k4_omega] = pendulumODE(theta + dt * k3_theta, omega + dt * k3_omega, t + dt, b, A, omega_f);
+
+            const new_theta = theta + (dt / 6) * (k1_theta + 2 * k2_theta + 2 * k3_theta + k4_theta);
+            const new_omega = omega + (dt / 6) * (k1_omega + 2 * k2_omega + 2 * k3_omega + k4_omega);
+            return [new_theta, new_omega];
+        }
+
+        // Energy calculation
+        function calculateEnergy() {
+            const v = omega * L;
+            const kinetic = 0.5 * m * v * v;
+            const potential = m * g * L * (1 - Math.cos(theta));
+            const total = kinetic + potential;
+            return { kinetic, potential, total };
+        }
+
+        // Draw main pendulum
+        function drawMainScene() {
+            const gradient = mainCtx.createLinearGradient(0, 0, 0, mainCanvas.height);
+            gradient.addColorStop(0, '#87CEEB');
+            gradient.addColorStop(1, '#E0F7FA');
+            mainCtx.fillStyle = gradient;
+            mainCtx.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
+
+            const pivotX = mainCanvas.width / 2;
+            const pivotY = 50;
+            const scale = 150;
+            const bobX = pivotX + scale * L * Math.sin(theta);
+            const bobY = pivotY + scale * L * Math.cos(theta);
+
+            // Trail
+            trail.push({ x: bobX, y: bobY, omega });
+            if (trail.length > 100) trail.shift();
+            mainCtx.beginPath();
+            for (let i = 0; i < trail.length; i++) {
+                const hue = Math.abs(trail[i].omega) * 20;
+                mainCtx.strokeStyle = `hsl(${Math.min(hue, 240)}, 70%, 50%)`;
+                if (i === 0) mainCtx.moveTo(trail[i].x, trail[i].y);
+                else mainCtx.lineTo(trail[i].x, trail[i].y);
+            }
+            mainCtx.lineWidth = 2;
+            mainCtx.stroke();
+
+            // Rod
+            mainCtx.beginPath();
+            mainCtx.moveTo(pivotX, pivotY);
+            mainCtx.lineTo(bobX, bobY);
+            mainCtx.strokeStyle = '#555';
+            mainCtx.lineWidth = 4;
+            mainCtx.stroke();
+
+            // Bob
+            const bobGradient = mainCtx.createRadialGradient(bobX, bobY, 0, bobX, bobY, 15);
+            bobGradient.addColorStop(0, '#FF6347');
+            bobGradient.addColorStop(1, '#FF4500');
+            mainCtx.beginPath();
+            mainCtx.arc(bobX, bobY, 15, 0, 2 * Math.PI);
+            mainCtx.fillStyle = bobGradient;
+            mainCtx.fill();
+            mainCtx.shadowBlur = 15;
+            mainCtx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            mainCtx.fill();
+            mainCtx.shadowBlur = 0;
+
+            // Pivot
+            mainCtx.beginPath();
+            mainCtx.arc(pivotX, pivotY, 8, 0, 2 * Math.PI);
+            mainCtx.fillStyle = '#333';
+            mainCtx.fill();
+        }
+
+        // Draw phase plot
+        function drawPhasePlot() {
+            phaseCtx.fillStyle = '#fff';
+            phaseCtx.fillRect(0, 0, phaseCanvas.width, phaseCanvas.height);
+            phaseCtx.strokeStyle = '#ccc';
+            phaseCtx.beginPath();
+            phaseCtx.moveTo(phaseCanvas.width / 2, 0);
+            phaseCtx.lineTo(phaseCanvas.width / 2, phaseCanvas.height);
+            phaseCtx.moveTo(0, phaseCanvas.height / 2);
+            phaseCtx.lineTo(phaseCanvas.width, phaseCanvas.height / 2);
+            phaseCtx.stroke();
+
+            phaseTrail.push({ theta, omega });
+            if (phaseTrail.length > 500) phaseTrail.shift();
+            phaseCtx.beginPath();
+            phaseCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+            phaseCtx.lineWidth = 1;
+            const scaleX = phaseCanvas.width / 12; // Adjusted for larger canvas
+            const scaleY = phaseCanvas.height / 12; // Adjusted for larger canvas
+            for (let i = 0; i < phaseTrail.length; i++) {
+                const x = phaseCanvas.width / 2 + phaseTrail[i].theta * scaleX;
+                const y = phaseCanvas.height / 2 - phaseTrail[i].omega * scaleY;
+                if (i === 0) phaseCtx.moveTo(x, y);
+                else phaseCtx.lineTo(x, y);
+            }
+            phaseCtx.stroke();
+        }
+
+        // Animation loop
         function animate() {
-            update();
-            draw();
-            requestAnimationFrame(animate);
+            if (isPaused) return;
+
+            // Update parameters dynamically
+            const b = parseFloat(document.getElementById('damping').value);
+            const A = parseFloat(document.getElementById('forceAmp').value);
+            const omega_f = parseFloat(document.getElementById('forceFreq').value);
+
+            const dt = 0.02;
+            [theta, omega] = rk4Step(theta, omega, t, dt, b, A, omega_f);
+            t += dt;
+
+            drawMainScene();
+            drawPhasePlot();
+
+            const { kinetic, potential, total } = calculateEnergy();
+            metrics.textContent = `Angle: ${theta.toFixed(2)} rad | Angular Velocity: ${omega.toFixed(2)} rad/s | Time: ${t.toFixed(2)} s`;
+            energyDiv.textContent = `Kinetic: ${kinetic.toFixed(2)} J | Potential: ${potential.toFixed(2)} J | Total: ${total.toFixed(2)} J`;
+
+            animationId = requestAnimationFrame(animate);
         }
 
-        animate();
+        // Start simulation
+        function startSimulation() {
+            if (animationId && !isPaused) return;
+            if (isPaused) {
+                isPaused = false;
+                animate();
+                return;
+            }
+
+            theta = parseFloat(document.getElementById('theta0').value);
+            omega = 0;
+            t = 0;
+            trail = [];
+            phaseTrail = [];
+
+            animate();
+        }
+
+        // Toggle pause
+        function togglePause() {
+            isPaused = !isPaused;
+            if (!isPaused) animate();
+            document.getElementById('pauseButton').textContent = isPaused ? 'Resume' : 'Pause';
+        }
+
+        // Reset simulation
+        function resetSimulation() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            theta = 0;
+            omega = 0;
+            t = 0;
+            trail = [];
+            phaseTrail = [];
+            isPaused = false;
+            document.getElementById('pauseButton').textContent = 'Pause';
+            drawMainScene();
+            drawPhasePlot();
+            metrics.textContent = `Angle: 0 rad | Angular Velocity: 0 rad/s | Time: 0 s`;
+            energyDiv.textContent = `Kinetic: 0 J | Potential: 0 J | Total: 0 J`;
+        }
+
+        // Interactive angle setting
+        mainCanvas.addEventListener('click', (e) => {
+            if (animationId && !isPaused) return;
+            const rect = mainCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - mainCanvas.width / 2;
+            const y = e.clientY - rect.top - 50;
+            theta = Math.atan2(x, y);
+            omega = 0;
+            document.getElementById('theta0').value = theta;
+            document.getElementById('theta0Value').textContent = theta.toFixed(2);
+            drawMainScene();
+            drawPhasePlot();
+        });
+
+        // Initial draw
+        resetSimulation();
     </script>
 </body>
 </html>
-
