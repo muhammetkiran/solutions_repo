@@ -3,238 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stable Projectile Motion with Animated Character</title>
+    <title>Projectile Range vs Angle Simulation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #e0e0e0;
+            background-color: #f0f0f0;
+            text-align: center;
         }
-        #canvas {
+        canvas {
             border: 2px solid #333;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
         }
         .controls {
-            margin: 15px;
+            margin: 20px;
             background-color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            border-radius: 8px;
             display: inline-block;
         }
-        label, input, button {
-            margin: 0 5px;
+        .control-group {
+            margin: 10px;
         }
         button {
-            padding: 5px 10px;
+            padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 3px;
+            border-radius: 5px;
             cursor: pointer;
         }
         button:hover {
             background-color: #45a049;
         }
         #metrics {
-            margin: 10px 15px;
-            font-size: 14px;
+            margin-top: 15px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="controls">
-        <label for="velocity">Velocity (m/s): </label>
-        <input type="number" id="velocity" value="25" min="1" step="1">
-        <label for="angle">Angle (°): </label>
-        <input type="number" id="angle" value="45" min="0" max="90" step="1">
-        <button onclick="startSimulation()">Throw</button>
-        <button onclick="resetSimulation()">Reset</button>
+        <div class="control-group">
+            <label for="velocity">Initial Velocity (m/s): </label>
+            <input type="number" id="velocity" value="25" min="1" step="1">
+        </div>
+        <button onclick="simulateRange()">Calculate Range</button>
     </div>
+
     <canvas id="canvas" width="800" height="400"></canvas>
-    <div id="metrics">Range: 0 m | Height: 0 m | Time: 0 s</div>
+
+    <div id="metrics"></div>
 
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const metrics = document.getElementById('metrics');
         const g = 9.8; // Gravitational acceleration (m/s²)
-        let animationId = null;
-        let path = [];
-        let armAngle = -Math.PI / 2; // Initial arm angle (downward)
-        let state = 'idle'; // 'idle', 'swinging', 'throwing'
-        let swingProgress = 0;
 
         // Convert degrees to radians
         function toRadians(degrees) {
             return degrees * Math.PI / 180;
         }
 
-        // Draw background and character
-        function drawScene(projX = 0, projY = 0, showProjectile = false) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Sky gradient
-            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            gradient.addColorStop(0, '#87CEEB');
-            gradient.addColorStop(1, '#E0F7FA');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Flat ground
-            ctx.fillStyle = '#4CAF50';
-            ctx.fillRect(0, canvas.height - 50, canvas.width, 50);
-
-            // Stick-figure character
-            const charX = 70;
-            const charY = canvas.height - 50;
-            ctx.fillStyle = '#000';
-            ctx.beginPath();
-            ctx.arc(charX, charY - 30, 10, 0, 2 * Math.PI); // Head
-            ctx.fill();
-            ctx.moveTo(charX, charY - 20);
-            ctx.lineTo(charX, charY); // Body
-            ctx.moveTo(charX, charY - 10);
-            ctx.lineTo(charX - 15, charY - 25); // Left arm (static)
-            if (state !== 'throwing') { // Hide arm during flight
-                ctx.save();
-                ctx.translate(charX, charY - 10);
-                ctx.rotate(armAngle);
-                ctx.moveTo(0, 0);
-                ctx.lineTo(15, 0); // Right arm (animated)
-                ctx.restore();
-            }
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.moveTo(charX, charY);
-            ctx.lineTo(charX - 10, charY + 20); // Left leg
-            ctx.moveTo(charX, charY);
-            ctx.lineTo(charX + 10, charY + 20); // Right leg
-            ctx.stroke();
-
-            // Draw trajectory path
-            drawPath();
-
-            // Draw projectile if in flight
-            if (showProjectile) {
-                drawProjectile(projX, projY);
-            }
-        }
-
-        // Start the simulation
-        function startSimulation() {
-            if (animationId || state !== 'idle') return;
-
+        // Simulate the projectile motion and calculate the range for different angles
+        function simulateRange() {
             const velocity = parseFloat(document.getElementById('velocity').value);
-            const angle = parseFloat(document.getElementById('angle').value);
-            const angleRad = toRadians(angle);
-            const targetAngle = angleRad;
+            const angles = Array.from({ length: 91 }, (_, i) => i); // Angles from 0° to 90°
+            const ranges = angles.map(angle => {
+                const angleRad = toRadians(angle);
+                const range = (velocity * velocity * Math.sin(2 * angleRad)) / g;
+                return { angle, range };
+            });
 
-            const vx = velocity * Math.cos(angleRad);
-            const vyInitial = velocity * Math.sin(angleRad);
-            const timeOfFlight = (2 * vyInitial) / g;
-            const maxHeight = (vyInitial * vyInitial) / (2 * g);
-            const range = vx * timeOfFlight;
-
-            const scaleX = canvas.width / (range * 1.1);
-            const scaleY = (canvas.height - 50) / (maxHeight * 1.1);
-
-            let t = 0;
-            const dt = 0.016; // ~60 FPS
-            path = [];
-            const startX = 85; // Start at end of arm
-            const startY = 40; // Arm height
-            const swingDuration = 0.3; // 0.3 seconds swing
-
-            state = 'swinging';
-            swingProgress = 0;
-
-            function animate() {
-                if (state === 'swinging') {
-                    swingProgress += dt / swingDuration;
-                    armAngle = -Math.PI / 2 + (targetAngle + Math.PI / 2) * Math.min(swingProgress, 1);
-                    drawScene();
-
-                    if (swingProgress >= 1) {
-                        state = 'throwing'; // Transition to throwing
-                        armAngle = targetAngle; // Lock at throw angle briefly
-                    }
-                } else if (state === 'throwing') {
-                    // Calculate position
-                    const x = startX + vx * t * scaleX;
-                    const y = vyInitial * t - 0.5 * g * t * t;
-                    const scaledY = canvas.height - startY - y * scaleY;
-
-                    // Draw with projectile
-                    drawScene(x, scaledY, true);
-
-                    // Update metrics
-                    metrics.textContent = `Range: ${((x - startX) / scaleX).toFixed(1)} m | Height: ${Math.max(0, y).toFixed(1)} m | Time: ${t.toFixed(2)} s`;
-
-                    // Stop if projectile hits ground
-                    if (y <= 0 && t > 0) {
-                        cancelAnimationFrame(animationId);
-                        animationId = null;
-                        state = 'idle';
-                        armAngle = -Math.PI / 2; // Reset arm
-                        drawScene(x, canvas.height - startY, true); // Final position
-                        return;
-                    }
-
-                    // Store path point
-                    path.push({ x, y: scaledY });
-
-                    t += dt;
-                }
-
-                animationId = requestAnimationFrame(animate);
-            }
-
-            animationId = requestAnimationFrame(animate);
+            // Draw the results
+            drawChart(ranges);
+            displayMetrics(ranges);
         }
 
-        // Draw the projectile with shadow
-        function drawProjectile(x, y) {
-            ctx.beginPath();
-            ctx.arc(x, y, 8, 0, 2 * Math.PI);
-            ctx.fillStyle = '#FF4500';
-            ctx.fill();
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-            ctx.fill();
-            ctx.shadowBlur = 0;
-            ctx.closePath();
+        // Display the metrics (range for each angle)
+        function displayMetrics(ranges) {
+            let metricsHTML = '<h3>Range vs Angle of Projection</h3>';
+            metricsHTML += '<table><tr><th>Angle (°)</th><th>Range (m)</th></tr>';
+            ranges.forEach(r => {
+                metricsHTML += `<tr><td>${r.angle}</td><td>${r.range.toFixed(2)}</td></tr>`;
+            });
+            metricsHTML += '</table>';
+            metrics.innerHTML = metricsHTML;
         }
 
-        // Draw the trajectory path
-        function drawPath() {
+        // Draw a chart of the range vs angle
+        function drawChart(ranges) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
-            ctx.strokeStyle = 'rgba(0, 0, 255, 0.5)';
+            ctx.moveTo(0, canvas.height);
+
+            // Draw axes
+            ctx.strokeStyle = '#000';
+            ctx.moveTo(40, canvas.height - 40); // x-axis (angle)
+            ctx.lineTo(canvas.width, canvas.height - 40);
+            ctx.moveTo(40, 0); // y-axis (range)
+            ctx.lineTo(40, canvas.height);
+
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#FF4500';
             ctx.lineWidth = 2;
-            for (let i = 0; i < path.length; i++) {
-                if (i === 0) ctx.moveTo(path[i].x, path[i].y);
-                else ctx.lineTo(path[i].x, path[i].y);
-            }
+
+            // Plot points for range vs angle
+            const scaleX = (canvas.width - 80) / 100; // 0-100 degree scale
+            const scaleY = (canvas.height - 80) / 100; // Range scale
+
+            ranges.forEach((r, index) => {
+                const x = 40 + r.angle * scaleX;
+                const y = canvas.height - 40 - r.range * scaleY;
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+
             ctx.stroke();
         }
-
-        // Reset the simulation
-        function resetSimulation() {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
-            }
-            path = [];
-            armAngle = -Math.PI / 2;
-            state = 'idle';
-            swingProgress = 0;
-            drawScene();
-            metrics.textContent = 'Range: 0 m | Height: 0 m | Time: 0 s';
-        }
-
-        // Initial setup
-        resetSimulation();
     </script>
 </body>
 </html>
