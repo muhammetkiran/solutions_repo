@@ -120,7 +120,7 @@ $$
 R = \frac{(20)^2 \sin 90^\circ}{9.81} = \frac{400}{9.81} \approx 40.8 \text{ m}
 $$
 
-![alt text](image-4.png) 
+
 
 ### **Effect of Initial Conditions**  
 
@@ -137,7 +137,6 @@ $$
   - On the Moon ( $g$ \approx 1.62 m/s²), projectiles travel **six times farther** than on Earth.  
 
 ---
- 
 
 ## **Implementation**
 
