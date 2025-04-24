@@ -13,7 +13,7 @@ The algorithm iteratively simplifies the graph by reducing series and parallel r
 ### Steps:
 1. **Series Connections**:
    - Identify a node with degree 2, connected to two resistors.
-   - Replace with a single resistor: $ R_{\text{series}} = R_1 + R_2 $.
+   - Replace with a single resistor: $$ R_{\text{series}} = R_1 + R_2 $$.
    - Remove the node, connect its neighbors with the new resistance.
 
 2. **Parallel Connections**:
