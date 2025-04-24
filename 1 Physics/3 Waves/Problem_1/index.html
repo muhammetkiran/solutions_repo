@@ -185,7 +185,6 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<hr/>
 <h2 id="algorithm-description">Algorithm Description</h2>
 <p>The goal is to compute the equivalent resistance between two nodes (source and sink) in a circuit modeled as an undirected graph, where:</p>
 <ul>
@@ -197,7 +196,7 @@
 <ol>
 <li><strong>Series Connections</strong>:</li>
 <li>Identify a node with degree 2, connected to two resistors.</li>
-<li>Replace with a single resistor: $ R_{\text{series}} = R_1 + R_2$</li>
+<li>Replace with a single resistor: $$ R_{\text{series}} = R_1 + R_2 $$</li>
 <li>
 <p>Remove the node, connect its neighbors with the new resistance.</p>
 </li>
@@ -205,7 +204,7 @@
 <p><strong>Parallel Connections</strong>:</p>
 </li>
 <li>Identify multiple edges between two nodes.</li>
-<li>Replace with one edge: $R_{\text{parallel}} = \frac{R_1 \cdot R_2}{R_1 + R_2} $, or $\frac{1}{R_{\text{parallel}}} = \frac{1}{R_1} + \frac{1}{R_2} $</li>
+<li>Replace with one edge: $ R_{\text{parallel}} = \frac{R_1 \cdot R_2}{R_1 + R_2} $ or $ \frac{1}{R_{\text{parallel}}} = \frac{1}{R_1} + \frac{1}{R_2} $</li>
 <li>
 <p>Update the graph with the new edge.</p>
 </li>
@@ -225,7 +224,7 @@
 <h3 id="explanation">Explanation</h3>
 <ul>
 <li><strong>Series</strong>: A degree-2 node (n1–R1–n–R2–n2) is reduced to n1–(R1 + R2)–n2, removing n.</li>
-<li><strong>Parallel</strong>: Multiple edges between nodes are combined using conductance: $\frac{1}{R_{\text{parallel}}} = \sum \frac{1}{R_i} $</li>
+<li><strong>Parallel</strong>: Multiple edges between nodes are combined using conductance: $$ \frac{1}{R_{\text{parallel}}} = \sum \frac{1}{R_i} $$</li>
 <li><strong>Nested Handling</strong>: Iterative reductions simplify inner structures first, with DFS aiding pattern detection.</li>
 <li><strong>Edge Cases</strong>: Avoids self-loops and ensures a valid path exists.</li>
 </ul>
@@ -235,12 +234,12 @@
 <li><strong>Circuit</strong>: 2Ω and 3Ω in series between A and B via C.</li>
 <li><strong>Graph</strong>: A --(2Ω)--&gt; C --(3Ω)--&gt; B</li>
 <li><strong>Steps</strong>:</li>
-<li>C has degree 2. Series: $2 + 3 = 5Ω $</li>
+<li>C has degree 2. Series: $$ 2 + 3 = 5Ω $$</li>
 <li>Remove C, add A --(5Ω)--&gt; B.</li>
 <li><strong>Output</strong>: 5Ω</li>
 <li><strong>Verification</strong>:</li>
-<li>Current at 1V: $I = \frac{1}{5} = 0.2A $</li>
-<li>Voltage drops: $V_1 = 0.2 \cdot 2 = 0.4V $, $V_2 = 0.2 \cdot 3 = 0.6V $, total $0.4 + 0.6 = 1V $</li>
+<li>Current at 1V: $$ I = \frac{1}{5} = 0.2A $$</li>
+<li>Voltage drops: $$ V_1 = 0.2 \cdot 2 = 0.4V $$ $$ V_2 = 0.2 \cdot 3 = 0.6V $$ total $$ 0.4 + 0.6 = 1V $$</li>
 </ul>
 <h3 id="efficiency-and-improvements">Efficiency and Improvements</h3>
 <ul>
