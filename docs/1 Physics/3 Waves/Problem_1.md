@@ -1,6 +1,4 @@
 
----
-
 ## Algorithm Description
 
 The goal is to compute the equivalent resistance between two nodes (source and sink) in a circuit modeled as an undirected graph, where:
@@ -13,12 +11,12 @@ The algorithm iteratively simplifies the graph by reducing series and parallel r
 ### Steps:
 1. **Series Connections**:
    - Identify a node with degree 2, connected to two resistors.
-   - Replace with a single resistor: $ R_{\text{series}} = R_1 + R_2$
+   - Replace with a single resistor: $$ R_{\text{series}} = R_1 + R_2 $$
    - Remove the node, connect its neighbors with the new resistance.
 
 2. **Parallel Connections**:
    - Identify multiple edges between two nodes.
-   - Replace with one edge: $R_{\text{parallel}} = \frac{R_1 \cdot R_2}{R_1 + R_2} $, or $\frac{1}{R_{\text{parallel}}} = \frac{1}{R_1} + \frac{1}{R_2} $
+   - Replace with one edge: $ R_{\text{parallel}} = \frac{R_1 \cdot R_2}{R_1 + R_2} $ or $ \frac{1}{R_{\text{parallel}}} = \frac{1}{R_1} + \frac{1}{R_2} $
    - Update the graph with the new edge.
 
 3. **Iteration**:
@@ -33,7 +31,7 @@ The algorithm iteratively simplifies the graph by reducing series and parallel r
 ### Explanation
 
 - **Series**: A degree-2 node (n1–R1–n–R2–n2) is reduced to n1–(R1 + R2)–n2, removing n.
-- **Parallel**: Multiple edges between nodes are combined using conductance: $\frac{1}{R_{\text{parallel}}} = \sum \frac{1}{R_i} $
+- **Parallel**: Multiple edges between nodes are combined using conductance: $$ \frac{1}{R_{\text{parallel}}} = \sum \frac{1}{R_i} $$
 - **Nested Handling**: Iterative reductions simplify inner structures first, with DFS aiding pattern detection.
 - **Edge Cases**: Avoids self-loops and ensures a valid path exists.
 
@@ -43,12 +41,12 @@ The algorithm iteratively simplifies the graph by reducing series and parallel r
 - **Circuit**: 2Ω and 3Ω in series between A and B via C.
 - **Graph**: A --(2Ω)--> C --(3Ω)--> B
 - **Steps**:
-  1. C has degree 2. Series: $2 + 3 = 5Ω $
+  1. C has degree 2. Series: $$ 2 + 3 = 5Ω $$
   2. Remove C, add A --(5Ω)--> B.
 - **Output**: 5Ω
 - **Verification**:
-  - Current at 1V: $I = \frac{1}{5} = 0.2A $
-  - Voltage drops: $V_1 = 0.2 \cdot 2 = 0.4V $, $V_2 = 0.2 \cdot 3 = 0.6V $, total $0.4 + 0.6 = 1V $
+  - Current at 1V: $$ I = \frac{1}{5} = 0.2A $$
+  - Voltage drops: $$ V_1 = 0.2 \cdot 2 = 0.4V $$ $$ V_2 = 0.2 \cdot 3 = 0.6V $$ total $$ 0.4 + 0.6 = 1V $$
 
 ### Efficiency and Improvements
 
