@@ -16,7 +16,7 @@ The algorithm iteratively simplifies the graph by reducing series and parallel r
 
 2. **Parallel Connections**:
    - Identify multiple edges between two nodes.
-   - Replace with one edge: $ R_{\text{parallel}} = \frac{R_1 \cdot R_2}{R_1 + R_2} $ or $ \frac{1}{R_{\text{parallel}}} = \frac{1}{R_1} + \frac{1}{R_2} $
+   - Replace with one edge: $R_{\text{parallel}} = \frac{R_1 \cdot R_2}{R_1 + R_2}$ or $\frac{1}{R_{\text{parallel}}} = \frac{1}{R_1} + \frac{1}{R_2}$
    - Update the graph with the new edge.
 
 3. **Iteration**:
