@@ -31,7 +31,7 @@ The algorithm iteratively simplifies the graph by reducing series and parallel r
 ### Explanation
 
 - **Series**: A degree-2 node (n1–R1–n–R2–n2) is reduced to n1–(R1 + R2)–n2, removing n.
-- **Parallel**: Multiple edges between nodes are combined using conductance: $$ \frac{1}{R_{\text{parallel}}} = \sum \frac{1}{R_i} $$
+- **Parallel**: Multiple edges between nodes are combined using conductance: $\frac{1}{R_{\text{parallel}}} = \sum \frac{1}{R_i}$
 - **Nested Handling**: Iterative reductions simplify inner structures first, with DFS aiding pattern detection.
 - **Edge Cases**: Avoids self-loops and ensures a valid path exists.
 
@@ -41,12 +41,12 @@ The algorithm iteratively simplifies the graph by reducing series and parallel r
 - **Circuit**: 2Ω and 3Ω in series between A and B via C.
 - **Graph**: A --(2Ω)--> C --(3Ω)--> B
 - **Steps**:
-  1. C has degree 2. Series: $$ 2 + 3 = 5Ω $$
+  1. C has degree 2. Series: $2 + 3 = 5Ω$
   2. Remove C, add A --(5Ω)--> B.
 - **Output**: 5Ω
 - **Verification**:
-  - Current at 1V: $$ I = \frac{1}{5} = 0.2A $$
-  - Voltage drops: $$ V_1 = 0.2 \cdot 2 = 0.4V $$ $$ V_2 = 0.2 \cdot 3 = 0.6V $$ total $$ 0.4 + 0.6 = 1V $$
+  - Current at 1V: $I = \frac{1}{5} = 0.2A$
+  - Voltage drops:$ V_1 = 0.2 \cdot 2 = 0.4V$  $V_2 = 0.2 \cdot 3 = 0.6V$ total $0.4 + 0.6 = 1V$
 
 ### Efficiency and Improvements
 
