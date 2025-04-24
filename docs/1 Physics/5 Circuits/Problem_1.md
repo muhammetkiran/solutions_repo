@@ -1,6 +1,3 @@
-Below is a concise English translation of the algorithm description for calculating equivalent resistance using graph theory, tailored to **Option 1: Simplified Task – Algorithm Description**. It includes more numerical calculations as requested, maintains the provided style, and reduces verbosity for brevity while preserving clarity and detail.
-
----
 
 ## Algorithm Description
 
@@ -30,37 +27,6 @@ The algorithm iteratively simplifies the graph by reducing series and parallel r
    - Stop when the graph has two nodes connected by one edge, its weight being the equivalent resistance.
    - Assumes series-parallel reducible circuits; otherwise, additional methods (e.g., delta-wye) are needed.
 
-### Pseudocode
-
-```pseudocode
-Function CalculateEquivalentResistance(Graph G, Node source, Node sink):
-    While G has > 2 nodes OR (2 nodes with source, sink connected):
-        // Series reduction
-        For node n in G:
-            If degree(n) == 2:
-                Neighbors n1, n2; R1 = edge(n1, n); R2 = edge(n, n2)
-                R_series = R1 + R2
-                Remove n
-                If n1 != n2:
-                    Add edge(n1, n2, R_series)
-                Continue
-
-        // Parallel reduction
-        For nodes u, v in G:
-            If multiple edges between u, v:
-                R_i = resistances of edges
-                Conductance = sum(1/R_i)
-                R_parallel = 1 / Conductance
-                Remove edges(u, v)
-                Add edge(u, v, R_parallel)
-                Continue
-
-        Break // No reductions possible
-
-    If edge(source, sink) exists:
-        Return edge weight
-    Return infinity // No path
-```
 
 ### Explanation
 
@@ -75,7 +41,7 @@ Function CalculateEquivalentResistance(Graph G, Node source, Node sink):
 - **Circuit**: 2Ω and 3Ω in series between A and B via C.
 - **Graph**: A --(2Ω)--> C --(3Ω)--> B
 - **Steps**:
-  1. C has degree 2. Series:$$ 2 + 3 = 5Ω$$.
+  1. C has degree 2. Series:$$2 + 3 = 5Ω$$.
   2. Remove C, add A --(5Ω)--> B.
 - **Output**: 5Ω
 - **Verification**:
@@ -107,4 +73,3 @@ This algorithm efficiently computes equivalent resistance for series-parallel ci
 
 --- 
 
-This version is streamlined, incorporates additional numerical verifications (e.g., currents, voltages), and aligns with the provided style while keeping transactions concise.
