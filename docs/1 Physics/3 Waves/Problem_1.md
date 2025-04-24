@@ -46,7 +46,7 @@ The algorithm iteratively simplifies the graph by reducing series and parallel r
 - **Output**: 5Ω
 - **Verification**:
   - Current at 1V: $I = \frac{1}{5} = 0.2A$
-  - Voltage drops:$ V_1 = 0.2 \cdot 2 = 0.4V$  $V_2 = 0.2 \cdot 3 = 0.6V$ total $0.4 + 0.6 = 1V$
+  - Voltage drops: $V_1 = 0.2 \cdot 2 = 0.4V$  $V_2 = 0.2 \cdot 3 = 0.6V$ total $0.4 + 0.6 = 1V$
 
 ### Efficiency and Improvements
 
