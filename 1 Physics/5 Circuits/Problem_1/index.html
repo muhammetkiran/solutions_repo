@@ -80,8 +80,6 @@
 <ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="#steps">Steps:</a>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#pseudocode">Pseudocode</a>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#explanation">Explanation</a>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#example-applications">Example Applications</a>
@@ -187,8 +185,6 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<p>Below is a concise English translation of the algorithm description for calculating equivalent resistance using graph theory, tailored to <strong>Option 1: Simplified Task – Algorithm Description</strong>. It includes more numerical calculations as requested, maintains the provided style, and reduces verbosity for brevity while preserving clarity and detail.</p>
-<hr/>
 <h2 id="algorithm-description">Algorithm Description</h2>
 <p>The goal is to compute the equivalent resistance between two nodes (source and sink) in a circuit modeled as an undirected graph, where:</p>
 <ul>
@@ -225,35 +221,6 @@
 <li>Stop when the graph has two nodes connected by one edge, its weight being the equivalent resistance.</li>
 <li>Assumes series-parallel reducible circuits; otherwise, additional methods (e.g., delta-wye) are needed.</li>
 </ol>
-<h3 id="pseudocode">Pseudocode</h3>
-<pre><code class="language-pseudocode">Function CalculateEquivalentResistance(Graph G, Node source, Node sink):
-    While G has &gt; 2 nodes OR (2 nodes with source, sink connected):
-        // Series reduction
-        For node n in G:
-            If degree(n) == 2:
-                Neighbors n1, n2; R1 = edge(n1, n); R2 = edge(n, n2)
-                R_series = R1 + R2
-                Remove n
-                If n1 != n2:
-                    Add edge(n1, n2, R_series)
-                Continue
-
-        // Parallel reduction
-        For nodes u, v in G:
-            If multiple edges between u, v:
-                R_i = resistances of edges
-                Conductance = sum(1/R_i)
-                R_parallel = 1 / Conductance
-                Remove edges(u, v)
-                Add edge(u, v, R_parallel)
-                Continue
-
-        Break // No reductions possible
-
-    If edge(source, sink) exists:
-        Return edge weight
-    Return infinity // No path
-</code></pre>
 <h3 id="explanation">Explanation</h3>
 <ul>
 <li><strong>Series</strong>: A degree-2 node (n1–R1–n–R2–n2) is reduced to n1–(R1 + R2)–n2, removing n.</li>
@@ -267,7 +234,7 @@
 <li><strong>Circuit</strong>: 2Ω and 3Ω in series between A and B via C.</li>
 <li><strong>Graph</strong>: A --(2Ω)--&gt; C --(3Ω)--&gt; B</li>
 <li><strong>Steps</strong>:</li>
-<li>C has degree 2. Series:$$ 2 + 3 = 5Ω$$.</li>
+<li>C has degree 2. Series:<span class="arithmatex">\(<span class="arithmatex">\(2 + 3 = 5Ω\)</span>\)</span>.</li>
 <li>Remove C, add A --(5Ω)--&gt; B.</li>
 <li><strong>Output</strong>: 5Ω</li>
 <li><strong>Verification</strong>:</li>
@@ -293,7 +260,6 @@
 <h3 id="conclusion">Conclusion</h3>
 <p>This algorithm efficiently computes equivalent resistance for series-parallel circuits, with numerical calculations (conductance, currents, voltages) ensuring accuracy. Iterative reductions handle nested structures, and extensions like delta-wye can address complex graphs.</p>
 <hr/>
-<p>This version is streamlined, incorporates additional numerical verifications (e.g., currents, voltages), and aligns with the provided style while keeping transactions concise.</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
