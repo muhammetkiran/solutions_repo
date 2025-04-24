@@ -99,6 +99,8 @@ Function CalculateEquivalentResistance(Graph G, Node source, Node sink):
   - Optimize with NetworkX for graph operations.
   - Use high-precision arithmetic for small resistances.
 
+[Graph-Based Equivalent Resistance Calculator](circuıt.html)
+
 ### Conclusion
 
 This algorithm efficiently computes equivalent resistance for series-parallel circuits, with numerical calculations (conductance, currents, voltages) ensuring accuracy. Iterative reductions handle nested structures, and extensions like delta-wye can address complex graphs.
