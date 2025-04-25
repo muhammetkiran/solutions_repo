@@ -194,17 +194,15 @@
 <hr/>
 <h2 id="wave-model">Wave Model</h2>
 <p>Each point source emits a wave described by:</p>
-<p>$
-u_i(x, y, t) = A \cdot \cos(k r_i - \omega t + \phi)
-$</p>
+<p><span class="arithmatex">\(u_i(x, y, t) = A \cdot \cos(k r_i - \omega t + \phi)\)</span></p>
 <p>Where:
-- $ u_i $: displacement due to source <em>i</em>.
-- $ A $: amplitude.
-- $ k = \frac{2\pi}{\lambda} $: wave number.
-- $ \omega = 2\pi f $: angular frequency.
-- $ r_i $: distance from source <em>i</em> to point <span class="arithmatex">\((x, y)\)</span>.
-- $ \phi $: initial phase (assumed 0 here).
-- $ t $: time.</p>
+- <span class="arithmatex">\(u_i\)</span>: displacement due to source <em>i</em>.
+- <span class="arithmatex">\(A\)</span>: amplitude.
+- $k = \frac{2\pi}{\lambda} $: wave number.
+- <span class="arithmatex">\(\omega = 2\pi f\)</span>: angular frequency.
+- <span class="arithmatex">\(r_i\)</span>: distance from source <em>i</em> to point <span class="arithmatex">\((x, y)\)</span>.
+- <span class="arithmatex">\(\phi\)</span>: initial phase (assumed 0 here).
+- <span class="arithmatex">\(t\)</span>: time.</p>
 <p>The total displacement at any point is:</p>
 <div class="arithmatex">\[
 u(x, y, t) = \sum_{i=1}^{N} u_i(x, y, t)
