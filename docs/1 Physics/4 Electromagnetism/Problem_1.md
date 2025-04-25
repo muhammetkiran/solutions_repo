@@ -85,12 +85,12 @@ $$
 
 | Symbol     | Meaning                     | Typical Value          |
 |------------|-----------------------------|-------------------------|
-| $ q $    | Particle charge              | $ 1.6 \times 10^{-19} \, \text{C} $ |
-| $ m $    | Particle mass                | $ 9.1 \times 10^{-31} \, \text{kg} $ (electron) |
-| $ \vec{E} $ | Electric field vector     | e.g., $ (0, 0, 100) \, \text{V/m} $ |
-| $ \vec{B} $ | Magnetic field vector     | e.g., $ (0, 0, 1) \, \text{T} $ |
-| $ \vec{v}_0 $ | Initial velocity vector | User-defined            |
-| $ \Delta t $ | Time step                | $ 1 \times 10^{-11} \, \text{s} $ |
+| $q$    | Particle charge              | $ 1.6 \times 10^{-19} \, \text{C}$ |
+| $m$    | Particle mass                | $ 9.1 \times 10^{-31} \, \text{kg}$ (electron) |
+| $\vec{E}$ | Electric field vector     | e.g., $ (0, 0, 100) \, \text{V/m}$ |
+| $\vec{B}$ | Magnetic field vector     | e.g., $ (0, 0, 1) \, \text{T}$ |
+| $\vec{v}_0$ | Initial velocity vector | User-defined            |
+| $\Delta t$ | Time step                | $ 1 \times 10^{-11} \, \text{s}$ |
 
 
 ---
