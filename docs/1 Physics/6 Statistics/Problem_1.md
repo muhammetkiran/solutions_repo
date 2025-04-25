@@ -86,7 +86,7 @@ We will plot histograms of the sample means for each sample size, and observe th
 - **Predicting Outcomes in Financial Models**:  
    Financial analysts use the CLT to model returns and risks by taking large samples of historical data to predict future performance.
 
----
+[Central Limit Theorem Simulation](qwe.html)
 
 ###  Extension Ideas
 
