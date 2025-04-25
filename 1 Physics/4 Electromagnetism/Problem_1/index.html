@@ -72,6 +72,24 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#problem-1-simulating-the-effects-of-the-lorentz-force">Problem 1 — Simulating the Effects of the Lorentz Force</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mathematical-background">Mathematical Background</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#simulation-scenarios">Simulation Scenarios</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#numerical-method">Numerical Method</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#parameters">🧪 Parameters</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-plan">Implementation Plan</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#visual-output">Visual Output</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#real-world-applications">Real-World Applications</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -171,7 +189,159 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-1">Problem 1</h1>
+<h2 id="electromagnetism">Electromagnetism</h2>
+<h3 id="problem-1-simulating-the-effects-of-the-lorentz-force">Problem 1 — Simulating the Effects of the Lorentz Force</h3>
+<hr/>
+<h3 id="motivation">Motivation</h3>
+<p>The <strong>Lorentz force</strong> governs how charged particles move in the presence of <strong>electric</strong> and <strong>magnetic</strong> fields. It plays a central role in devices such as:</p>
+<ul>
+<li><strong>Cyclotrons and synchrotrons</strong> (used in particle accelerators),</li>
+<li><strong>Mass spectrometers</strong> (for analyzing atomic and molecular masses),</li>
+<li><strong>Plasma confinement devices</strong> (e.g., in fusion reactors).</li>
+</ul>
+<p>By simulating the motion of a charged particle under the Lorentz force, we gain insight into the fundamental mechanisms behind electromagnetic control and guidance systems.</p>
+<hr/>
+<h3 id="mathematical-background">Mathematical Background</h3>
+<p>The <strong>Lorentz force</strong> acting on a particle with charge $ q $, moving with velocity $ \vec{v} $, in electric field $ \vec{E} $ and magnetic field $ \vec{B} $ is given by:</p>
+<div class="arithmatex">\[
+\vec{F} = q(\vec{E} + \vec{v} \times \vec{B})
+\]</div>
+<p>According to Newton's second law:</p>
+<div class="arithmatex">\[
+\vec{F} = m \cdot \frac{d\vec{v}}{dt}
+\]</div>
+<p>Combining both expressions:</p>
+<div class="arithmatex">\[
+m \cdot \frac{d\vec{v}}{dt} = q(\vec{E} + \vec{v} \times \vec{B})
+\]</div>
+<p>To simulate particle motion, we numerically solve this differential equation using time-stepping methods (e.g., <strong>Euler</strong> or <strong>Runge-Kutta</strong>).</p>
+<hr/>
+<h3 id="simulation-scenarios">Simulation Scenarios</h3>
+<p>We explore the particle's trajectory in three configurations:</p>
+<ol>
+<li><strong>Uniform Magnetic Field Only</strong> </li>
+<li>Expect circular or helical motion.</li>
+<li>Larmor radius:<br/>
+     $$
+     r_L = \frac{mv_\perp}{|qB|}
+     $$</li>
+<li>
+<p>Cyclotron frequency:<br/>
+     $$
+     \omega_c = \frac{|qB|}{m}
+     $$</p>
+</li>
+<li>
+<p><strong>Uniform Electric and Magnetic Fields</strong> </p>
+</li>
+<li>
+<p>Complex trajectory depending on field orientations and strengths.</p>
+</li>
+<li>
+<p><strong>Crossed $ \vec{E} \perp \vec{B} $</strong> Fields  </p>
+</li>
+<li><strong>$ \vec{E} \times \vec{B} $</strong> drift:
+     $$
+     \vec{v}_{\text{drift}} = \frac{\vec{E} \times \vec{B}}{B^2}
+     $$</li>
+</ol>
+<hr/>
+<h3 id="numerical-method">Numerical Method</h3>
+<p>We use the <strong>Euler method</strong> for simplicity, updating velocity and position iteratively:</p>
+<div class="arithmatex">\[
+\vec{v}_{n+1} = \vec{v}_n + \frac{q}{m} (\vec{E} + \vec{v}_n \times \vec{B}) \cdot \Delta t
+$$
+$$
+\vec{r}_{n+1} = \vec{r}_n + \vec{v}_{n+1} \cdot \Delta t
+\]</div>
+<p>(Alternatively, a <strong>4th-order Runge-Kutta method</strong> can be used for better accuracy.)</p>
+<hr/>
+<h3 id="parameters">🧪 Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+<th>Typical Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$ q $</td>
+<td>Particle charge</td>
+<td>$ 1.6 \times 10^{-19} \, \text{C} $</td>
+</tr>
+<tr>
+<td>$ m $</td>
+<td>Particle mass</td>
+<td>$ 9.1 \times 10^{-31} \, \text{kg} $ (electron)</td>
+</tr>
+<tr>
+<td>$ \vec{E} $</td>
+<td>Electric field vector</td>
+<td>e.g., $ (0, 0, 100) \, \text{V/m} $</td>
+</tr>
+<tr>
+<td>$ \vec{B} $</td>
+<td>Magnetic field vector</td>
+<td>e.g., $ (0, 0, 1) \, \text{T} $</td>
+</tr>
+<tr>
+<td>$ \vec{v}_0 $</td>
+<td>Initial velocity vector</td>
+<td>User-defined</td>
+</tr>
+<tr>
+<td>$ \Delta t $</td>
+<td>Time step</td>
+<td>$ 1 \times 10^{-11} \, \text{s} $</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h3 id="implementation-plan">Implementation Plan</h3>
+<ul>
+<li>[ ] Step 1: Implement basic Euler integration.</li>
+<li>[ ] Step 2: Visualize motion in 2D and 3D using <code>matplotlib</code>.</li>
+<li>[ ] Step 3: Allow interactive control of fields and initial velocity.</li>
+<li>[ ] Step 4: Compare effects of different configurations.</li>
+</ul>
+<hr/>
+<h3 id="visual-output">Visual Output</h3>
+<p>For each simulation:</p>
+<ul>
+<li><strong>2D Trajectory</strong>: $ x(t), y(t) $</li>
+<li><strong>3D Trajectory</strong>: $ x(t), y(t), z(t) $</li>
+<li>Highlight:</li>
+<li>Circular or spiral motion</li>
+<li>Drift due to crossed fields</li>
+<li>Larmor radius changes with field strength</li>
+</ul>
+<hr/>
+<h3 id="real-world-applications">Real-World Applications</h3>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>Lorentz Force Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cyclotron</td>
+<td>Particles spiral outward under magnetic field</td>
+</tr>
+<tr>
+<td>Mass Spectrometer</td>
+<td>Different trajectories reveal mass/charge ratio</td>
+</tr>
+<tr>
+<td>Fusion Reactors (Tokamak)</td>
+<td>Magnetic confinement of plasma</td>
+</tr>
+</tbody>
+</table>
+<p>-</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
