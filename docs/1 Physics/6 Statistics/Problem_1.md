@@ -88,6 +88,8 @@ We will plot histograms of the sample means for each sample size, and observe th
 
 [Central Limit Theorem Simulation](qwe.html)
 
+[Central Limit Theorem Simulation 2](statıc.html)
+
 ###  Extension Ideas
 
 1. **Impact of Population Variance**:  
