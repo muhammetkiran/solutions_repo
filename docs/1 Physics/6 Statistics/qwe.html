@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Limit Theorem Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .section {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        canvas {
+            width: 100% !important;
+            height: 250px !important;
+        }
+        #error {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        #info {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h1>Central Limit Theorem Simulation</h1>
+        <p>
+            The Central Limit Theorem (CLT) states that the distribution of sample means approaches a normal distribution as the sample size increases, regardless of the population's distribution. This simulation shows this by plotting histograms of sample means for different sample sizes (n=5, 10, 30, 50). The red curve represents the theoretical normal distribution. Adjust parameters and observe the convergence to normality.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Parameters</h2>
+        <div class="grid">
+            <div>
+                <label>Distribution</label>
+                <select id="distribution">
+                    <option value="uniform">Uniform</option>
+                    <option value="exponential">Exponential</option>
+                    <option value="binomial">Binomial</option>
+                </select>
+            </div>
+            <div>
+                <label>Number of Samples</label>
+                <input type="number" id="numSamples" value="1000" min="100" step="100">
+            </div>
+            <div id="dist-params"></div>
+        </div>
+        <div style="margin-top: 10px;">
+            <button onclick="runSimulation()">Run Simulation</button>
+            <button onclick="resetParameters()">Reset</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Population Distribution</h2>
+        <canvas id="populationChart"></canvas>
+    </div>
+
+    <div class="grid">
+        <div class="section">
+            <h2>Sample Size n=5</h2>
+            <canvas id="chart5"></canvas>
+        </div>
+        <div class="section">
+            <h2>Sample Size n=10</h2>
+            <canvas id="chart10"></canvas>
+        </div>
+        <div class="section">
+            <h2>Sample Size n=30</h2>
+            <canvas id="chart30"></canvas>
+        </div>
+        <div class="section">
+            <h2>Sample Size n=50</h2>
+            <canvas id="chart50"></canvas>
+        </div>
+    </div>
+
+    <div class="section" id="info">
+        <h2>Results</h2>
+        <div id="result-text">Select a distribution and run the simulation to see results.</div>
+    </div>
+    <div id="error"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Error handling
+        function showError(message) {
+            document.getElementById('error').innerText = `Error: ${message}`;
+            console.error(message);
+        }
+
+        // Default parameters
+        const defaultParams = {
+            uniform: { min: 0, max: 1 },
+            exponential: { lambda: 1 },
+            binomial: { n: 10, p: 0.5 },
+            numSamples: 1000
+        };
+
+        // Random number generators
+        function uniformRandom(min, max) {
+            return min + Math.random() * (max - min);
+        }
+
+        function exponentialRandom(lambda) {
+            return -Math.log(1 - Math.random()) / lambda;
+        }
+
+        function binomialRandom(n, p) {
+            let sum = 0;
+            for (let i = 0; i < n; i++) {
+                sum += Math.random() < p ? 1 : 0;
+            }
+            return sum;
+        }
+
+        // Generate population
+        function generatePopulation(distribution, params, size) {
+            try {
+                const population = new Array(size);
+                if (distribution === 'uniform') {
+                    for (let i = 0; i < size; i++) {
+                        population[i] = uniformRandom(params.min, params.max);
+                    }
+                } else if (distribution === 'exponential') {
+                    for (let i = 0; i < size; i++) {
+                        population[i] = exponentialRandom(params.lambda);
+                    }
+                } else if (distribution === 'binomial') {
+                    for (let i = 0; i < size; i++) {
+                        population[i] = binomialRandom(params.n, params.p);
+                    }
+                }
+                console.log(`Generated ${distribution} population:`, population.slice(0, 5));
+                return population;
+            } catch (e) {
+                showError("Error generating population: " + e.message);
+                return [];
+            }
+        }
+
+        // Calculate sample mean
+        function sampleMean(population, sampleSize) {
+            try {
+                let sum = 0;
+                for (let i = 0; i < sampleSize; i++) {
+                    const index = Math.floor(Math.random() * population.length);
+                    sum += population[index];
+                }
+                return sum / sampleSize;
+            } catch (e) {
+                showError("Error calculating sample mean: " + e.message);
+                return 0;
+            }
+        }
+
+        // Generate sampling distribution
+        function generateSamplingDistribution(population, sampleSize, numSamples) {
+            try {
+                const sampleMeans = new Array(numSamples);
+                for (let i = 0; i < numSamples; i++) {
+                    sampleMeans[i] = sampleMean(population, sampleSize);
+                }
+                console.log(`Generated sampling distribution (n=${sampleSize}):`, sampleMeans.slice(0, 5));
+                return sampleMeans;
+            } catch (e) {
+                showError("Error generating sampling distribution: " + e.message);
+                return [];
+            }
+        }
+
+        // Create histogram data
+        function createHistogramData(data, bins) {
+            try {
+                if (!data.length) throw new Error("Empty data array");
+                const min = Math.min(...data);
+                const max = Math.max(...data);
+                const binWidth = (max - min) / bins || 1; // Avoid division by zero
+                const histogram = new Array(bins).fill(0);
+                const binEdges = new Array(bins + 1).fill(0).map((_, i) => min + i * binWidth);
+
+                data.forEach(value => {
+                    const binIndex = Math.min(Math.floor((value - min) / binWidth), bins - 1);
+                    histogram[binIndex]++;
+                });
+
+                console.log(`Histogram created: min=${min}, max=${max}, binWidth=${binWidth}`);
+                return { histogram, binEdges, min, max };
+            } catch (e) {
+                showError("Error creating histogram: " + e.message);
+                return { histogram: [], binEdges: [], min: 0, max: 0 };
+            }
+        }
+
+        // Normal distribution PDF
+        function normalPDF(x, mean, std) {
+            return (1 / (std * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - mean) / std) ** 2);
+        }
+
+        // Chart.js setup
+        const charts = {};
+        function initCharts() {
+            try {
+                const chartIds = ['population', '5', '10', '30', '50'];
+                chartIds.forEach(id => {
+                    const canvas = document.getElementById(`chart${id}`);
+                    if (!canvas) {
+                        showError(`Canvas chart${id} not found in DOM`);
+                        return;
+                    }
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) {
+                        showError(`Failed to get 2D context for chart${id}`);
+                        return;
+                    }
+                    charts[id] = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [],
+                            datasets: [
+                                {
+                                    label: id === 'population' ? 'Population' : 'Sample Means',
+                                    data: [],
+                                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                                    borderColor: 'rgba(0, 123, 255, 1)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: id === 'population' ? '' : 'Normal Distribution',
+                                    type: 'line',
+                                    data: [],
+                                    borderColor: 'rgba(220, 38, 38, 1)',
+                                    borderWidth: 2,
+                                    fill: false,
+                                    pointRadius: 0,
+                                    hidden: id === 'population'
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: { title: { display: true, text: id === 'population' ? 'Value' : 'Sample Mean' } },
+                                y: { title: { display: true, text: 'Frequency' } }
+                            },
+                            plugins: {
+                                title: { display: true, text: id === 'population' ? 'Population Distribution' : `Sampling Distribution (n=${id})` }
+                            }
+                        }
+                    });
+                    console.log(`Chart ${id} initialized successfully`);
+                });
+                if (Object.keys(charts).length !== chartIds.length) {
+                    showError(`Only ${Object.keys(charts).length} of ${chartIds.length} charts initialized`);
+                } else {
+                    console.log("All charts initialized successfully");
+                }
+            } catch (e) {
+                showError("Error initializing charts: " + e.message);
+            }
+        }
+
+        function updateChart(id, histogram, binEdges, mean, std) {
+            try {
+                if (!charts[id]) {
+                    showError(`Chart ${id} not initialized, skipping update`);
+                    return;
+                }
+                const normalData = id === 'population' ? [] : binEdges.map(x => ({
+                    x: x,
+                    y: normalPDF(x, mean, std) * histogram.reduce((a, b) => a + b, 0) * (binEdges[1] - binEdges[0])
+                }));
+                charts[id].data.labels = binEdges.slice(0, -1).map(e => e.toFixed(3));
+                charts[id].data.datasets[0].data = histogram;
+                charts[id].data.datasets[1].data = normalData.map(d => d.y);
+                charts[id].update();
+                console.log(`Chart ${id} updated with ${histogram.length} bars`);
+            } catch (e) {
+                showError(`Error updating chart ${id}: ${e.message}`);
+            }
+        }
+
+        // Update distribution parameters UI
+        function updateDistParams() {
+            try {
+                const distribution = document.getElementById('distribution').value;
+                let html = '';
+                if (distribution === 'uniform') {
+                    html = `
+                        <div>
+                            <label>Min</label>
+                            <input type="number" id="uniformMin" value="${defaultParams.uniform.min}" step="0.1">
+                        </div>
+                        <div>
+                            <label>Max</label>
+                            <input type="number" id="uniformMax" value="${defaultParams.uniform.max}" step="0.1">
+                        </div>
+                    `;
+                } else if (distribution === 'exponential') {
+                    html = `
+                        <div>
+                            <label>Lambda</label>
+                            <input type="number" id="expLambda" value="${defaultParams.exponential.lambda}" min="0.1" step="0.1">
+                        </div>
+                    `;
+                } else if (distribution === 'binomial') {
+                    html = `
+                        <div>
+                            <label>n (Trials)</label>
+                            <input type="number" id="binomialN" value="${defaultParams.binomial.n}" min="1" step="1">
+                        </div>
+                        <div>
+                            <label>p (Probability)</label>
+                            <input type="number" id="binomialP" value="${defaultParams.binomial.p}" min="0" max="1" step="0.1">
+                        </div>
+                    `;
+                }
+                document.getElementById('dist-params').innerHTML = html;
+                console.log(`Distribution parameters updated for ${distribution}`);
+            } catch (e) {
+                showError("Error updating distribution parameters: " + e.message);
+            }
+        }
+
+        // Reset parameters
+        function resetParameters() {
+            try {
+                document.getElementById('distribution').value = 'uniform';
+                document.getElementById('numSamples').value = defaultParams.numSamples;
+                updateDistParams();
+                runSimulation();
+                console.log("Parameters reset");
+            } catch (e) {
+                showError("Error resetting parameters: " + e.message);
+            }
+        }
+
+        // Run simulation
+        function runSimulation() {
+            document.getElementById('error').innerText = '';
+            try {
+                const distribution = document.getElementById('distribution').value;
+                const numSamples = parseInt(document.getElementById('numSamples').value) || defaultParams.numSamples;
+                let params = {};
+                if (distribution === 'uniform') {
+                    params = {
+                        min: parseFloat(document.getElementById('uniformMin')?.value) || defaultParams.uniform.min,
+                        max: parseFloat(document.getElementById('uniformMax')?.value) || defaultParams.uniform.max
+                    };
+                    if (params.max <= params.min) throw new Error("Uniform max must be greater than min");
+                } else if (distribution === 'exponential') {
+                    params = {
+                        lambda: parseFloat(document.getElementById('expLambda')?.value) || defaultParams.exponential.lambda
+                    };
+                    if (params.lambda <= 0) throw new Error("Lambda must be positive");
+                } else if (distribution === 'binomial') {
+                    params = {
+                        n: parseInt(document.getElementById('binomialN')?.value) || defaultParams.binomial.n,
+                        p: parseFloat(document.getElementById('binomialP')?.value) || defaultParams.binomial.p
+                    };
+                    if (params.n < 1) throw new Error("Binomial n must be at least 1");
+                    if (params.p < 0 || params.p > 1) throw new Error("Binomial p must be between 0 and 1");
+                }
+
+                console.log(`Running simulation: distribution=${distribution}, numSamples=${numSamples}, params=`, params);
+
+                // Generate population
+                const populationSize = 100000;
+                const population = generatePopulation(distribution, params, populationSize);
+                if (population.length === 0) throw new Error("Population generation failed");
+
+                // Population histogram
+                const { histogram: popHist, binEdges: popEdges } = createHistogramData(population, 30);
+                if (popHist.length === 0) throw new Error("Population histogram is empty");
+                updateChart('population', popHist, popEdges, 0, 0);
+
+                // Sampling distributions
+                const sampleSizes = [5, 10, 30, 50];
+                const results = sampleSizes.map(sampleSize => {
+                    const sampleMeans = generateSamplingDistribution(population, sampleSize, numSamples);
+                    if (sampleMeans.length === 0) return null;
+                    const mean = sampleMeans.reduce((sum, x) => sum + x, 0) / numSamples;
+                    const variance = sampleMeans.reduce((sum, x) => sum + (x - mean) ** 2, 0) / (numSamples - 1);
+                    const std = Math.sqrt(variance);
+                    const { histogram, binEdges } = createHistogramData(sampleMeans, 30);
+                    updateChart(sampleSize.toString(), histogram, binEdges, mean, std);
+                    return { sampleSize, mean, variance, std };
+                });
+
+                // Update results
+                let resultHtml = `<p><strong>Distribution:</strong> ${distribution}</p>`;
+                resultHtml += `<p><strong>Number of Samples:</strong> ${numSamples}</p>`;
+                resultHtml += `<p><strong>Population Parameters:</strong> ${JSON.stringify(params)}</p>`;
+                resultHtml += `<h3>Sampling Distribution Statistics</h3>`;
+                results.forEach(r => {
+                    if (r) {
+                        resultHtml += `<p><strong>n=${r.sampleSize}:</strong> Mean=${r.mean.toFixed(3)}, Variance=${r.variance.toFixed(3)}, Standard Error=${r.std.toFixed(3)}</p>`;
+                    }
+                });
+                resultHtml += `
+                    <p><strong>Observation:</strong> As sample size increases, the histograms approach a normal distribution (red curve), demonstrating the CLT. The variance decreases with larger n, proportional to σ²/n.</p>
+                    <h3>Practical Applications</h3>
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li><strong>Estimating Population Parameters:</strong> The CLT enables using sample means for population estimates with normal-based confidence intervals (e.g., polling).</li>
+                        <li><strong>Quality Control:</strong> Sample means of measurements are normally distributed, aiding defect detection in manufacturing.</li>
+                        <li><strong>Financial Models:</strong> The CLT supports modeling portfolio averages as normal, simplifying risk analysis.</li>
+                    </ul>
+                `;
+                document.getElementById('result-text').innerHTML = resultHtml;
+            } catch (e) {
+                showError("Error in runSimulation: " + e.message);
+            }
+        }
+
+        // Event listeners
+        function addEventListeners() {
+            try {
+                document.getElementById('distribution').addEventListener('change', () => {
+                    updateDistParams();
+                    runSimulation();
+                });
+                document.getElementById('numSamples').addEventListener('input', runSimulation);
+                document.getElementById('dist-params').addEventListener('input', e => {
+                    if (e.target.tagName === 'INPUT') runSimulation();
+                });
+                console.log("Event listeners added");
+            } catch (e) {
+                showError("Error adding event listeners: " + e.message);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                console.log("DOM fully loaded, initializing simulation");
+                initCharts();
+                updateDistParams();
+                addEventListeners();
+                console.log("Running default simulation");
+                runSimulation();
+            } catch (e) {
+                showError("Error on initialization: " + e.message);
+            }
+        });
+    </script>
+</body>
+</html>
