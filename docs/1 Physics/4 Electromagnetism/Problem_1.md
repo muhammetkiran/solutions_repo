@@ -81,7 +81,7 @@ $$
 
 ---
 
-### 🧪 Parameters
+###  Parameters
 
 | Symbol     | Meaning                     | Typical Value          |
 |------------|-----------------------------|-------------------------|
@@ -92,14 +92,6 @@ $$
 | $ \vec{v}_0 $ | Initial velocity vector | User-defined            |
 | $ \Delta t $ | Time step                | $ 1 \times 10^{-11} \, \text{s} $ |
 
----
-
-###  Implementation Plan
-
-- [ ] Step 1: Implement basic Euler integration.
-- [ ] Step 2: Visualize motion in 2D and 3D using `matplotlib`.
-- [ ] Step 3: Allow interactive control of fields and initial velocity.
-- [ ] Step 4: Compare effects of different configurations.
 
 ---
 
@@ -107,8 +99,8 @@ $$
 
 For each simulation:
 
-- **2D Trajectory**: $ x(t), y(t) $
-- **3D Trajectory**: $ x(t), y(t), z(t) $
+- **2D Trajectory**: $x(t), y(t)$
+- **3D Trajectory**: $x(t), y(t), z(t)$
 - Highlight:
   - Circular or spiral motion
   - Drift due to crossed fields
