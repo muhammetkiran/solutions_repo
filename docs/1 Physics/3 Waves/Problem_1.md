@@ -27,7 +27,7 @@ $u_i(x, y, t) = A \cdot \cos(k r_i - \omega t + \phi)$
 Where:
 - $u_i$: displacement due to source *i*.
 - $A$: amplitude.
-- $k = \frac{2\pi}{\lambda} $: wave number.
+- $k=\frac{2\pi}{\lambda}$ : wave number.
 - $\omega = 2\pi f$: angular frequency.
 - $r_i$: distance from source *i* to point $(x, y)$.
 - $\phi$: initial phase (assumed 0 here).
