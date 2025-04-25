@@ -173,17 +173,17 @@
 <div class="section" itemprop="articleBody">
 <h3 id="central-limit-theorem-exploration-through-simulations">Central Limit Theorem Exploration through Simulations</h3>
 <hr/>
-<h3 id="motivation">🧠 Motivation</h3>
+<h3 id="motivation">Motivation</h3>
 <p>The <strong>Central Limit Theorem (CLT)</strong> is a fundamental concept in statistics, asserting that regardless of the population's distribution, the sampling distribution of the sample mean will approximate a normal distribution as the sample size grows. This principle allows us to make inferences about a population's characteristics even if the population distribution is not normal.</p>
 <p>By simulating sampling distributions for different types of population distributions, we can visually observe how the CLT works and the role that sample size and population characteristics play in shaping the sampling distribution.</p>
 <hr/>
 <h3 id="mathematical-background">Mathematical Background</h3>
 <p>The <strong>Central Limit Theorem</strong> states:</p>
 <ul>
-<li>Let $ X_1, X_2, ..., X_n$ be random variables drawn from any distribution with mean $ \mu$ and variance $ \sigma^2$.</li>
-<li>The sample mean $ \bar{X}<em>n = \frac{1}{n} \sum</em>{i=1}^n X_i$ will approximate a normal distribution with:</li>
-<li>Mean $ \mu$,</li>
-<li>Variance $ \frac{\sigma^2}{n}$ as the sample size $ n $ increases.</li>
+<li>Let <span class="arithmatex">\(X_1, X_2, ..., X_n\)</span> be random variables drawn from any distribution with mean <span class="arithmatex">\(\mu\)</span> and variance <span class="arithmatex">\(\sigma^2\)</span>.</li>
+<li>The sample mean <span class="arithmatex">\(\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i\)</span> will approximate a normal distribution with:</li>
+<li>Mean <span class="arithmatex">\(\mu\)</span>,</li>
+<li>Variance <span class="arithmatex">\(\frac{\sigma^2}{n}\)</span> as the sample size <span class="arithmatex">\(n\)</span> increases.</li>
 </ul>
 <p>Thus, no matter the underlying distribution, as the sample size increases, the distribution of the sample mean will become more bell-shaped and resemble a normal distribution.</p>
 <hr/>
@@ -198,7 +198,7 @@
 - Repeat the process to create a <strong>sampling distribution of the sample mean</strong> for each sample size.
 - Plot the histograms of these sampling distributions and observe how they approach a normal distribution as the sample size increases.</p>
 <hr/>
-<h3 id="simulation-process">🔁 Simulation Process</h3>
+<h3 id="simulation-process">Simulation Process</h3>
 <h4 id="step-1-create-the-population-distributions">Step 1: Create the Population Distributions</h4>
 <p>We will generate a large population for each of the following distributions:</p>
 <ol>
