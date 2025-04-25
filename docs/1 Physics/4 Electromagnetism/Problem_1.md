@@ -56,8 +56,8 @@ We explore the particle's trajectory in three configurations:
 2. **Uniform Electric and Magnetic Fields**  
    - Complex trajectory depending on field orientations and strengths.
 
-3. **Crossed $ \vec{E} \perp \vec{B} $** Fields  
-   - **$ \vec{E} \times \vec{B} $** drift:
+3. **Crossed $\vec{E} \perp \vec{B}$** Fields  
+   - **$\vec{E} \times \vec{B}$** drift:
      $$\vec{v}_{\text{drift}} = \frac{\vec{E} \times \vec{B}}{B^2}$$
 
 ---
