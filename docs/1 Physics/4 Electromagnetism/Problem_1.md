@@ -66,12 +66,9 @@ We explore the particle's trajectory in three configurations:
 
 We use the **Euler method** for simplicity, updating velocity and position iteratively:
 
-$$
-\vec{v}_{n+1} = \vec{v}_n + \frac{q}{m} (\vec{E} + \vec{v}_n \times \vec{B}) \cdot \Delta t
-$$
-$$
-\vec{r}_{n+1} = \vec{r}_n + \vec{v}_{n+1} \cdot \Delta t
-$$
+$$\vec{v}_{n+1} = \vec{v}_n + \frac{q}{m} (\vec{E} + \vec{v}_n \times \vec{B}) \cdot \Delta t$$
+
+$$\vec{r}_{n+1} = \vec{r}_n + \vec{v}_{n+1} \cdot \Delta t$$
 
 (Alternatively, a **4th-order Runge-Kutta method** can be used for better accuracy.)
 
