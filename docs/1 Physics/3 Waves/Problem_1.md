@@ -3,7 +3,7 @@
 
 # 🌊 Interference Patterns on a Water Surface
 
-## 📘 Motivation
+##  Motivation
 
 Interference patterns occur when waves from different sources overlap, forming regions of constructive and destructive interference. Observing how these ripples interact on a water surface is a powerful way to explore wave behavior and superposition. In this task, we simulate such a pattern using wave sources placed at the vertices of a regular polygon.
 
@@ -12,13 +12,13 @@ Interference patterns occur when waves from different sources overlap, forming r
 
 ---
 
-## 🔺 Chosen Polygon
+##  Chosen Polygon
 
 We select a **square** as our regular polygon for simplicity and clarity. The wave sources will be placed at its vertices.
 
 ---
 
-## 📐 Wave Model
+##  Wave Model
 
 Each point source emits a wave described by:
 
