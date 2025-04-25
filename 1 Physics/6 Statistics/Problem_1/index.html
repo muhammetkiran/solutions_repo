@@ -171,7 +171,103 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-1">Problem 1</h1>
+<h3 id="central-limit-theorem-exploration-through-simulations">Central Limit Theorem Exploration through Simulations</h3>
+<hr/>
+<h3 id="motivation">🧠 Motivation</h3>
+<p>The <strong>Central Limit Theorem (CLT)</strong> is a fundamental concept in statistics, asserting that regardless of the population's distribution, the sampling distribution of the sample mean will approximate a normal distribution as the sample size grows. This principle allows us to make inferences about a population's characteristics even if the population distribution is not normal.</p>
+<p>By simulating sampling distributions for different types of population distributions, we can visually observe how the CLT works and the role that sample size and population characteristics play in shaping the sampling distribution.</p>
+<hr/>
+<h3 id="mathematical-background">Mathematical Background</h3>
+<p>The <strong>Central Limit Theorem</strong> states:</p>
+<ul>
+<li>Let $ X_1, X_2, ..., X_n$ be random variables drawn from any distribution with mean $ \mu$ and variance $ \sigma^2$.</li>
+<li>The sample mean $ \bar{X}<em>n = \frac{1}{n} \sum</em>{i=1}^n X_i$ will approximate a normal distribution with:</li>
+<li>Mean $ \mu$,</li>
+<li>Variance $ \frac{\sigma^2}{n}$ as the sample size $ n $ increases.</li>
+</ul>
+<p>Thus, no matter the underlying distribution, as the sample size increases, the distribution of the sample mean will become more bell-shaped and resemble a normal distribution.</p>
+<hr/>
+<h3 id="simulation-setup">Simulation Setup</h3>
+<p>We will simulate the following distributions:
+1. <strong>Uniform Distribution</strong>
+2. <strong>Exponential Distribution</strong>
+3. <strong>Binomial Distribution</strong></p>
+<p>For each distribution, we will:
+- Generate a large population of data points.
+- Randomly sample from the population and calculate the sample mean for different sample sizes.
+- Repeat the process to create a <strong>sampling distribution of the sample mean</strong> for each sample size.
+- Plot the histograms of these sampling distributions and observe how they approach a normal distribution as the sample size increases.</p>
+<hr/>
+<h3 id="simulation-process">🔁 Simulation Process</h3>
+<h4 id="step-1-create-the-population-distributions">Step 1: Create the Population Distributions</h4>
+<p>We will generate a large population for each of the following distributions:</p>
+<ol>
+<li>
+<p><strong>Uniform Distribution</strong>:<br/>
+   A distribution where each value has an equal probability of occurring within a specified range.</p>
+</li>
+<li>
+<p><strong>Exponential Distribution</strong>:<br/>
+   A distribution often used to model the time between events in a Poisson process.</p>
+</li>
+<li>
+<p><strong>Binomial Distribution</strong>:<br/>
+   A distribution representing the number of successes in a fixed number of trials.</p>
+</li>
+</ol>
+<h4 id="step-2-sample-and-calculate-sample-means">Step 2: Sample and Calculate Sample Means</h4>
+<p>For each population, we'll randomly sample from the population multiple times, calculating the sample mean each time. We will use different sample sizes (e.g., 5, 10, 30, 50) to see how the sample mean distribution changes.</p>
+<h4 id="step-3-visualization">Step 3: Visualization</h4>
+<p>We will plot histograms of the sample means for each sample size, and observe the convergence towards a normal distribution as the sample size increases.</p>
+<h3 id="output-and-observations">Output and Observations</h3>
+<ol>
+<li><strong>Uniform Distribution</strong>:  </li>
+<li>
+<p>For small sample sizes (e.g., 5), the sampling distribution is spread out and not normal. As the sample size increases, the distribution of sample means becomes more bell-shaped.</p>
+</li>
+<li>
+<p><strong>Exponential Distribution</strong>:  </p>
+</li>
+<li>
+<p>With a highly skewed population, the sampling distribution of the mean will initially appear skewed for small sample sizes. As the sample size increases, the skew diminishes, and the distribution approaches a normal shape.</p>
+</li>
+<li>
+<p><strong>Binomial Distribution</strong>:  </p>
+</li>
+<li>The sampling distribution starts to resemble a normal distribution even with smaller sample sizes due to the inherent nature of the binomial distribution, which tends to become normal as the number of trials increases.</li>
+</ol>
+<hr/>
+<h2 id="practical-applications">Practical Applications</h2>
+<ul>
+<li>
+<p><strong>Estimating Population Parameters</strong>:<br/>
+   CLT allows us to estimate the population mean using the sample mean, with increasing accuracy as the sample size grows.</p>
+</li>
+<li>
+<p><strong>Quality Control</strong>:<br/>
+   In manufacturing, the CLT is used to monitor product quality by taking random samples and analyzing the sample mean to predict the overall quality.</p>
+</li>
+<li>
+<p><strong>Predicting Outcomes in Financial Models</strong>:<br/>
+   Financial analysts use the CLT to model returns and risks by taking large samples of historical data to predict future performance.</p>
+</li>
+</ul>
+<hr/>
+<h3 id="extension-ideas">Extension Ideas</h3>
+<ol>
+<li>
+<p><strong>Impact of Population Variance</strong>:<br/>
+   Investigate how the variance of the population affects the spread of the sampling distribution for different sample sizes.</p>
+</li>
+<li>
+<p><strong>Non-Normal Populations</strong>:<br/>
+   Experiment with more complex population distributions (e.g., Gamma, Pareto) and see how the sample mean distribution approaches normality.</p>
+</li>
+<li>
+<p><strong>Dynamic Simulations</strong>:<br/>
+   Create interactive visualizations where users can adjust parameters like sample size and population distribution in real-time to observe the effects on the CLT.</p>
+</li>
+</ol>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
