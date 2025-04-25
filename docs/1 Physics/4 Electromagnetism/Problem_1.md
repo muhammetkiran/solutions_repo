@@ -58,9 +58,7 @@ We explore the particle's trajectory in three configurations:
 
 3. **Crossed $ \vec{E} \perp \vec{B} $** Fields  
    - **$ \vec{E} \times \vec{B} $** drift:
-     $$
-     \vec{v}_{\text{drift}} = \frac{\vec{E} \times \vec{B}}{B^2}
-     $$
+     $$\vec{v}_{\text{drift}} = \frac{\vec{E} \times \vec{B}}{B^2}$$
 
 ---
 
