@@ -209,9 +209,7 @@
 \vec{F} = m \cdot \frac{d\vec{v}}{dt}
 \]</div>
 <p>Combining both expressions:</p>
-<div class="arithmatex">\[
-m \cdot \frac{d\vec{v}}{dt} = q(\vec{E} + \vec{v} \times \vec{B})
-\]</div>
+<div class="arithmatex">\[m \cdot \frac{d\vec{v}}{dt} = q(\vec{E} + \vec{v} \times \vec{B})\]</div>
 <p>To simulate particle motion, we numerically solve this differential equation using time-stepping methods (e.g., <strong>Euler</strong> or <strong>Runge-Kutta</strong>).</p>
 <hr/>
 <h3 id="simulation-scenarios">Simulation Scenarios</h3>
@@ -267,22 +265,22 @@ $$
 <tr>
 <td><span class="arithmatex">\(q\)</span></td>
 <td>Particle charge</td>
-<td>$ 1.6 \times 10^{-19} \, \text{C}$</td>
+<td><span class="arithmatex">\(1.6 \times 10^{-19} \, \text{C}\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(m\)</span></td>
 <td>Particle mass</td>
-<td>$ 9.1 \times 10^{-31} \, \text{kg}$ (electron)</td>
+<td><span class="arithmatex">\(9.1 \times 10^{-31} \, \text{kg}\)</span> (electron)</td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(\vec{E}\)</span></td>
 <td>Electric field vector</td>
-<td>e.g., $ (0, 0, 100) \, \text{V/m}$</td>
+<td>e.g., <span class="arithmatex">\((0, 0, 100) \, \text{V/m}\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(\vec{B}\)</span></td>
 <td>Magnetic field vector</td>
-<td>e.g., $ (0, 0, 1) \, \text{T}$</td>
+<td>e.g., <span class="arithmatex">\((0, 0, 1) \, \text{T}\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(\vec{v}_0\)</span></td>
@@ -292,7 +290,7 @@ $$
 <tr>
 <td><span class="arithmatex">\(\Delta t\)</span></td>
 <td>Time step</td>
-<td>$ 1 \times 10^{-11} \, \text{s}$</td>
+<td><span class="arithmatex">\(1 \times 10^{-11} \, \text{s}\)</span></td>
 </tr>
 </tbody>
 </table>
