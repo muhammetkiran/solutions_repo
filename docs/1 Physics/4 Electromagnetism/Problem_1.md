@@ -99,7 +99,7 @@ For each simulation:
   - Drift due to crossed fields
   - Larmor radius changes with field strength
 
----
+[Lorentz Force Simulation](asdc.html)
 
 ###  Real-World Applications
 
@@ -109,4 +109,3 @@ For each simulation:
 | Mass Spectrometer      | Different trajectories reveal mass/charge ratio |
 | Fusion Reactors (Tokamak) | Magnetic confinement of plasma              |
 
--
