@@ -18,7 +18,7 @@ By simulating the motion of a charged particle under the Lorentz force, we gain 
 
 ###  Mathematical Background
 
-The **Lorentz force** acting on a particle with charge $ q $, moving with velocity $ \vec{v} $, in electric field $ \vec{E} $ and magnetic field $ \vec{B} $ is given by:
+The **Lorentz force** acting on a particle with charge $q$, moving with velocity $\vec{v}$, in electric field $\vec{E}$ and magnetic field $\vec{B}$ is given by:
 
 $$
 \vec{F} = q(\vec{E} + \vec{v} \times \vec{B})
