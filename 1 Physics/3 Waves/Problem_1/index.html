@@ -66,17 +66,15 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="#steps">Steps:</a>
+<li class="toctree-l3"><a class="reference internal" href="#motivation">📘 Motivation</a>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#explanation">Explanation</a>
+<li class="toctree-l3"><a class="reference internal" href="#chosen-polygon">🔺 Chosen Polygon</a>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#example-applications">Example Applications</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#example-1-series-combination">Example 1: Series Combination</a>
+<li class="toctree-l3"><a class="reference internal" href="#wave-model">📐 Wave Model</a>
 </li>
-</ul>
+<li class="toctree-l3"><a class="reference internal" href="#results-analysis">📊 Results &amp; Analysis</a>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#efficiency-and-improvements">Efficiency and Improvements</a>
+<li class="toctree-l3"><a class="reference internal" href="#extension-ideas">Extension Ideas</a>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#conclusion">Conclusion</a>
 </li>
@@ -185,79 +183,52 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h2 id="algorithm-description">Algorithm Description</h2>
-<p>The goal is to compute the equivalent resistance between two nodes (source and sink) in a circuit modeled as an undirected graph, where:</p>
+<hr/>
+<h1 id="interference-patterns-on-a-water-surface">🌊 Interference Patterns on a Water Surface</h1>
+<h2 id="motivation">📘 Motivation</h2>
+<p>Interference patterns occur when waves from different sources overlap, forming regions of constructive and destructive interference. Observing how these ripples interact on a water surface is a powerful way to explore wave behavior and superposition. In this task, we simulate such a pattern using wave sources placed at the vertices of a regular polygon.</p>
+<hr/>
+<hr/>
+<h2 id="chosen-polygon">🔺 Chosen Polygon</h2>
+<p>We select a <strong>square</strong> as our regular polygon for simplicity and clarity. The wave sources will be placed at its vertices.</p>
+<hr/>
+<h2 id="wave-model">📐 Wave Model</h2>
+<p>Each point source emits a wave described by:</p>
+<p>$
+u_i(x, y, t) = A \cdot \cos(k r_i - \omega t + \phi)
+$</p>
+<p>Where:
+- $ u_i $: displacement due to source <em>i</em>.
+- $ A $: amplitude.
+- $ k = \frac{2\pi}{\lambda} $: wave number.
+- $ \omega = 2\pi f $: angular frequency.
+- $ r_i $: distance from source <em>i</em> to point <span class="arithmatex">\((x, y)\)</span>.
+- $ \phi $: initial phase (assumed 0 here).
+- $ t $: time.</p>
+<p>The total displacement at any point is:</p>
+<div class="arithmatex">\[
+u(x, y, t) = \sum_{i=1}^{N} u_i(x, y, t)
+\]</div>
+<hr/>
+<hr/>
+<h2 id="results-analysis">📊 Results &amp; Analysis</h2>
 <ul>
-<li><strong>Nodes</strong>: Represent circuit junctions.</li>
-<li><strong>Edges</strong>: Represent resistors, with weights as resistance values (in ohms).</li>
+<li><strong>Constructive Interference</strong>: Bright/red regions where wave crests from multiple sources align.</li>
+<li><strong>Destructive Interference</strong>: Dark/blue regions where crests and troughs cancel each other.</li>
+<li><strong>Pattern Symmetry</strong>: Due to the square configuration, the resulting interference pattern exhibits fourfold symmetry.</li>
+<li><strong>Fringes and Nodes</strong>: Alternating bands/rings indicating changing interference conditions across the plane.</li>
 </ul>
-<p>The algorithm iteratively simplifies the graph by reducing series and parallel resistor configurations until only the source and sink nodes remain, connected by a single edge whose weight is the equivalent resistance.</p>
-<h3 id="steps">Steps:</h3>
-<ol>
-<li><strong>Series Connections</strong>:</li>
-<li>Identify a node with degree 2, connected to two resistors.</li>
-<li>Replace with a single resistor: $$ R_{\text{series}} = R_1 + R_2 $$</li>
-<li>
-<p>Remove the node, connect its neighbors with the new resistance.</p>
-</li>
-<li>
-<p><strong>Parallel Connections</strong>:</p>
-</li>
-<li>Identify multiple edges between two nodes.</li>
-<li>Replace with one edge: <span class="arithmatex">\(R_{\text{parallel}} = \frac{R_1 \cdot R_2}{R_1 + R_2}\)</span> or <span class="arithmatex">\(\frac{1}{R_{\text{parallel}}} = \frac{1}{R_1} + \frac{1}{R_2}\)</span></li>
-<li>
-<p>Update the graph with the new edge.</p>
-</li>
-<li>
-<p><strong>Iteration</strong>:</p>
-</li>
-<li>Repeat series and parallel reductions until only the source and sink remain.</li>
-<li>
-<p>Nested structures are handled iteratively, reducing inner patterns first.</p>
-</li>
-<li>
-<p><strong>Termination</strong>:</p>
-</li>
-<li>Stop when the graph has two nodes connected by one edge, its weight being the equivalent resistance.</li>
-<li>Assumes series-parallel reducible circuits; otherwise, additional methods (e.g., delta-wye) are needed.</li>
-</ol>
-<h3 id="explanation">Explanation</h3>
+<hr/>
+<h2 id="extension-ideas">Extension Ideas</h2>
 <ul>
-<li><strong>Series</strong>: A degree-2 node (n1–R1–n–R2–n2) is reduced to n1–(R1 + R2)–n2, removing n.</li>
-<li><strong>Parallel</strong>: Multiple edges between nodes are combined using conductance: <span class="arithmatex">\(\frac{1}{R_{\text{parallel}}} = \sum \frac{1}{R_i}\)</span></li>
-<li><strong>Nested Handling</strong>: Iterative reductions simplify inner structures first, with DFS aiding pattern detection.</li>
-<li><strong>Edge Cases</strong>: Avoids self-loops and ensures a valid path exists.</li>
+<li>Test other polygons: triangle, pentagon, hexagon.</li>
+<li>Animate the simulation over time.</li>
+<li>Explore phase differences between sources.</li>
 </ul>
-<h3 id="example-applications">Example Applications</h3>
-<h4 id="example-1-series-combination">Example 1: Series Combination</h4>
-<ul>
-<li><strong>Circuit</strong>: 2Ω and 3Ω in series between A and B via C.</li>
-<li><strong>Graph</strong>: A --(2Ω)--&gt; C --(3Ω)--&gt; B</li>
-<li><strong>Steps</strong>:</li>
-<li>C has degree 2. Series: <span class="arithmatex">\(2 + 3 = 5Ω\)</span></li>
-<li>Remove C, add A --(5Ω)--&gt; B.</li>
-<li><strong>Output</strong>: 5Ω</li>
-<li><strong>Verification</strong>:</li>
-<li>Current at 1V: <span class="arithmatex">\(I = \frac{1}{5} = 0.2A\)</span></li>
-<li>Voltage drops: <span class="arithmatex">\(V_1 = 0.2 \cdot 2 = 0.4V\)</span> <span class="arithmatex">\(V_2 = 0.2 \cdot 3 = 0.6V\)</span> total <span class="arithmatex">\(0.4 + 0.6 = 1V\)</span></li>
-</ul>
-<h3 id="efficiency-and-improvements">Efficiency and Improvements</h3>
-<ul>
-<li><strong>Time Complexity</strong>:</li>
-<li>Series: O(V) to find degree-2 nodes.</li>
-<li>Parallel: O(E) for multi-edges, up to O(V²) in dense graphs.</li>
-<li>Iterations: Up to O(V).</li>
-<li>Total: O(V²) to O(V³).</li>
-<li><strong>Space Complexity</strong>: O(V + E) for adjacency lists.</li>
-<li><strong>Improvements</strong>:</li>
-<li>Use priority queues for degree-2 nodes or multi-edges.</li>
-<li>Apply DFS to prioritize inner reductions.</li>
-<li>Add delta-wye for non-series-parallel circuits.</li>
-<li>Optimize with NetworkX for graph operations.</li>
-<li>Use high-precision arithmetic for small resistances.</li>
-</ul>
-<h3 id="conclusion">Conclusion</h3>
-<p>This algorithm efficiently computes equivalent resistance for series-parallel circuits, with numerical calculations (conductance, currents, voltages) ensuring accuracy. Iterative reductions handle nested structures, and extensions like delta-wye can address complex graphs.</p>
+<hr/>
+<h2 id="conclusion">Conclusion</h2>
+<p>This simulation demonstrates how multiple wave sources interact to form complex interference patterns. The symmetry and distribution of nodes/antinodes depend on the geometric arrangement of the sources, providing a beautiful and intuitive insight into wave superposition.</p>
+<p><a href="../waves.html">Wave Interference on the Water Surface simulation</a></p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
