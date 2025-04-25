@@ -1,7 +1,7 @@
 
 ---
 
-# 🌊 Interference Patterns on a Water Surface
+#  Interference Patterns on a Water Surface
 
 ##  Motivation
 
@@ -70,4 +70,4 @@ This simulation demonstrates how multiple wave sources interact to form complex 
 
 
 
-[Wave Interference on the Water Surface simulation](waves.html)
+[Wave Interference on the Water Surface simulation](docs.waves.html)
