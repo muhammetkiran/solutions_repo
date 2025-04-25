@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Equivalent Resistance Calculator</title>
+</head>
+<body>
+  <h1>Graph-Based Equivalent Resistance Calculator</h1>
+
+  <div>
+    <label>Edges (format: node1,node2,resistance):</label><br>
+    <textarea id="edgesInput" rows="6" cols="40">
+A,B,4
+B,C,6
+A,C,12
+    </textarea>
+    <br>
+    <label>Start Node:</label>
+    <input type="text" id="startNode" value="A">
+    <label>End Node:</label>
+    <input type="text" id="endNode" value="C">
+    <br><br>
+    <button onclick="calculate()">Calculate Equivalent Resistance</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function calculate() {
+      const edgesInput = document.getElementById("edgesInput").value.trim().split("\n");
+      const graph = {};
+
+      for (const line of edgesInput) {
+        const [n1, n2, rStr] = line.split(",");
+        const r = parseFloat(rStr);
+
+        if (!graph[n1]) graph[n1] = [];
+        if (!graph[n2]) graph[n2] = [];
+
+        graph[n1].push({ node: n2, resistance: r });
+        graph[n2].push({ node: n1, resistance: r }); // undirected
+      }
+
+      const start = document.getElementById("startNode").value;
+      const end = document.getElementById("endNode").value;
+
+      const res = findEquivalentResistance(graph, start, end);
+      document.getElementById("result").innerText = `Equivalent Resistance: ${res.toFixed(2)} Ω`;
+    }
+
+    function findEquivalentResistance(graph, start, end) {
+      // Placeholder: use BFS/DFS to find all paths and compute parallel resistance.
+      // Here we assume a direct connection as a simplification.
+      const visited = new Set();
+      let minResistance = Infinity;
+
+      function dfs(node, target, resistance) {
+        if (node === target) {
+          minResistance = 1 / (1 / minResistance + 1 / resistance); // parallel paths
+          return;
+        }
+
+        visited.add(node);
+
+        for (const neighbor of graph[node]) {
+          if (!visited.has(neighbor.node)) {
+            dfs(neighbor.node, target, resistance + neighbor.resistance);
+          }
+        }
+
+        visited.delete(node);
+      }
+
+      dfs(start, end, 0);
+      return minResistance === Infinity ? -1 : minResistance;
+    }
+  </script>
+</body>
+</html>

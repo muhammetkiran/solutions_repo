@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Limit Theorem Simulation</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Arial', sans-serif; }
+        #plot { min-height: 400px; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-4">Central Limit Theorem Simulation</h1>
+        <p class="text-center mb-6">
+            Explore how sample means converge to a normal distribution as sample size increases, per the Central Limit Theorem.
+            Select a population distribution, sample size, and number of samples to visualize the sampling distribution.
+        </p>
+
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="distribution" class="block text-sm font-medium text-gray-700">Distribution</label>
+                    <select id="distribution" class="mt-1 block w-full p-2 border rounded-md">
+                        <option value="uniform">Uniform</option>
+                        <option value="exponential">Exponential</option>
+                        <option value="binomial">Binomial</option>
+                        <option value="poisson">Poisson</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="sampleSize" class="block text-sm font-medium text-gray-700">Sample Size (n)</label>
+                    <input type="range" id="sampleSize" min="5" max="100" value="30" class="w-full">
+                    <span id="sampleSizeValue" class="text-sm">30</span>
+                </div>
+                <div>
+                    <label for="numSamples" class="block text-sm font-medium text-gray-700">Number of Samples</label>
+                    <input type="range" id="numSamples" min="100" max="5000" value="1000" step="100" class="w-full">
+                    <span id="numSamplesValue" class="text-sm">1000</span>
+                </div>
+            </div>
+            <button id="runSimulation" class="mt-4 w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">
+                Run Simulation
+            </button>
+        </div>
+
+        <div id="plot" class="bg-white p-4 rounded-lg shadow-md"></div>
+    </div>
+
+    <script>
+        // Distribution parameters
+        const distParams = {
+            uniform: { min: 0, max: 10, mean: 5, variance: 100/12 },
+            exponential: { lambda: 0.5, mean: 2, variance: 4 },
+            binomial: { n: 10, p: 0.5, mean: 5, variance: 2.5 },
+            poisson: { lambda: 4, mean: 4, variance: 4 }
+        };
+
+        // Update slider values
+        document.getElementById('sampleSize').addEventListener('input', function() {
+            document.getElementById('sampleSizeValue').textContent = this.value;
+        });
+        document.getElementById('numSamples').addEventListener('input', function() {
+            document.getElementById('numSamplesValue').textContent = this.value;
+        });
+
+        // Simulation function
+        function runSimulation() {
+            const distType = document.getElementById('distribution').value;
+            const sampleSize = parseInt(document.getElementById('sampleSize').value);
+            const numSamples = parseInt(document.getElementById('numSamples').value);
+            const params = distParams[distType];
+
+            // Generate sample means
+            const sampleMeans = [];
+            for (let i = 0; i < numSamples; i++) {
+                let sample;
+                if (distType === 'uniform') {
+                    sample = Array.from({length: sampleSize}, () => 
+                        params.min + Math.random() * (params.max - params.min));
+                } else if (distType === 'exponential') {
+                    sample = Array.from({length: sampleSize}, () => 
+                        -Math.log(1 - Math.random()) / params.lambda);
+                } else if (distType === 'binomial') {
+                    sample = Array.from({length: sampleSize}, () => {
+                        let sum = 0;
+                        for (let j = 0; j < params.n; j++) {
+                            if (Math.random() < params.p) sum++;
+                        }
+                        return sum;
+                    });
+                } else if (distType === 'poisson') {
+                    sample = Array.from({length: sampleSize}, () => {
+                        let L = Math.exp(-params.lambda), k = 0, p = 1;
+                        do {
+                            k++;
+                            p *= Math.random();
+                        } while (p > L);
+                        return k - 1;
+                    });
+                }
+                const mean = sample.reduce((sum, val) => sum + val, 0) / sampleSize;
+                sampleMeans.push(mean);
+            }
+
+            // Histogram trace
+            const histTrace = {
+                x: sampleMeans,
+                type: 'histogram',
+                histnorm: 'density',
+                nbinsx: 50,
+                name: 'Sample Means',
+                marker: { color: 'blue', opacity: 0.6 }
+            };
+
+            // Theoretical normal distribution
+            const xRange = [Math.min(...sampleMeans), Math.max(...sampleMeans)];
+            const x = Array.from({length: 100}, (_, i) => 
+                xRange[0] + i * (xRange[1] - xRange[0]) / 99);
+            const sigma = Math.sqrt(params.variance / sampleSize);
+            const y = x.map(val => 
+                (1 / (sigma * Math.sqrt(2 * Math.PI))) * 
+                Math.exp(-0.5 * ((val - params.mean) / sigma) ** 2));
+
+            const normalTrace = {
+                x: x,
+                y: y,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Normal Approx.',
+                line: { color: 'red', width: 2 }
+            };
+
+            // Variance calculation
+            const empiricalVariance = sampleMeans.reduce((sum, val) => 
+                sum + (val - params.mean) ** 2, 0) / numSamples;
+
+            // Plot
+            const layout = {
+                title: `${distType.charAt(0).toUpperCase() + distType.slice(1)} Distribution, n=${sampleSize}, Samples=${numSamples}`,
+                xaxis: { title: 'Sample Mean' },
+                yaxis: { title: 'Density' },
+                showlegend: true,
+                annotations: [{
+                    x: 0.95,
+                    y: 0.95,
+                    xref: 'paper',
+                    yref: 'paper',
+                    text: `Empirical Var: ${empiricalVariance.toFixed(4)}<br>Theoretical Var: ${(params.variance / sampleSize).toFixed(4)}`,
+                    showarrow: false,
+                    align: 'right'
+                }]
+            };
+
+            Plotly.newPlot('plot', [histTrace, normalTrace], layout);
+        }
+
+        // Run simulation on button click
+        document.getElementById('runSimulation').addEventListener('click', runSimulation);
+
+        // Initial run
+        runSimulation();
+    </script>
+</body>
+</html>
