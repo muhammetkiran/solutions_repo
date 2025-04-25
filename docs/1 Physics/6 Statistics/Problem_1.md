@@ -2,7 +2,7 @@
 
 ---
 
-### 🧠 Motivation
+###  Motivation
 
 The **Central Limit Theorem (CLT)** is a fundamental concept in statistics, asserting that regardless of the population's distribution, the sampling distribution of the sample mean will approximate a normal distribution as the sample size grows. This principle allows us to make inferences about a population's characteristics even if the population distribution is not normal.
 
@@ -14,10 +14,10 @@ By simulating sampling distributions for different types of population distribut
 
 The **Central Limit Theorem** states:
 
-- Let $ X_1, X_2, ..., X_n$ be random variables drawn from any distribution with mean $ \mu$ and variance $ \sigma^2$.
-- The sample mean $ \bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$ will approximate a normal distribution with:
-  - Mean $ \mu$,
-  - Variance $ \frac{\sigma^2}{n}$ as the sample size $ n $ increases.
+- Let $X_1, X_2, ..., X_n$ be random variables drawn from any distribution with mean $\mu$ and variance $\sigma^2$.
+- The sample mean $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$ will approximate a normal distribution with:
+  - Mean $\mu$,
+  - Variance $\frac{\sigma^2}{n}$ as the sample size $n$ increases.
 
 Thus, no matter the underlying distribution, as the sample size increases, the distribution of the sample mean will become more bell-shaped and resemble a normal distribution.
 
@@ -38,7 +38,7 @@ For each distribution, we will:
 
 ---
 
-### 🔁 Simulation Process
+###  Simulation Process
 
 #### Step 1: Create the Population Distributions
 
