@@ -51,7 +51,7 @@ This shows that the range depends on $\sin(2\theta)$, reaching a maximum at $\th
 * **Military**: Calculating artillery firing angles.
 * **Engineering**: Launch dynamics of rockets or drones.
 
----
+
 
 ###  Limitations and Extensions
 
@@ -59,6 +59,7 @@ This shows that the range depends on $\sin(2\theta)$, reaching a maximum at $\th
 * **Uneven terrain** changes the final height, requiring a modified trajectory equation.
 * **Wind** introduces lateral and vertical forces that must be modeled with differential equations.
 
----
 
-Would you like help extending the simulation to include air resistance or varying launch height?
+[3D Simulation](projectile_with_embedded_video.html)
+
+This document provides a theoretical foundation, computational implementation, and practical insights into projectile motion.
