@@ -3,129 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projectile Range vs Angle Simulation</title>
+    <title>Projectile Motion 3D Simulation</title>
+    <!-- Include Plotly.js via CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
             text-align: center;
-        }
-        canvas {
-            border: 2px solid #333;
-            margin-top: 20px;
-        }
-        .controls {
             margin: 20px;
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            display: inline-block;
         }
-        .control-group {
+        #plot {
+            width: 100%;
+            height: 600px;
+            margin: 20px auto;
+        }
+        #scenario {
             margin: 10px;
+            font-size: 18px;
+            font-weight: bold;
         }
         button {
             padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
         }
         button:hover {
             background-color: #45a049;
         }
-        #metrics {
-            margin-top: 15px;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
-    <div class="controls">
-        <div class="control-group">
-            <label for="velocity">Initial Velocity (m/s): </label>
-            <input type="number" id="velocity" value="25" min="1" step="1">
-        </div>
-        <button onclick="simulateRange()">Calculate Range</button>
-    </div>
-
-    <canvas id="canvas" width="800" height="400"></canvas>
-
-    <div id="metrics"></div>
+    <h1>Range vs Angle and Initial Velocity (3D)</h1>
+    <div id="scenario">Scenario: Earth (g = 9.8 m/s², Angles: 0-90°, Velocities: 5-25 m/s)</div>
+    <button onclick="changeSimulation()">Change Scenario</button>
+    <div id="plot"></div>
 
     <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const metrics = document.getElementById('metrics');
-        const g = 9.8; // Gravitational acceleration (m/s²)
+        // Predefined scenarios with more variety
+        const scenarios = [
+            { name: 'Earth', g: 9.8, minAngle: 0, maxAngle: 90, minV0: 5, maxV0: 25 },
+            { name: 'Moon', g: 1.625, minAngle: 0, maxAngle: 90, minV0: 5, maxV0: 25 },
+            { name: 'Mars', g: 3.72, minAngle: 0, maxAngle: 90, minV0: 5, maxV0: 25 },
+            { name: 'Jupiter', g: 24.79, minAngle: 0, maxAngle: 90, minV0: 5, maxV0: 25 },
+            { name: 'Low Gravity, Narrow Angles', g: 1.0, minAngle: 30, maxAngle: 60, minV0: 5, maxV0: 25 },
+            { name: 'High Gravity, High Velocities', g: 15.0, minAngle: 0, maxAngle: 90, minV0: 20, maxV0: 40 }
+        ];
+        let currentScenarioIndex = 0;
 
-        // Convert degrees to radians
-        function toRadians(degrees) {
-            return degrees * Math.PI / 180;
+        // Global variable to store the plot
+        let plotData = null;
+
+        // Function to compute range
+        function computeRange(v0, thetaDeg, g) {
+            const theta = (thetaDeg * Math.PI) / 180;  // Convert degrees to radians
+            const range = (v0 * v0 * Math.sin(2 * theta)) / g;  // Range formula
+            return Math.max(0, range);  // Ensure non-negative range
         }
 
-        // Simulate the projectile motion and calculate the range for different angles
-        function simulateRange() {
-            const velocity = parseFloat(document.getElementById('velocity').value);
-            const angles = Array.from({ length: 91 }, (_, i) => i); // Angles from 0° to 90°
-            const ranges = angles.map(angle => {
-                const angleRad = toRadians(angle);
-                const range = (velocity * velocity * Math.sin(2 * angleRad)) / g;
-                return { angle, range };
-            });
+        // Function to prepare data for 3D surface plot
+        function prepareData(minAngle, maxAngle, minV0, maxV0, g) {
+            const angles = Array.from({ length: maxAngle - minAngle + 1 }, (_, i) => minAngle + i);
+            const v0Values = Array.from({ length: Math.floor((maxV0 - minV0) / 1) + 1 }, (_, i) => minV0 + i * 1);
 
-            // Draw the results
-            drawChart(ranges);
-            displayMetrics(ranges);
-        }
+            const zData = v0Values.map(v0 => 
+                angles.map(theta => computeRange(v0, theta, g))
+            );
 
-        // Display the metrics (range for each angle)
-        function displayMetrics(ranges) {
-            let metricsHTML = '<h3>Range vs Angle of Projection</h3>';
-            metricsHTML += '<table><tr><th>Angle (°)</th><th>Range (m)</th></tr>';
-            ranges.forEach(r => {
-                metricsHTML += `<tr><td>${r.angle}</td><td>${r.range.toFixed(2)}</td></tr>`;
-            });
-            metricsHTML += '</table>';
-            metrics.innerHTML = metricsHTML;
-        }
-
-        // Draw a chart of the range vs angle
-        function drawChart(ranges) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height);
-
-            // Draw axes
-            ctx.strokeStyle = '#000';
-            ctx.moveTo(40, canvas.height - 40); // x-axis (angle)
-            ctx.lineTo(canvas.width, canvas.height - 40);
-            ctx.moveTo(40, 0); // y-axis (range)
-            ctx.lineTo(40, canvas.height);
-
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.strokeStyle = '#FF4500';
-            ctx.lineWidth = 2;
-
-            // Plot points for range vs angle
-            const scaleX = (canvas.width - 80) / 100; // 0-100 degree scale
-            const scaleY = (canvas.height - 80) / 100; // Range scale
-
-            ranges.forEach((r, index) => {
-                const x = 40 + r.angle * scaleX;
-                const y = canvas.height - 40 - r.range * scaleY;
-                if (index === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
+            return {
+                x: angles,
+                y: v0Values,
+                z: zData,
+                type: 'surface',
+                name: `g=${g.toFixed(3)} m/s²`,
+                colorscale: 'Viridis',
+                opacity: 0.8,
+                showscale: true,
+                colorbar: {
+                    title: `Range (m) for g=${g.toFixed(3)}`,
+                    titleside: 'right'
                 }
-            });
-
-            ctx.stroke();
+            };
         }
+
+        // Function to update the simulation based on the current scenario
+        function updateSimulation() {
+            const scenario = scenarios[currentScenarioIndex];
+            const data = [prepareData(scenario.minAngle, scenario.maxAngle, scenario.minV0, scenario.maxV0, scenario.g)];
+            const layout = {
+                title: 'Range vs Angle of Projection and Initial Velocity',
+                scene: {
+                    xaxis: { title: 'Angle (degrees)' },
+                    yaxis: { title: 'Initial Velocity (m/s)' },
+                    zaxis: { title: 'Range (m)' }
+                },
+                margin: { l: 40, r: 40, b: 40, t: 60 },
+                height: 600
+            };
+
+            // Update scenario display
+            document.getElementById('scenario').innerText = `Scenario: ${scenario.name} (g = ${scenario.g} m/s², Angles: ${scenario.minAngle}-${scenario.maxAngle}°, Velocities: ${scenario.minV0}-${scenario.maxV0} m/s)`;
+
+            // Update or create the plot
+            if (plotData) {
+                Plotly.react('plot', data, layout);
+            } else {
+                Plotly.newPlot('plot', data, layout);
+                plotData = document.getElementById('plot');
+            }
+        }
+
+        // Function to cycle through scenarios
+        function changeSimulation() {
+            currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;  // Cycle through scenarios
+            updateSimulation();
+        }
+
+        // Initial call to populate the plot with the first scenario
+        updateSimulation();
     </script>
 </body>
 </html>
