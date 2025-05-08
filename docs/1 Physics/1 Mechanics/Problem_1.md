@@ -140,10 +140,8 @@ $$
 
 ## **Implementation**
 
+[3D Simulation](simulation_projecttile.html)
 
-[simulation](simulation_projecttile.html)
-
-[example vıdeo](projectile_with_embedded_video.html)
 
 
 

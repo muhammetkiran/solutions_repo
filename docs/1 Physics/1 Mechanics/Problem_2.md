@@ -129,4 +129,4 @@ Understanding the dynamics of forced damped pendulums is crucial in various fiel
 
 ### Implementation
 
- [Simulation model motion of pendulum](projectile_with_embedded_video.html)
+ [Simulation model motion of pendulum](projectile_with_embedded_video.html)(projectile_with_embedded_video.html)

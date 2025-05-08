@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renkli Dalga Girişim Simülasyonu</title>
+    <style>
+        body { display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; background: #f0f0f0; font-family: Arial, sans-serif; }
+        canvas { border: 2px solid #333; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        h1 { font-size: 1.5em; margin: 20px 0 10px; }
+        p { font-size: 1em; color: #555; margin: 0 0 20px; }
+    </style>
+</head>
+<body>
+    <h1>Wave Interference on the Water Surface</h1>
+   
+    <canvas id="waveCanvas" width="600" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        // Dalga parametreleri
+        const A = 1; // Genlik
+        const lambda = 0.4; // Dalga boyu (daha net desenler için küçültüldü)
+        const k = 2 * Math.PI / lambda; // Dalga sayısı
+        const f = 1; // Frekans
+        const omega = 2 * Math.PI * f; // Açısal frekans
+
+        // Kare köşeleri (kaynaklar)
+        const sources = [
+            { x: 1, y: 1 },
+            { x: 1, y: -1 },
+            { x: -1, y: -1 },
+            { x: -1, y: 1 }
+        ];
+
+        // Animasyon değişkenleri
+        let t = 0;
+
+        function computeDisplacement(x, y, t) {
+            let totalU = 0;
+            for (const source of sources) {
+                // Kanvas koordinatlarını (0 ila 600) simülasyon koordinatlarına (-2 ila 2) eşle
+                const simX = (x / width) * 4 - 2;
+                const simY = (y / height) * 4 - 2;
+                const r = Math.sqrt((simX - source.x) ** 2 + (simY - source.y) ** 2);
+                totalU += A * Math.cos(k * r - omega * t);
+            }
+            return totalU;
+        }
+
+        function displacementToColor(u) {
+            // Yer değiştirmeyi renk gradyanına eşle
+            // u: [-4, 4] aralığında (4 kaynak, her biri [-1, 1])
+            const normalized = (u + 4) / 8; // [0, 1] aralığına normalize et
+            let r, g, b;
+            if (u > 0) {
+                // Pozitif: Yeşil -> Kırmızı
+                r = Math.min(255, normalized * 2 * 255);
+                g = Math.min(255, (1 - normalized) * 2 * 255);
+                b = 0;
+            } else {
+                // Negatif: Siyah -> Mavi
+                r = 0;
+                g = 0;
+                b = Math.min(255, normalized * 255);
+            }
+            return [r, g, b];
+        }
+
+        function draw() {
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const u = computeDisplacement(x, y, t);
+                    const [r, g, b] = displacementToColor(u);
+                    const index = (y * width + x) * 4;
+                    data[index] = r;     // R
+                    data[index + 1] = g; // G
+                    data[index + 2] = b; // B
+                    data[index + 3] = 255; // A
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+            t += 0.015; // Daha pürüzsüz animasyon için küçük zaman adımı
+            requestAnimationFrame(draw);
+        }
+
+        // Animasyonu başlat
+        draw();
+    </script>
+</body>
+</html>
