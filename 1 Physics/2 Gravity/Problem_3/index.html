@@ -60,6 +60,46 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 3</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#1-theoretical-background-possible-trajectory-types">1. Theoretical Background: Possible Trajectory Types</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#11-trajectory-types-based-on-energy">1.1 Trajectory Types Based on Energy</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#12-key-physical-equations">1.2 Key Physical Equations</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#13-typical-values-for-earth">1.3 Typical Values (for Earth)</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-numerical-simulation">2. Numerical Simulation</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#3-python-simulation">3. Python Simulation</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#required-libraries">Required Libraries</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#constants-and-earth-parameters">Constants and Earth Parameters</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#simulation-function">Simulation Function</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-sample-scenarios">4. Sample Scenarios</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#scenario-a-low-speed-release-return-to-earth">Scenario A – Low-Speed Release (Return to Earth)</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#scenario-b-orbital-velocity">Scenario B – Orbital Velocity</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#scenario-c-escape-velocity">Scenario C – Escape Velocity</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#5-visualization">5. Visualization</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#6-discussion-and-applications">6. Discussion and Applications</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#7-conclusion">7. Conclusion</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -171,7 +211,183 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-3">Problem 3</h1>
+<hr/>
+<h1 id="problem-3-trajectories-of-a-freely-released-payload-near-earth"><strong>Problem 3: Trajectories of a Freely Released Payload Near Earth</strong></h1>
+<h2 id="motivation"><strong>Motivation</strong></h2>
+<p>The trajectory of a payload released from a spacecraft orbiting Earth can vary dramatically depending on its initial velocity and direction. This situation is a real-world application of orbital mechanics and Newtonian gravity.</p>
+<p>In space missions, understanding these trajectories is essential for deploying satellites, safely returning payloads to Earth, and planning interplanetary missions. Analyzing the motion of a freely moving object under gravity gives us crucial insights into orbital behavior.</p>
+<hr/>
+<h2 id="1-theoretical-background-possible-trajectory-types"><strong>1. Theoretical Background: Possible Trajectory Types</strong></h2>
+<p>The trajectory of an object released into space is determined by its <strong>total mechanical energy</strong>:</p>
+<h3 id="11-trajectory-types-based-on-energy"><strong>1.1 Trajectory Types Based on Energy</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Energy Condition</th>
+<th>Trajectory Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(E &lt; 0\)</span></td>
+<td>Elliptical Orbit</td>
+<td>Bound to the planet; object returns</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(E = 0\)</span></td>
+<td>Parabolic Trajectory</td>
+<td>Escape threshold; marginal case</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(E &gt; 0\)</span></td>
+<td>Hyperbolic Trajectory</td>
+<td>Object escapes planet’s gravity permanently</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-key-physical-equations"><strong>1.2 Key Physical Equations</strong></h3>
+<ul>
+<li><strong>Newton’s Law of Gravitation</strong>:</li>
+</ul>
+<p>$$
+  F = G \frac{Mm}{r^2}
+  $$</p>
+<ul>
+<li><strong>Acceleration due to gravity</strong>:</li>
+</ul>
+<p>$$
+  a = \frac{F}{m} = -\frac{GM}{r^2}
+  $$</p>
+<ul>
+<li><strong>Total Mechanical Energy</strong>:</li>
+</ul>
+<p>$$
+  E = \frac{1}{2}mv^2 - \frac{GMm}{r}
+  $$</p>
+<h3 id="13-typical-values-for-earth"><strong>1.3 Typical Values (for Earth)</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gravitational Constant <span class="arithmatex">\(G\)</span></td>
+<td><span class="arithmatex">\(6.674 \times 10^{-11} \, \text{Nm}^2/\text{kg}^2\)</span></td>
+</tr>
+<tr>
+<td>Earth’s Mass <span class="arithmatex">\(M\)</span></td>
+<td><span class="arithmatex">\(5.972 \times 10^{24} \, \text{kg}\)</span></td>
+</tr>
+<tr>
+<td>Earth’s Radius <span class="arithmatex">\(R\)</span></td>
+<td><span class="arithmatex">\(6.371 \times 10^6 \, \text{m}\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="2-numerical-simulation"><strong>2. Numerical Simulation</strong></h2>
+<p>To simulate motion under gravity, we can use simple numerical methods like <strong>Euler’s Method</strong> or more accurate ones like <strong>Velocity-Verlet</strong>. These methods calculate an object’s trajectory step by step based on Newton’s laws.</p>
+<hr/>
+<h2 id="3-python-simulation"><strong>3. Python Simulation</strong></h2>
+<h3 id="required-libraries">Required Libraries</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<h3 id="constants-and-earth-parameters">Constants and Earth Parameters</h3>
+<pre><code class="language-python">G = 6.67430e-11  # Universal gravitational constant
+M_earth = 5.972e24  # Mass of Earth (kg)
+R_earth = 6.371e6   # Radius of Earth (m)
+</code></pre>
+<h3 id="simulation-function">Simulation Function</h3>
+<pre><code class="language-python">def simulate_trajectory(r0, v0, dt=1, steps=20000):
+    r = np.array(r0, dtype='float64')
+    v = np.array(v0, dtype='float64')
+
+    traj = [r.copy()]
+    for _ in range(steps):
+        r_mag = np.linalg.norm(r)
+        if r_mag &lt; R_earth:
+            break  # Collided with Earth
+        a = -G * M_earth * r / r_mag**3
+        v += a * dt
+        r += v * dt
+        traj.append(r.copy())
+    return np.array(traj)
+</code></pre>
+<hr/>
+<h2 id="4-sample-scenarios"><strong>4. Sample Scenarios</strong></h2>
+<h3 id="scenario-a-low-speed-release-return-to-earth"><strong>Scenario A – Low-Speed Release (Return to Earth)</strong></h3>
+<pre><code class="language-python">traj1 = simulate_trajectory(
+    r0=[R_earth + 100e3, 0],  # Released from 100 km altitude
+    v0=[0, 500]               # 500 m/s velocity
+)
+</code></pre>
+<p><strong>Explanation</strong>: This velocity is insufficient for orbit. The payload quickly falls back to Earth.</p>
+<hr/>
+<h3 id="scenario-b-orbital-velocity"><strong>Scenario B – Orbital Velocity</strong></h3>
+<pre><code class="language-python">v_orbit = np.sqrt(G * M_earth / (R_earth + 300e3))  # Orbital speed at 300 km altitude
+traj2 = simulate_trajectory(
+    r0=[R_earth + 300e3, 0],
+    v0=[0, v_orbit]
+)
+</code></pre>
+<p>📍 <strong>Numerical Result</strong>:</p>
+<div class="arithmatex">\[
+v_{\text{orbit}} \approx 7.73 \, \text{km/s}
+\]</div>
+<p>🔻 <strong>Explanation</strong>: The payload enters a stable circular orbit.</p>
+<hr/>
+<h3 id="scenario-c-escape-velocity"><strong>Scenario C – Escape Velocity</strong></h3>
+<pre><code class="language-python">v_escape = np.sqrt(2 * G * M_earth / (R_earth + 300e3))
+traj3 = simulate_trajectory(
+    r0=[R_earth + 300e3, 0],
+    v0=[0, v_escape]
+)
+</code></pre>
+<p><strong>Numerical Result</strong>:</p>
+<p>$$
+v_{\text{escape}} \approx 10.93 \, \text{km/s}
+$$
+ <strong>Explanation</strong>: The object exceeds escape speed and leaves Earth’s gravitational field.</p>
+<hr/>
+<h2 id="5-visualization"><strong>5. Visualization</strong></h2>
+<pre><code class="language-python">def plot_trajectory(trajs, labels):
+    plt.figure(figsize=(8,8))
+    theta = np.linspace(0, 2*np.pi, 100)
+    plt.plot(R_earth*np.cos(theta), R_earth*np.sin(theta), 'k', label="Earth")
+
+    for traj, label in zip(trajs, labels):
+        plt.plot(traj[:,0], traj[:,1], label=label)
+
+    plt.xlabel("x (m)")
+    plt.ylabel("y (m)")
+    plt.legend()
+    plt.axis('equal')
+    plt.title("Payload Trajectories Near Earth")
+    plt.grid(True)
+    plt.show()
+
+plot_trajectory(
+    [traj1, traj2, traj3],
+    ["Return to Earth", "Stable Orbit", "Escape"]
+)
+</code></pre>
+<hr/>
+<h2 id="6-discussion-and-applications"><strong>6. Discussion and Applications</strong></h2>
+<ul>
+<li>If the object is released at <strong>low velocity</strong> (e.g., 0.5 km/s), it will re-enter Earth and crash. This is applicable to reentry capsules.</li>
+<li>At <strong>orbital velocity</strong>, it can remain in stable orbit — this is the principle behind satellites like the ISS.</li>
+<li>At <strong>escape velocity</strong>, the payload can exit Earth's gravity. This is used for lunar and interplanetary missions like Voyager 1.</li>
+</ul>
+<p>These simulations help engineers understand how small velocity changes drastically alter the mission outcome — a critical consideration in spacecraft design and mission planning.</p>
+<hr/>
+<h2 id="7-conclusion"><strong>7. Conclusion</strong></h2>
+<p>This simulation shows that gravity is the dominant force in determining an object’s path in space and that the object’s initial velocity and direction are crucial. Numerical tools like Python provide powerful insight into predicting and planning space missions.</p>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
