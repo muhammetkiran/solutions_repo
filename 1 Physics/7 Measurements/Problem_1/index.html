@@ -92,6 +92,20 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#problem-1-measuring-earths-gravitational-acceleration-with-a-pendulum">Problem 1: Measuring Earth's Gravitational Acceleration with a Pendulum</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#motivation">Motivation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#task">Task</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#procedure">Procedure</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#calculations">Calculations</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis">Analysis</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,6 +186,120 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h2 id="problem-1-measuring-earths-gravitational-acceleration-with-a-pendulum"><strong>Problem 1: Measuring Earth's Gravitational Acceleration with a Pendulum</strong></h2>
+<h3 id="motivation"><strong>Motivation</strong></h3>
+<p>The gravitational acceleration <span class="arithmatex">\(g\)</span> is approximately <strong>9.80665 m/s²</strong> at sea level. It governs the motion of objects under the influence of Earth's gravity and is essential in both theoretical and experimental physics. A simple and elegant method for measuring <span class="arithmatex">\(g\)</span> is using the <strong>period of a simple pendulum</strong>, whose motion is governed by the relationship:</p>
+<div class="arithmatex">\[
+T = 2\pi \sqrt{\frac{L}{g}}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(T\)</span>: Period of one full oscillation (in seconds)</li>
+<li><span class="arithmatex">\(L\)</span>: Length of the pendulum (in meters)</li>
+<li><span class="arithmatex">\(g\)</span>: Gravitational acceleration (in m/s²)</li>
+</ul>
+<p>By measuring the length of the pendulum and the period, we can solve for <span class="arithmatex">\(g\)</span>.</p>
+<hr/>
+<h3 id="task"><strong>Task</strong></h3>
+<p>Perform a pendulum experiment to measure <span class="arithmatex">\(g\)</span> and analyze the <strong>uncertainties</strong> involved in the length and timing measurements. This task emphasizes good experimental practices and error propagation.</p>
+<hr/>
+<h3 id="procedure"><strong>Procedure</strong></h3>
+<h4 id="1-materials">1. Materials</h4>
+<ul>
+<li>String of length ≈ 1.00 or 1.50 meters</li>
+<li>Small dense weight (e.g., metal washer, keychain, bag of coins)</li>
+<li>Stopwatch or smartphone timer (resolution ±0.01 s)</li>
+<li>Ruler or measuring tape (resolution ±0.01 m or ±0.005 m)</li>
+</ul>
+<h4 id="2-setup">2. Setup</h4>
+<ul>
+<li>Secure the string to a stable support (e.g., tripod, shelf).</li>
+<li>Measure the <strong>length <span class="arithmatex">\(L\)</span></strong> from the point of suspension to the center of mass of the weight.
+  For example:</li>
+</ul>
+<p>$$
+  L = 1.000 \text{ m}, \quad \delta L = \pm 0.005 \text{ m}
+  $$</p>
+<h4 id="3-data-collection">3. Data Collection</h4>
+<ul>
+<li>Displace the pendulum by a small angle (&lt;15° to ensure simple harmonic motion).</li>
+<li>Measure the time for <strong>10 oscillations</strong>, denoted as <span class="arithmatex">\(t_{10}\)</span>.</li>
+<li>Repeat this measurement <strong>10 times</strong>, recording all values.</li>
+<li>
+<p>Compute:</p>
+</li>
+<li>
+<p>Mean time for 10 oscillations:</p>
+<p>$$
+\overline{t_{10}} = \frac{1}{10} \sum_{i=1}^{10} t_{10,i}
+$$
+  * Standard deviation <span class="arithmatex">\(\sigma\)</span>
+  * Uncertainty in mean:</p>
+<p>$$
+\delta \overline{t_{10}} = \frac{\sigma}{\sqrt{n}}
+$$
+  * Period:</p>
+<div class="arithmatex">\[
+T = \frac{\overline{t_{10}}}{10}
+\]</div>
+</li>
+</ul>
+<hr/>
+<h3 id="calculations"><strong>Calculations</strong></h3>
+<h4 id="1-determining-gravitational-acceleration">1. Determining Gravitational Acceleration:</h4>
+<p>From:</p>
+<div class="arithmatex">\[
+T = 2\pi \sqrt{\frac{L}{g}} \Rightarrow g = \frac{4\pi^2 L}{T^2}
+\]</div>
+<p>For example, if:</p>
+<ul>
+<li><span class="arithmatex">\(L = 1.000 \text{ m}\)</span></li>
+<li><span class="arithmatex">\(\overline{t_{10}} = 20.05 \text{ s} \Rightarrow T = 2.005 \text{ s}\)</span></li>
+</ul>
+<p>Then:</p>
+<div class="arithmatex">\[
+g = \frac{4\pi^2 \cdot 1.000}{(2.005)^2} \approx 9.832 \text{ m/s}^2
+\]</div>
+<h4 id="2-propagation-of-uncertainty">2. Propagation of Uncertainty</h4>
+<p>Using:</p>
+<div class="arithmatex">\[
+\delta g = g \cdot \sqrt{\left( \frac{\delta L}{L} \right)^2 + \left( 2 \cdot \frac{\delta T}{T} \right)^2}
+\]</div>
+<p>If:</p>
+<ul>
+<li><span class="arithmatex">\(\delta L = 0.005 \text{ m}\)</span>, <span class="arithmatex">\(L = 1.000 \text{ m}\)</span></li>
+<li><span class="arithmatex">\(\delta T = 0.02 \text{ s}\)</span>, <span class="arithmatex">\(T = 2.005 \text{ s}\)</span></li>
+</ul>
+<p>Then:</p>
+<div class="arithmatex">\[
+\delta g \approx 9.832 \cdot \sqrt{(0.005)^2 + \left( 2 \cdot \frac{0.02}{2.005} \right)^2} \approx 0.12 \text{ m/s}^2
+\]</div>
+<p>Final result:</p>
+<div class="arithmatex">\[
+g = 9.83 \pm 0.12 \text{ m/s}^2
+\]</div>
+<hr/>
+<h3 id="analysis"><strong>Analysis</strong></h3>
+<h4 id="1-comparison-with-accepted-value">1. Comparison with Accepted Value:</h4>
+<ul>
+<li>Experimental <span class="arithmatex">\(g = 9.83 \pm 0.12 \text{ m/s}^2\)</span></li>
+<li>Standard <span class="arithmatex">\(g = 9.80665 \text{ m/s}^2\)</span></li>
+<li>The measured value is within <strong>experimental uncertainty</strong>, indicating good accuracy.</li>
+</ul>
+<h4 id="2-uncertainty-sources">2. Uncertainty Sources:</h4>
+<ul>
+<li><strong>Length uncertainty (<span class="arithmatex">\(\delta L\)</span>)</strong> arises from reading error and string flexibility.</li>
+<li><strong>Timing uncertainty (<span class="arithmatex">\(\delta T\)</span>)</strong> due to reaction time and stopwatch resolution.</li>
+<li>
+<p>Assumes:</p>
+</li>
+<li>
+<p>No air resistance</p>
+</li>
+<li>Small-angle approximation holds (valid for θ &lt; 15°)</li>
+<li>Fixed pivot point, negligible damping</li>
+</ul>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
