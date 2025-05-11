@@ -65,32 +65,7 @@ $T = \frac{2\pi}{\omega_0} = \frac{2\pi}{3.13} \approx 2.01 \text{ s}$
 
 ---
 
-#### **2. Damped Motion Without External Force**  
-If damping is present but no external force ($A = 0$), the equation becomes:
 
-$\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \omega_0^2 \theta = 0$
-
-The general solution depends on the damping coefficient $\beta$:
-
-- **Underdamped Motion ($\beta < 2\omega_0$)**:
-  $\theta(t) = \theta_0 e^{-\frac{\beta}{2} t} \cos\left(\omega_d t + \phi \right)$
-  where:
-  $\omega_d = \sqrt{\omega_0^2 - \left(\frac{\beta}{2}\right)^2}$
-
-  Example Calculation:  
-  If $\beta = 1$ s\(^{-1}\) and $L = 1$ m:
-
-  $\omega_d = \sqrt{(3.13)^2 - (0.5)^2} = \sqrt{9.80} \approx 3.13 \text{ rad/s}$
-
-  The oscillations decay exponentially due to the damping term $e^{-\frac{\beta}{2} t}$.
-
-- **Critically Damped Motion ($\beta = 2\omega_0$)**:  
-  $\theta(t) = (\theta_0 + v_0 t) e^{-\omega_0 t}$
-
-- **Overdamped Motion ($\beta > 2\omega_0$)**:
-  $\theta(t) = e^{-\frac{\beta}{2} t} (C_1 e^{r_1 t} + C_2 e^{r_2 t})$
-  where:
-  $r_{1,2} = -\frac{\beta}{2} \pm \sqrt{\left(\frac{\beta}{2}\right)^2 - \omega_0^2}$
 
 ---
 
@@ -105,14 +80,7 @@ $\theta_{\text{particular}}(t) = \frac{F}{\sqrt{(\omega_0^2 - \omega^2)^2 + (\be
 
 $\tan\delta = \frac{\beta \omega}{\omega_0^2 - \omega^2}$
 
-Example Calculation:  
-For $\omega_0 = 3.13$ rad/s, $\beta = 1$ s\(^{-1}\), $F = 0.5$, and $\omega = 2.5$ rad/s:
 
-$\theta_{\text{particular}} = \frac{0.5}{\sqrt{(3.13^2 - 2.5^2)^2 + (1 \times 2.5)^2}}$
-
-$\approx \frac{0.5}{\sqrt{(9.80 - 6.25)^2 + (2.5)^2}} = \frac{0.5}{\sqrt{12.56}} \approx 0.14$
-
-$\tan\delta = \frac{1 \times 2.5}{9.80 - 6.25} = \frac{2.5}{3.55} \approx 0.704 \quad \Rightarrow \quad \delta \approx 35.3^\circ$
 
 Thus, the steady-state response is:
 
@@ -128,5 +96,3 @@ Understanding the dynamics of forced damped pendulums is crucial in various fiel
 **Seismology:** Modeling the Earth's response to periodic forces, such as tidal effects, benefits from insights into forced oscillatory systems.
 
 ### Implementation
-
- [Simulation model motion of pendulum](projectile_with_embedded_video.html)(projectile_with_embedded_video.html)
