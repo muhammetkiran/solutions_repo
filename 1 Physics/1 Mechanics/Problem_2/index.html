@@ -58,7 +58,7 @@
 <ul>
 <li class="toctree-l2"><a class="reference internal" href="../../2%20Gravity/Problem_1/">Problem 1</a>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../2%20Gravity/Problem_2/">Problem 2</a>
+<li class="toctree-l2"><a class="reference internal" href="../../2%20Gravity/Problem_2/">Problem 2: Escape Velocities and Cosmic Velocities</a>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../2%20Gravity/Problem_3/">Problem 3</a>
 </li>
@@ -210,32 +210,6 @@ If <span class="arithmatex">\(L = 1\)</span> m, then:</p>
 <p>The period is:</p>
 <p><span class="arithmatex">\(T = \frac{2\pi}{\omega_0} = \frac{2\pi}{3.13} \approx 2.01 \text{ s}\)</span></p>
 <hr/>
-<h4 id="2-damped-motion-without-external-force"><strong>2. Damped Motion Without External Force</strong></h4>
-<p>If damping is present but no external force (<span class="arithmatex">\(A = 0\)</span>), the equation becomes:</p>
-<p><span class="arithmatex">\(\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \omega_0^2 \theta = 0\)</span></p>
-<p>The general solution depends on the damping coefficient <span class="arithmatex">\(\beta\)</span>:</p>
-<ul>
-<li><strong>Underdamped Motion (<span class="arithmatex">\(\beta &lt; 2\omega_0\)</span>)</strong>:
-  <span class="arithmatex">\(\theta(t) = \theta_0 e^{-\frac{\beta}{2} t} \cos\left(\omega_d t + \phi \right)\)</span>
-  where:
-  <span class="arithmatex">\(\omega_d = \sqrt{\omega_0^2 - \left(\frac{\beta}{2}\right)^2}\)</span></li>
-</ul>
-<p>Example Calculation:<br/>
-  If <span class="arithmatex">\(\beta = 1\)</span> s<span class="arithmatex">\(^{-1}\)</span> and <span class="arithmatex">\(L = 1\)</span> m:</p>
-<p><span class="arithmatex">\(\omega_d = \sqrt{(3.13)^2 - (0.5)^2} = \sqrt{9.80} \approx 3.13 \text{ rad/s}\)</span></p>
-<p>The oscillations decay exponentially due to the damping term <span class="arithmatex">\(e^{-\frac{\beta}{2} t}\)</span>.</p>
-<ul>
-<li>
-<p><strong>Critically Damped Motion (<span class="arithmatex">\(\beta = 2\omega_0\)</span>)</strong>:<br/>
-<span class="arithmatex">\(\theta(t) = (\theta_0 + v_0 t) e^{-\omega_0 t}\)</span></p>
-</li>
-<li>
-<p><strong>Overdamped Motion (<span class="arithmatex">\(\beta &gt; 2\omega_0\)</span>)</strong>:
-  <span class="arithmatex">\(\theta(t) = e^{-\frac{\beta}{2} t} (C_1 e^{r_1 t} + C_2 e^{r_2 t})\)</span>
-  where:
-  <span class="arithmatex">\(r_{1,2} = -\frac{\beta}{2} \pm \sqrt{\left(\frac{\beta}{2}\right)^2 - \omega_0^2}\)</span></p>
-</li>
-</ul>
 <hr/>
 <h4 id="3-steady-state-solution-with-external-forcing"><strong>3. Steady-State Solution with External Forcing</strong></h4>
 <p>For a forced pendulum (<span class="arithmatex">\(A \neq 0\)</span>), the steady-state solution can be found using:</p>
@@ -243,11 +217,6 @@ If <span class="arithmatex">\(L = 1\)</span> m, then:</p>
 <p>where:</p>
 <p><span class="arithmatex">\(\theta_{\text{particular}}(t) = \frac{F}{\sqrt{(\omega_0^2 - \omega^2)^2 + (\beta \omega)^2}} \cos(\omega t - \delta)\)</span></p>
 <p><span class="arithmatex">\(\tan\delta = \frac{\beta \omega}{\omega_0^2 - \omega^2}\)</span></p>
-<p>Example Calculation:<br/>
-For <span class="arithmatex">\(\omega_0 = 3.13\)</span> rad/s, <span class="arithmatex">\(\beta = 1\)</span> s<span class="arithmatex">\(^{-1}\)</span>, <span class="arithmatex">\(F = 0.5\)</span>, and <span class="arithmatex">\(\omega = 2.5\)</span> rad/s:</p>
-<p><span class="arithmatex">\(\theta_{\text{particular}} = \frac{0.5}{\sqrt{(3.13^2 - 2.5^2)^2 + (1 \times 2.5)^2}}\)</span></p>
-<p><span class="arithmatex">\(\approx \frac{0.5}{\sqrt{(9.80 - 6.25)^2 + (2.5)^2}} = \frac{0.5}{\sqrt{12.56}} \approx 0.14\)</span></p>
-<p><span class="arithmatex">\(\tan\delta = \frac{1 \times 2.5}{9.80 - 6.25} = \frac{2.5}{3.55} \approx 0.704 \quad \Rightarrow \quad \delta \approx 35.3^\circ\)</span></p>
 <p>Thus, the steady-state response is:</p>
 <p><span class="arithmatex">\(\theta_{\text{steady}}(t) = 0.14 \cos(2.5t - 35.3^\circ)\)</span></p>
 <h3 id="practical-applications">Practical Applications</h3>
@@ -256,7 +225,6 @@ For <span class="arithmatex">\(\omega_0 = 3.13\)</span> rad/s, <span class="arit
 <p><strong>Robotics:</strong> The principles governing pendulum dynamics assist in designing stable walking robots and understanding bipedal locomotion.</p>
 <p><strong>Seismology:</strong> Modeling the Earth's response to periodic forces, such as tidal effects, benefits from insights into forced oscillatory systems.</p>
 <h3 id="implementation">Implementation</h3>
-<p><a href="../projectile_with_embedded_video.html">Simulation model motion of pendulum</a>(projectile_with_embedded_video.html)</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">

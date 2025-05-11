@@ -6,13 +6,13 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../../img/favicon.ico" rel="shortcut icon"/>
-<title>Problem 2 - Physics and Mathematics</title>
+<title>Problem 2: Escape Velocities and Cosmic Velocities - Physics and Mathematics</title>
 <link href="../../../css/theme.css" rel="stylesheet"/>
 <link href="../../../css/theme_extra.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
 <script>
         // Current page data
-        var mkdocs_page_name = "Problem 2";
+        var mkdocs_page_name = "Problem 2: Escape Velocities and Cosmic Velocities";
         var mkdocs_page_input_path = "1 Physics/2 Gravity/Problem_2.md";
         var mkdocs_page_url = null;
       </script>
@@ -56,8 +56,26 @@
 <ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../Problem_1/">Problem 1</a>
 </li>
-<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2</a>
+<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2: Escape Velocities and Cosmic Velocities</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#1-definitions">1. Definitions</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#first-cosmic-velocity-orbital-velocity">First Cosmic Velocity (Orbital Velocity)</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#second-cosmic-velocity-escape-velocity">Second Cosmic Velocity (Escape Velocity)</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#third-cosmic-velocity">Third Cosmic Velocity</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-mathematical-analysis">2. Mathematical Analysis</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-importance-in-space-exploration">4. Importance in Space Exploration</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#5-conclusion">5. Conclusion</a>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_3/">Problem 3</a>
@@ -163,7 +181,7 @@
 <li><a aria-label="Docs" class="icon icon-home" href="../../.."></a></li>
 <li class="breadcrumb-item">1 Physics</li>
 <li class="breadcrumb-item">2 Gravity</li>
-<li class="breadcrumb-item active">Problem 2</li>
+<li class="breadcrumb-item active">Problem 2: Escape Velocities and Cosmic Velocities</li>
 <li class="wy-breadcrumbs-aside">
 </li>
 </ul>
@@ -171,7 +189,71 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-2">Problem 2</h1>
+<h1 id="problem-2-escape-velocities-and-cosmic-velocities"><strong>Problem 2: Escape Velocities and Cosmic Velocities</strong></h1>
+<h2 id="motivation"><strong>Motivation</strong></h2>
+<p>Escape velocity represents the minimum speed an object must attain to break free from a celestial body's gravitational pull without further propulsion. This idea scales up through the concept of <strong>cosmic velocities</strong>, which are key to understanding artificial satellites, interplanetary travel, and potentially interstellar missions. These velocities — first, second, and third cosmic velocities — set the benchmarks for different gravitational boundaries.</p>
+<hr/>
+<h2 id="1-definitions"><strong>1. Definitions</strong></h2>
+<h3 id="first-cosmic-velocity-orbital-velocity"><strong>First Cosmic Velocity (Orbital Velocity)</strong></h3>
+<ul>
+<li>The minimum speed needed to enter a stable circular orbit just above a celestial body's surface.</li>
+<li>Formula:</li>
+</ul>
+<p>$$
+  v_1 = \sqrt{\frac{GM}{R}}
+  $$</p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(G\)</span>: gravitational constant,</li>
+<li><span class="arithmatex">\(M\)</span>: mass of the celestial body,</li>
+<li><span class="arithmatex">\(R\)</span>: radius of the celestial body.</li>
+</ul>
+<h3 id="second-cosmic-velocity-escape-velocity"><strong>Second Cosmic Velocity (Escape Velocity)</strong></h3>
+<ul>
+<li>The minimum speed needed to escape a celestial body's gravitational field without propulsion.</li>
+<li>Formula:</li>
+</ul>
+<p>$$
+  v_2 = \sqrt{2} \cdot v_1 = \sqrt{\frac{2GM}{R}}
+  $$</p>
+<h3 id="third-cosmic-velocity"><strong>Third Cosmic Velocity</strong></h3>
+<ul>
+<li>The speed needed to escape the gravitational field of the entire star system (e.g., the Solar System).</li>
+<li>Depends on the Sun's mass and the distance from the Sun at launch (e.g., Earth's orbit).</li>
+<li>Formula:</li>
+</ul>
+<p>$$
+  v_3 = \sqrt{v_{\text{escape, sun}}^2 + v_{\text{orbital}}^2}
+  $$</p>
+<hr/>
+<h2 id="2-mathematical-analysis"><strong>2. Mathematical Analysis</strong></h2>
+<ul>
+<li>
+<p><strong>Variables affecting velocities:</strong></p>
+</li>
+<li>
+<p>Mass <span class="arithmatex">\(M\)</span> of the celestial body</p>
+</li>
+<li>Radius <span class="arithmatex">\(R\)</span></li>
+<li>Gravitational constant <span class="arithmatex">\(G = 6.67430 \times 10^{-11} \, \text{m}^3/\text{kg}\cdot\text{s}^2\)</span></li>
+<li>
+<p><strong>Assumptions:</strong></p>
+</li>
+<li>
+<p>No atmospheric drag</p>
+</li>
+<li>No rotational effects</li>
+</ul>
+<hr/>
+<h2 id="4-importance-in-space-exploration"><strong>4. Importance in Space Exploration</strong></h2>
+<ul>
+<li><strong>First Cosmic Velocity</strong>: Used for satellite launches and orbital space stations (e.g., ISS).</li>
+<li><strong>Second Cosmic Velocity</strong>: Required for missions leaving a planet (e.g., Moon missions).</li>
+<li><strong>Third Cosmic Velocity</strong>: Necessary for escaping the solar system (e.g., Voyager probes).</li>
+</ul>
+<hr/>
+<h2 id="5-conclusion"><strong>5. Conclusion</strong></h2>
+<p>Understanding and calculating cosmic velocities is essential in mission planning, spacecraft design, and predicting the energy requirements for various goals in space exploration — from placing satellites into orbit to sending probes across interstellar distances.</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
