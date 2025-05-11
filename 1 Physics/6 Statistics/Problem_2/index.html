@@ -86,6 +86,8 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -171,7 +173,92 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-2">Problem 2</h1>
+<p>Elbette! Aşağıda, <strong>Monte Carlo yöntemleriyle π'nin tahmini</strong> problemini içeren açıklamayı <strong>biraz daha uzun</strong>, <strong>daha fazla sayısal ifade içeren</strong> ve teknik yönleri öne çıkaran bir şekilde sunuyorum. Bu versiyon, hem teorik hem de uygulamalı yönleri dengeli şekilde açıklar:</p>
+<hr/>
+<h2 id="problem-2-estimating-using-monte-carlo-methods"><strong>Problem 2: Estimating π Using Monte Carlo Methods</strong></h2>
+<h3 id="motivation"><strong>Motivation</strong></h3>
+<p>The number <strong>π (pi)</strong> is a fundamental mathematical constant that represents the ratio of a circle’s circumference to its diameter, approximately <strong>3.1415926535…</strong>. Despite its apparent simplicity, π cannot be expressed exactly as a fraction and has an infinite non-repeating decimal expansion. Estimating π numerically is an excellent example of how randomness and probability can be used to solve deterministic problems.</p>
+<p><strong>Monte Carlo methods</strong> are a family of computational algorithms that rely on repeated random sampling to obtain numerical results. These methods are widely used in fields such as <strong>physics</strong>, <strong>finance</strong>, <strong>AI</strong>, and <strong>engineering</strong>, especially when deterministic methods become too complex or infeasible.</p>
+<p>This problem uses two classical Monte Carlo approaches to estimate π:</p>
+<ol>
+<li><strong>The Circle Method</strong> (Geometric probability)</li>
+<li><strong>Buffon's Needle Experiment</strong> (Probabilistic geometry)</li>
+</ol>
+<hr/>
+<h2 id="part-1-estimating-using-a-circle"><strong>Part 1: Estimating π Using a Circle</strong></h2>
+<h3 id="theoretical-foundation"><strong>Theoretical Foundation</strong></h3>
+<p>Imagine a <strong>unit circle</strong> (radius <span class="arithmatex">\(r = 1\)</span>) centered at the origin and inscribed in a square with side length 2. The area of the circle is:</p>
+<div class="arithmatex">\[
+A_{\text{circle}} = \pi r^2 = \pi
+\]</div>
+<p>The area of the square is:</p>
+<div class="arithmatex">\[
+A_{\text{square}} = (2r)^2 = 4
+\]</div>
+<p>Therefore, the probability that a randomly chosen point inside the square also lies inside the circle is:</p>
+<div class="arithmatex">\[
+P = \frac{A_{\text{circle}}}{A_{\text{square}}} = \frac{\pi}{4}
+\]</div>
+<p>Thus, if we generate <strong>N</strong> random points <span class="arithmatex">\((x, y)\)</span> uniformly in the square <span class="arithmatex">\([-1, 1] \times [-1, 1]\)</span> and count how many of them fall inside the circle (i.e., satisfy <span class="arithmatex">\(x^2 + y^2 \leq 1\)</span>), then:</p>
+<div class="arithmatex">\[
+\pi \approx 4 \cdot \frac{N_{\text{inside}}}{N}
+\]</div>
+<h3 id="numerical-results-example"><strong>Numerical Results Example</strong></h3>
+<ul>
+<li>For <strong>N = 1,000</strong> points → π ≈ 3.14</li>
+<li>For <strong>N = 10,000</strong> points → π ≈ 3.141</li>
+<li>For <strong>N = 1,000,000</strong> points → π ≈ 3.14159</li>
+</ul>
+<p>The accuracy improves with <strong><span class="arithmatex">\(\sqrt{N}\)</span></strong> convergence behavior — to get one more digit of accuracy, we need roughly <strong>100×</strong> more samples.</p>
+<hr/>
+<h2 id="part-2-estimating-using-buffons-needle"><strong>Part 2: Estimating π Using Buffon’s Needle</strong></h2>
+<h3 id="theoretical-foundation_1"><strong>Theoretical Foundation</strong></h3>
+<p><strong>Buffon's Needle Problem</strong> is one of the earliest problems in geometric probability. Consider a floor with equally spaced parallel lines, <strong>d</strong> units apart. If we randomly drop a needle of length <strong>L ≤ d</strong>, the probability that the needle crosses a line is given by:</p>
+<div class="arithmatex">\[
+P = \frac{2L}{\pi d}
+\]</div>
+<p>Solving for π:</p>
+<div class="arithmatex">\[
+\pi \approx \frac{2L \cdot N}{d \cdot H}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(N\)</span> = total number of needle drops</li>
+<li><span class="arithmatex">\(H\)</span> = number of times the needle crosses a line</li>
+</ul>
+<p>For example, if we drop <strong>10,000 needles</strong> of length 1 on lines spaced 2 units apart, and <strong>6,366</strong> cross a line, we estimate:</p>
+<div class="arithmatex">\[
+\pi \approx \frac{2 \cdot 1 \cdot 10,000}{2 \cdot 6366} \approx 3.1413
+\]</div>
+<h3 id="statistical-behavior"><strong>Statistical Behavior</strong></h3>
+<p>Buffon's method tends to converge more slowly than the circle method due to its dependence on trigonometric functions and geometric constraints. The accuracy also depends heavily on having a large number of hits <span class="arithmatex">\(H\)</span>, making small sample sizes unstable.</p>
+<hr/>
+<h2 id="comparison-of-methods"><strong>Comparison of Methods</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Convergence Rate</th>
+<th>Complexity</th>
+<th>Suitable For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Circle Monte Carlo</td>
+<td><span class="arithmatex">\(O(\frac{1}{\sqrt{N}})\)</span></td>
+<td>Simple Geometry</td>
+<td>Quick Estimation</td>
+</tr>
+<tr>
+<td>Buffon’s Needle</td>
+<td>Slower, probabilistic</td>
+<td>Trigonometry</td>
+<td>Historical curiosity, advanced problems</td>
+</tr>
+</tbody>
+</table>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
