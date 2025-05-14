@@ -1,4 +1,3 @@
-Elbette! Aşağıda, **Monte Carlo yöntemleriyle π'nin tahmini** problemini içeren açıklamayı **biraz daha uzun**, **daha fazla sayısal ifade içeren** ve teknik yönleri öne çıkaran bir şekilde sunuyorum. Bu versiyon, hem teorik hem de uygulamalı yönleri dengeli şekilde açıklar:
 
 ---
 
