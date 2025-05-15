@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measuring Earth's Gravity with a Pendulum</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h2, h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px auto;
+            display: block;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="range"] {
+            width: 100%;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #34495e;
+        }
+        p {
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        .equation {
+            font-style: italic;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Measuring Earth's Gravity with a Pendulum</h2>
+        <p>Adjust the pendulum length and start the oscillation. Click "Measure" to record the time for 10 oscillations. Collect 10 trials to estimate \(g\).</p>
+        <div id="pendulum-canvas"></div>
+        <div class="controls">
+            <label for="length">Pendulum Length (m): <span id="length-value">1.0</span></label>
+            <input type="range" id="length" min="0.5" max="1.5" step="0.01" value="1.0">
+            <button onclick="startOscillation()">Start Oscillation</button>
+            <button onclick="measureTime()">Measure</button>
+            <button onclick="resetSimulation()">Reset</button>
+            <p>Trials Completed: <span id="trial-count">0</span>/10</p>
+            <p>Current Period (s): <span id="period">N/A</span></p>
+            <p>Estimated \(g\) (m/s²): <span id="gravity">N/A</span></p>
+            <p>Uncertainty in \(g\) (m/s²): <span id="gravity-uncertainty">N/A</span></p>
+        </div>
+        <h3>Measurement Data</h3>
+        <table id="data-table">
+            <tr>
+                <th>Trial</th>
+                <th>Time for 10 Oscillations (s)</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        let theta = 0.1; // initial angle (radians, ~5.7° < 15°)
+        let thetaDot = 0; // initial angular velocity
+        let t = 0; // simulation time
+        let L = 1.0; // pendulum length (m)
+        let g = 9.81; // true gravity (m/s²)
+        let dt = 0.02; // time step (s)
+        let oscillating = false;
+        let oscillationStartTime = 0;
+        let oscillationCount = 0;
+        let times = []; // times for 10 oscillations
+        let trialCount = 0;
+
+        // Pendulum Sketch
+        let pendulumSketch = function(p) {
+            p.setup = function() {
+                let canvas = p.createCanvas(400, 400);
+                canvas.parent('pendulum-canvas');
+            };
+
+            p.draw = function() {
+                p.background(255);
+                p.translate(p.width / 2, p.height / 4);
+                let x = L * 100 * Math.sin(theta);
+                let y = L * 100 * Math.cos(theta);
+                p.stroke(0);
+                p.line(0, 0, x, y);
+                p.fill(255, 0, 0);
+                p.noStroke();
+                p.ellipse(x, y, 20, 20);
+
+                if (oscillating) {
+                    // Small-angle approximation: d²θ/dt² + (g/L)θ = 0
+                    let thetaDDot = -(g / L) * theta;
+                    thetaDot += thetaDDot * dt;
+                    theta += thetaDot * dt;
+                    t += dt;
+
+                    // Detect oscillation by zero crossings
+                    if (Math.abs(theta) < 0.01 && Math.abs(thetaDot) > 0.1) {
+                        oscillationCount++;
+                        if (oscillationCount >= 10) {
+                            let timeTaken = t - oscillationStartTime;
+                            document.getElementById('period').textContent = (timeTaken / 10).toFixed(3);
+                            oscillating = false;
+                        }
+                    }
+                }
+            };
+        };
+
+        // Initialize sketch
+        new p5(pendulumSketch, 'pendulum-canvas');
+
+        // Start oscillation
+        function startOscillation() {
+            if (!oscillating) {
+                theta = 0.1; // reset to initial angle
+                thetaDot = 0;
+                t = 0;
+                oscillationStartTime = t;
+                oscillationCount = 0;
+                oscillating = true;
+                document.getElementById('period').textContent = 'N/A';
+            }
+        }
+
+        // Measure time for 10 oscillations
+        function measureTime() {
+            if (!oscillating && oscillationCount >= 10 && trialCount < 10) {
+                let timeTaken = t - oscillationStartTime;
+                times.push(timeTaken);
+                trialCount++;
+                document.getElementById('trial-count').textContent = trialCount;
+
+                // Update table
+                let table = document.getElementById('data-table');
+                let row = table.insertRow();
+                row.insertCell(0).textContent = trialCount;
+                row.insertCell(1).textContent = timeTaken.toFixed(3);
+
+                // Calculate g if 10 trials are complete
+                if (trialCount === 10) {
+                    let meanTime = times.reduce((a, b) => a + b, 0) / 10;
+                    let T = meanTime / 10; // period
+                    let sigmaT = Math.sqrt(times.reduce((sum, t) => sum + (t - meanTime) ** 2, 0) / (10 * 9));
+                    let deltaT = sigmaT / Math.sqrt(10);
+                    let deltaL = 0.0005; // half of 1 mm resolution
+                    let gEst = (4 * Math.PI ** 2 * L) / (T ** 2);
+                    let deltaG = gEst * Math.sqrt((deltaL / L) ** 2 + (2 * deltaT / T) ** 2);
+
+                    document.getElementById('period').textContent = T.toFixed(3);
+                    document.getElementById('gravity').textContent = gEst.toFixed(3);
+                    document.getElementById('gravity-uncertainty').textContent = deltaG.toFixed(3);
+                }
+            }
+        }
+
+        // Reset simulation
+        function resetSimulation() {
+            theta = 0.1;
+            thetaDot = 0;
+            t = 0;
+            oscillating = false;
+            oscillationCount = 0;
+            times = [];
+            trialCount = 0;
+            document.getElementById('trial-count').textContent = '0';
+            document.getElementById('period').textContent = 'N/A';
+            document.getElementById('gravity').textContent = 'N/A';
+            document.getElementById('gravity-uncertainty').textContent = 'N/A';
+            let table = document.getElementById('data-table');
+            while (table.rows.length > 1) table.deleteRow(1);
+        }
+
+        // Slider for length
+        document.getElementById('length').addEventListener('input', function() {
+            L = parseFloat(this.value);
+            document.getElementById('length-value').textContent = L.toFixed(2);
+            resetSimulation(); // reset to apply new length
+        });
+    </script>
+</body>
+</html>
