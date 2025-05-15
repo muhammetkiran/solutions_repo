@@ -44,7 +44,7 @@ $$
 
 ---
 
-## 📊 Results & Analysis
+##  Results & Analysis
 
 - **Constructive Interference**: Bright/red regions where wave crests from multiple sources align.
 - **Destructive Interference**: Dark/blue regions where crests and troughs cancel each other.
