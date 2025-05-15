@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buffon's Needle Method for Estimating Pi</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px auto;
+            display: block;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="range"] {
+            width: 100%;
+        }
+        button {
+            padding: 8px 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #34495e;
+        }
+        p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Buffon's Needle Method</h2>
+        <p>Adjust the slider to change the number of needle drops. Red needles cross a line; blue needles do not.</p>
+        <div id="needle-canvas"></div>
+        <div class="controls">
+            <label for="needle-drops">Number of Drops: <span id="needle-drops-value">1000</span></label>
+            <input type="range" id="needle-drops" min="100" max="10000" step="100" value="1000">
+            <p>Estimated \(\pi\): <span id="pi-needle">0</span></p>
+            <button onclick="resetNeedle()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let needleDrops = [];
+        let needleN = 1000;
+        let needleM = 0;
+
+        // Buffon's Needle Sketch
+        let needleSketch = function(p) {
+            p.setup = function() {
+                let canvas = p.createCanvas(400, 400);
+                canvas.parent('needle-canvas');
+                updateNeedleDrops();
+            };
+
+            p.draw = function() {
+                p.background(255);
+                p.stroke(0);
+                for (let y = 0; y <= p.height; y += p.height / 4) {
+                    p.line(0, y, p.width, y);
+                }
+                for (let needle of needleDrops) {
+                    let x = p.map(needle.x, 0, 2, 0, p.width);
+                    let y = p.map(needle.y, 0, 4, 0, p.height);
+                    let theta = needle.theta;
+                    let dx = (p.width / 4) * Math.cos(theta);
+                    let dy = (p.width / 4) * Math.sin(theta);
+                    p.stroke(needle.crosses ? 'red' : 'blue');
+                    p.line(x - dx, y - dy, x + dx, y + dy);
+                }
+                p.fill(0);
+                p.noStroke();
+                p.text(`Drops: ${needleN}`, 10, 20);
+                p.text(`Crossings: ${needleM}`, 10, 40);
+                p.text(`π ≈ ${(needleM ? (2 * needleN / needleM).toFixed(4) : 'N/A')}`, 10, 60);
+            };
+        };
+
+        // Initialize sketch
+        new p5(needleSketch, 'needle-canvas');
+
+        // Update Needle Drops
+        function updateNeedleDrops() {
+            needleDrops = [];
+            needleM = 0;
+            for (let i = 0; i < needleN; i++) {
+                let x = 2 * Math.random();
+                let y = 4 * Math.random();
+                let theta = Math.PI * Math.random();
+                let y1 = y - 0.5 * Math.sin(theta);
+                let y2 = y + 0.5 * Math.sin(theta);
+                let crosses = Math.floor(y1) !== Math.floor(y2);
+                if (crosses) needleM++;
+                needleDrops.push({ x, y, theta, crosses });
+            }
+            document.getElementById('pi-needle').textContent = (needleM ? (2 * needleN / needleM).toFixed(4) : 'N/A');
+        }
+
+        // Slider and Button Events
+        document.getElementById('needle-drops').addEventListener('input', function() {
+            needleN = parseInt(this.value);
+            document.getElementById('needle-drops-value').textContent = needleN;
+            updateNeedleDrops();
+        });
+
+        function resetNeedle() {
+            needleN = 1000;
+            document.getElementById('needle-drops').value = needleN;
+            document.getElementById('needle-drops-value').textContent = needleN;
+            updateNeedleDrops();
+        }
+    </script>
+</body>
+</html>

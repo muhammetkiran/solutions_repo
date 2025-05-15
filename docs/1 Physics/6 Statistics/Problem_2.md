@@ -95,4 +95,9 @@ Buffon's method tends to converge more slowly than the circle method due to its 
 | Buffon’s Needle    | Slower, probabilistic   | Trigonometry    | Historical curiosity, advanced problems |
 
 ---
+![alt text](image-1.png)
 [Estimating Pi with Monte Carlo Simulations](simmmmmm2.html)
+
+
+![alt text](image.png)
+ [Buffon's Needle Method Simulations](sim2.2.html)
