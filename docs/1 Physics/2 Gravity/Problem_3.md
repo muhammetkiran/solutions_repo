@@ -9,6 +9,7 @@ The trajectory of a payload released from a spacecraft orbiting Earth can vary d
 
 In space missions, understanding these trajectories is essential for deploying satellites, safely returning payloads to Earth, and planning interplanetary missions. Analyzing the motion of a freely moving object under gravity gives us crucial insights into orbital behavior.
 
+![alt text](image.png)
 ---
 
 ## **1. Theoretical Background: Possible Trajectory Types**
