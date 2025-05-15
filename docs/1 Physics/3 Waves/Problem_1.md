@@ -40,7 +40,7 @@ u(x, y, t) = \sum_{i=1}^{N} u_i(x, y, t)
 $$
 
 ---
-
+![alt text](image.png)
 
 ---
 
