@@ -1,98 +1,262 @@
-# Problem 2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forced Damped Pendulum Interactive Simulation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #f0f0f0;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .canvas-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        .controls {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        .section {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="range"] {
+            width: 100%;
+        }
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h2>Interactive Simulation</h2>
+        <p>Adjust the sliders to explore the pendulum’s dynamics. The animation shows the pendulum’s motion, with plots for time series, phase portrait, and Poincaré section.</p>
+        <div class="container">
+            <div class="canvas-container">
+                <div id="pendulum-canvas"></div>
+                <div id="time-series-canvas"></div>
+                <div id="phase-portrait-canvas"></div>
+                <div id="poincare-canvas"></div>
+            </div>
+            <div class="controls">
+                <label for="gamma">Damping Coefficient (γ): <span id="gamma-value">0.5</span></label>
+                <input type="range" id="gamma" min="0" max="2" step="0.01" value="0.5">
+                <label for="force">Driving Amplitude (F): <span id="force-value">1.2</span></label>
+                <input type="range" id="force" min="0" max="2" step="0.01" value="1.2">
+                <label for="omega">Driving Frequency (ω): <span id="omega-value">0.67</span></label>
+                <input type="range" id="omega" min="0.1" max="5" step="0.01" value="0.67">
+                <button onclick="resetSimulation()">Reset</button>
+            </div>
+        </div>
+    </div>
 
-# Investigating the Dynamics of a Forced Damped Pendulum
+    <script>
+        let theta = 0.2; // initial angle
+        let thetaDot = 0; // initial angular velocity
+        let t = 0; // time
+        let g = 9.81; // gravity
+        let l = 1; // pendulum length
+        let omega0 = Math.sqrt(g / l); // natural frequency
+        let gamma = 0.5; // damping coefficient
+        let F = 1.2; // driving amplitude
+        let omega = 2/3; // driving frequency
+        let dt = 0.02; // time step
 
-### **Theoretical Foundations of the Forced Damped Pendulum**
-  
+        let timeSeries = [];
+        let phasePortrait = [];
+        let poincarePoints = [];
+        let T = 2 * Math.PI / omega; // driving period
+        let nextPoincareTime = T;
 
-The motion of a **forced damped pendulum** is governed by a second-order nonlinear differential equation that incorporates **inertia**, **damping**, **restoring force**, and **external driving force**:  
+        let pendulumSketch, timeSeriesSketch, phasePortraitSketch, poincareSketch;
 
-$\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \frac{g}{L} \sin\theta = \frac{A}{mL^2} \cos(\omega t)$
+        // Pendulum animation
+        pendulumSketch = function(p) {
+            p.setup = function() {
+                p.createCanvas(300, 300);
+                p.background(255);
+            };
 
-where:  
-- $\theta$ = Angular displacement (radians)  
-- $\frac{d^2\theta}{dt^2}$ = Angular acceleration  
-- $\frac{d\theta}{dt}$ = Angular velocity  
-- $\beta$ = Damping coefficient (s\(^{-1}\))  
-- $g$ = Acceleration due to gravity (9.81 m/s²)  
-- $L$ = Length of the pendulum (m)  
-- $A$ = Amplitude of the external driving torque (N·m)  
-- $m$ = Mass of the pendulum bob (kg)  
-- $\omega$ = Angular frequency of the driving force (rad/s)  
-- $t$ = Time (s)  
+            p.draw = function() {
+                p.background(255);
+                p.translate(p.width / 2, p.height / 4);
+                let x = l * 100 * Math.sin(theta);
+                let y = l * 100 * Math.cos(theta);
+                p.stroke(0);
+                p.line(0, 0, x, y);
+                p.fill(255, 0, 0);
+                p.ellipse(x, y, 20, 20);
+            };
+        };
 
----
+        // Time series plot
+        timeSeriesSketch = function(p) {
+            p.setup = function() {
+                p.createCanvas(300, 200);
+                p.background(255);
+            };
 
-### **Dimensionless Form of the Equation**  
+            p.draw = function() {
+                p.background(255);
+                p.beginShape();
+                p.noFill();
+                p.stroke(0, 0, 255);
+                for (let i = 0; i < timeSeries.length; i++) {
+                    let x = p.map(i, 0, timeSeries.length, 0, p.width);
+                    let y = p.map(timeSeries[i], -Math.PI, Math.PI, p.height, 0);
+                    p.vertex(x, y);
+                }
+                p.endShape();
+                p.text('θ(t)', 10, 20);
+                p.text('Time', p.width - 40, p.height - 10);
+            };
+        };
 
-To simplify the analysis, we introduce **dimensionless variables**:
+        // Phase portrait
+        phasePortraitSketch = function(p) {
+            p.setup = function() {
+                p.createCanvas(300, 200);
+                p.background(255);
+            };
 
-$\tau = \sqrt{\frac{g}{L}} t, \quad Q = \frac{\beta}{\sqrt{\frac{g}{L}}}, \quad F = \frac{A}{mL^2 \sqrt{\frac{g}{L}}}, \quad \Omega = \frac{\omega}{\sqrt{\frac{g}{L}}}$
+            p.draw = function() {
+                p.background(255);
+                p.beginShape();
+                p.noFill();
+                p.stroke(0, 255, 0);
+                for (let point of phasePortrait) {
+                    let x = p.map(point[0], -Math.PI, Math.PI, 0, p.width);
+                    let y = p.map(point[1], -10, 10, p.height, 0);
+                    p.vertex(x, y);
+                }
+                p.endShape();
+                p.text('θ', 10, 20);
+                p.text('dθ/dt', p.width - 40, p.height - 10);
+            };
+        };
 
-Thus, the equation becomes:
+        // Poincaré section
+        poincareSketch = function(p) {
+            p.setup = function() {
+                p.createCanvas(300, 200);
+                p.background(255);
+            };
 
-$\frac{d^2\theta}{d\tau^2} + Q \frac{d\theta}{d\tau} + \sin\theta = F \cos(\Omega \tau)$
+            p.draw = function() {
+                p.background(255);
+                p.fill(255, 0, 0);
+                p.noStroke();
+                for (let point of poincarePoints) {
+                    let x = p.map(point[0], -Math.PI, Math.PI, 0, p.width);
+                    let y = p.map(point[1], -10, 10, p.height, 0);
+                    p.ellipse(x, y, 5, 5);
+                }
+                p.text('θ', 10, 20);
+                p.text('dθ/dt', p.width - 40, p.height - 10);
+            };
+        };
 
----
+        // Initialize sketches
+        new p5(pendulumSketch, 'pendulum-canvas');
+        new p5(timeSeriesSketch, 'time-series-canvas');
+        new p5(phasePortraitSketch, 'phase-portrait-canvas');
+        new p5(poincareSketch, 'poincare-canvas');
 
-### **Key Calculations and Numerical Examples**  
+        // Update parameters from sliders
+        document.getElementById('gamma').addEventListener('input', function() {
+            gamma = parseFloat(this.value);
+            document.getElementById('gamma-value').textContent = gamma.toFixed(2);
+        });
 
-#### **1. Natural Frequency of an Undamped Pendulum**  
-For a simple pendulum **without damping** ($\beta = 0$) and **no driving force** ($A = 0$), the equation simplifies to:
+        document.getElementById('force').addEventListener('input', function() {
+            F = parseFloat(this.value);
+            document.getElementById('force-value').textContent = F.toFixed(2);
+        });
 
-$\frac{d^2\theta}{dt^2} + \frac{g}{L} \sin\theta = 0$
+        document.getElementById('omega').addEventListener('input', function() {
+            omega = parseFloat(this.value);
+            document.getElementById('omega-value').textContent = omega.toFixed(2);
+            T = 2 * Math.PI / omega;
+            nextPoincareTime = t + T;
+        });
 
-For small angles ($\sin\theta \approx \theta$), this reduces to:
+        // Reset simulation
+        function resetSimulation() {
+            theta = 0.2;
+            thetaDot = 0;
+            t = 0;
+            timeSeries = [];
+            phasePortrait = [];
+            poincarePoints = [];
+            nextPoincareTime = T;
+        }
 
-$\frac{d^2\theta}{dt^2} + \omega_0^2 \theta = 0$
+        // Runge-Kutta 4th order
+        function rk4() {
+            let k1_theta = thetaDot;
+            let k1_thetaDot = -gamma * thetaDot - omega0 * omega0 * Math.sin(theta) + F * Math.cos(omega * t);
 
-where:
+            let theta2 = theta + 0.5 * k1_theta * dt;
+            let thetaDot2 = thetaDot + 0.5 * k1_thetaDot * dt;
+            let k2_theta = thetaDot2;
+            let k2_thetaDot = -gamma * thetaDot2 - omega0 * omega0 * Math.sin(theta2) + F * Math.cos(omega * (t + 0.5 * dt));
 
-$\omega_0 = \sqrt{\frac{g}{L}}$
+            let theta3 = theta + 0.5 * k2_theta * dt;
+            let thetaDot3 = thetaDot + 0.5 * k2_thetaDot * dt;
+            let k3_theta = thetaDot3;
+            let k3_thetaDot = -gamma * thetaDot3 - omega0 * omega0 * Math.sin(theta3) + F * Math.cos(omega * (t + 0.5 * dt));
 
-is the **natural frequency** of the pendulum. The solution is:
+            let theta4 = theta + k3_theta * dt;
+            let thetaDot4 = thetaDot + k3_thetaDot * dt;
+            let k4_theta = thetaDot4;
+            let k4_thetaDot = -gamma * thetaDot4 - omega0 * omega0 * Math.sin(theta4) + F * Math.cos(omega * (t + dt));
 
-$\theta(t) = \theta_0 \cos(\omega_0 t + \phi)$
+            theta += (dt / 6) * (k1_theta + 2 * k2_theta + 2 * k3_theta + k4_theta);
+            thetaDot += (dt / 6) * (k1_thetaDot + 2 * k2_thetaDot + 2 * k3_thetaDot + k4_thetaDot);
+            t += dt;
 
-Example Calculation:  
-If $L = 1$ m, then:
+            // Store data
+            timeSeries.push(theta);
+            phasePortrait.push([theta, thetaDot]);
+            if (timeSeries.length > 500) timeSeries.shift();
+            if (phasePortrait.length > 1000) phasePortrait.shift();
 
-$\omega_0 = \sqrt{\frac{9.81}{1}} = 3.13 \text{ rad/s}$
+            // Poincaré section
+            if (t >= nextPoincareTime) {
+                poincarePoints.push([theta, thetaDot]);
+                if (poincarePoints.length > 100) poincarePoints.shift();
+                nextPoincareTime += T;
+            }
+        }
 
-The period is:
-
-$T = \frac{2\pi}{\omega_0} = \frac{2\pi}{3.13} \approx 2.01 \text{ s}$
-
----
-
----
-
-#### **3. Steady-State Solution with External Forcing**  
-For a forced pendulum ($A \neq 0$), the steady-state solution can be found using:
-
-$\theta_{\text{steady}}(t) = \theta_{\text{particular}}(t) + \theta_{\text{transient}}(t)$
-
-where:
-
-$\theta_{\text{particular}}(t) = \frac{F}{\sqrt{(\omega_0^2 - \omega^2)^2 + (\beta \omega)^2}} \cos(\omega t - \delta)$
-
-$\tan\delta = \frac{\beta \omega}{\omega_0^2 - \omega^2}$
-
-
-
-Thus, the steady-state response is:
-
-$\theta_{\text{steady}}(t) = 0.14 \cos(2.5t - 35.3^\circ)$
-
-### Practical Applications
-Understanding the dynamics of forced damped pendulums is crucial in various fields:
-
-**Engineering:**  Mechanical systems with oscillatory components, such as suspension bridges or clock mechanisms, can experience resonant vibrations leading to structural failures if not properly damped.
-
-**Robotics:** The principles governing pendulum dynamics assist in designing stable walking robots and understanding bipedal locomotion.
-
-**Seismology:** Modeling the Earth's response to periodic forces, such as tidal effects, benefits from insights into forced oscillatory systems.
-
-### Implementation
-
-[ Simulation](sım2.html)
+        // Animation loop
+        setInterval(rk4, dt * 1000);
+    </script>
+</body>
+</html>
