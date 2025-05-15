@@ -65,8 +65,6 @@ $T = \frac{2\pi}{\omega_0} = \frac{2\pi}{3.13} \approx 2.01 \text{ s}$
 
 ---
 
-
-
 ---
 
 #### **3. Steady-State Solution with External Forcing**  
@@ -96,3 +94,5 @@ Understanding the dynamics of forced damped pendulums is crucial in various fiel
 **Seismology:** Modeling the Earth's response to periodic forces, such as tidal effects, benefits from insights into forced oscillatory systems.
 
 ### Implementation
+
+[ Simulation](sım2.html)
