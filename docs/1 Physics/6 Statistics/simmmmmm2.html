@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimating Pi with Monte Carlo Simulations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #f0f0f0;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .canvas-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        .controls {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .section {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="range"] {
+            width: 100%;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h2>Monte Carlo Circle Method</h2>
+        <p>Adjust the slider to change the number of points. Blue points are inside the unit circle; red points are outside. The estimated \(\pi\) is displayed.</p>
+        <div class="container">
+            <div class="canvas-container">
+                <div id="circle-canvas"></div>
+            </div>
+            <div class="controls">
+                <label for="circle-points">Number of Points: <span id="circle-points-value">1000</span></label>
+                <input type="range" id="circle-points" min="100" max="10000" step="100" value="1000">
+                <p>Estimated \(\pi\): <span id="pi-circle">0</span></p>
+                <button onclick="resetCircle()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Buffon's Needle Method</h2>
+        <p>Adjust the slider to change the number of needle drops. Red needles cross a line; blue needles do not. The estimated \(\pi\) is displayed.</p>
+        <div class="container">
+            <div class="canvas-container">
+                <div id="needle-canvas"></div>
+            </div>
+            <div class="controls">
+                <label for="needle-drops">Number of Drops: <span id="needle-drops-value">1000</span></label>
+                <input type="range" id="needle-drops" min="100" max="10000" step="100" value="1000">
+                <p>Estimated \(\pi\): <span id="pi-needle">0</span></p>
+                <button onclick="resetNeedle()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let circlePoints = [];
+        let needleDrops = [];
+        let circleN = 1000;
+        let needleN = 1000;
+        let circleM = 0;
+        let needleM = 0;
+
+        // Circle Method Sketch
+        let circleSketch = function(p) {
+            p.setup = function() {
+                let canvas = p.createCanvas(400, 400);
+                canvas.parent('circle-canvas');
+                updateCirclePoints();
+            };
+
+            p.draw = function() {
+                p.background(255);
+                p.fill(200, 200, 255, 50);
+                p.ellipse(p.width / 2, p.height / 2, p.width, p.height);
+                p.noFill();
+                p.stroke(0);
+                p.rect(0, 0, p.width, p.height);
+                for (let point of circlePoints) {
+                    let x = p.map(point.x, -1, 1, 0, p.width);
+                    let y = p.map(point.y, -1, 1, p.height, 0);
+                    p.fill(point.inside ? 'blue' : 'red');
+                    p.noStroke();
+                    p.ellipse(x, y, 3, 3);
+                }
+                p.fill(0);
+                p.noStroke();
+                p.text(`Points: ${circleN}`, 10, 20);
+                p.text(`Inside: ${circleM}`, 10, 40);
+                p.text(`π ≈ ${(4 * circleM / circleN).toFixed(4)}`, 10, 60);
+            };
+        };
+
+        // Buffon's Needle Sketch
+        let needleSketch = function(p) {
+            p.setup = function() {
+                let canvas = p.createCanvas(400, 400);
+                canvas.parent('needle-canvas');
+                updateNeedleDrops();
+            };
+
+            p.draw = function() {
+                p.background(255);
+                p.stroke(0);
+                for (let y = 0; y <= p.height; y += p.height / 4) {
+                    p.line(0, y, p.width, y);
+                }
+                for (let needle of needleDrops) {
+                    let x = p.map(needle.x, 0, 2, 0, p.width);
+                    let y = p.map(needle.y, 0, 4, 0, p.height);
+                    let theta = needle.theta;
+                    let dx = (p.width / 4) * Math.cos(theta);
+                    let dy = (p.width / 4) * Math.sin(theta);
+                    p.stroke(needle.crosses ? 'red' : 'blue');
+                    p.line(x - dx, y - dy, x + dx, y + dy);
+                }
+                p.fill(0);
+                p.noStroke();
+                p.text(`Drops: ${needleN}`, 10, 20);
+                p.text(`Crossings: ${needleM}`, 10, 40);
+                p.text(`π ≈ ${(needleM ? (2 * needleN / needleM).toFixed(4) : 'N/A')}`, 10, 60);
+            };
+        };
+
+        // Initialize sketches
+        new p5(circleSketch, 'circle-canvas');
+        new p5(needleSketch, 'needle-canvas');
+
+        // Update Circle Points
+        function updateCirclePoints() {
+            circlePoints = [];
+            circleM = 0;
+            for (let i = 0; i < circleN; i++) {
+                let x = 2 * Math.random() - 1;
+                let y = 2 * Math.random() - 1;
+                let inside = (x * x + y * y <= 1);
+                if (inside) circleM++;
+                circlePoints.push({ x, y, inside });
+            }
+            document.getElementById('pi-circle').textContent = (4 * circleM / circleN).toFixed(4);
+        }
+
+        // Update Needle Drops
+        function updateNeedleDrops() {
+            needleDrops = [];
+            needleM = 0;
+            for (let i = 0; i < needleN; i++) {
+                let x = 2 * Math.random();
+                let y = 4 * Math.random();
+                let theta = Math.PI * Math.random();
+                let y1 = y - 0.5 * Math.sin(theta);
+                let y2 = y + 0.5 * Math.sin(theta);
+                let crosses = Math.floor(y1) !== Math.floor(y2);
+                if (crosses) needleM++;
+                needleDrops.push({ x, y, theta, crosses });
+            }
+            document.getElementById('pi-needle').textContent = (needleM ? (2 * needleN / needleM).toFixed(4) : 'N/A');
+        }
+
+        // Slider and Button Events
+        document.getElementById('circle-points').addEventListener('input', function() {
+            circleN = parseInt(this.value);
+            document.getElementById('circle-points-value').textContent = circleN;
+            updateCirclePoints();
+        });
+
+        document.getElementById('needle-drops').addEventListener('input', function() {
+            needleN = parseInt(this.value);
+            document.getElementById('needle-drops-value').textContent = needleN;
+            updateNeedleDrops();
+        });
+
+        function resetCircle() {
+            circleN = 1000;
+            document.getElementById('circle-points').value = circleN;
+            document.getElementById('circle-points-value').textContent = circleN;
+            updateCirclePoints();
+        }
+
+        function resetNeedle() {
+            needleN = 1000;
+            document.getElementById('needle-drops').value = needleN;
+            document.getElementById('needle-drops-value').textContent = needleN;
+            updateNeedleDrops();
+        }
+    </script>
+</body>
+</html>
