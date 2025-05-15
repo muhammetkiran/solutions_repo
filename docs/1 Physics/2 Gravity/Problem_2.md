@@ -49,7 +49,7 @@ Understanding how fast a spacecraft must travel to orbit, escape a planet, or le
 
 ---
 
-## 🧮 Python Implementation
+##  Python Implementation
 
 ```python
 import numpy as np
